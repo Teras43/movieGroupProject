@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiDataService } from 'src/app/services/api-data.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private apiData: ApiDataService
+  ) { }
 
   ngOnInit(): void {
+    this.apiData.getApiData().subscribe(res => {
+      console.log(res);
+    })
   }
 
 }
