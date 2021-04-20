@@ -6,8 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiDataService {
   apiData;
-
-  apiKey = "https://api.themoviedb.org/3/movie/550?api_key=09a06bef76827ed3d24bd5d7fa86e5cc";
+  apiKey = "api_key=09a06bef76827ed3d24bd5d7fa86e5cc";
+  apiMovieId;
+  apiQuery = "https://api.themoviedb.org/3/movie/"
+  apiPopular = "https://api.themoviedb.org/3/movie/popular?";
+  apiPosterPath = "https://image.tmdb.org/t/p/original/";
 
   headers = new HttpHeaders()
   .set('content-type', 'application/json');
@@ -17,7 +20,7 @@ export class ApiDataService {
   ) { }
 
   getApiData = () => (
-    this.http.get(this.apiKey, { 'headers': this.headers, 'withCredentials': false })
+    this.apiData = this.http.get(this.apiPopular + this.apiKey, { 'headers': this.headers, 'withCredentials': false })
   )
 
 

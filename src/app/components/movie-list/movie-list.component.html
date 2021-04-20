@@ -1,1 +1,12 @@
-<p>movie-list works!</p>
+<div class="movieListContainer">
+  <mat-card *ngIf="popularData">
+    <div *ngFor="let data of popularData.results">
+      <img
+        class="movieListThumb"
+        src="{{ apiData.apiPosterPath + data.poster_path }}"
+      />
+      {{ data.title }}
+      <mat-divider></mat-divider>
+    </div>
+  </mat-card>
+</div>
