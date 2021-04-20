@@ -8,6 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { WatchListComponent } from './components/watch-list/watch-list.component';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import { AuthService } from "../app/services/auth.service";
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -15,14 +22,19 @@ import { WatchListComponent } from './components/watch-list/watch-list.component
     MovieListComponent,
     LoginPageComponent,
     MovieDetailsComponent,
-    WatchListComponent
+    WatchListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BrowserModule,
+    RouterModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
