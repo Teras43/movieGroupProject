@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './modules/app-routing.module';
 import { AppComponent } from './app.component';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
@@ -12,8 +11,9 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-import { AuthService } from "../app/services/auth.service";
 import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {MaterialModule} from './modules/material.module';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
     LoginPageComponent,
     MovieDetailsComponent,
     WatchListComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +34,9 @@ import { RouterModule } from '@angular/router';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    MaterialModule,
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
