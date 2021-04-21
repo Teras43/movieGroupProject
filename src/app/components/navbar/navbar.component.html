@@ -1,7 +1,19 @@
 <div class="navbarContainer">
   <mat-toolbar>
     <div class="toolbarBtn">
-      <div class="buttonDiv"></div>
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
     </div>
+    <div class="appNameDiv">
+      <div>The Movie Database</div>
+    </div>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
   </mat-toolbar>
 </div>
