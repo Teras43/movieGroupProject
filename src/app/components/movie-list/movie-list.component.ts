@@ -28,7 +28,6 @@ export class MovieListComponent implements OnInit {
   };
 
   searchFn = () => {
-    console.log(this.searchQuery);
     if (this.searchQuery === '' || this.searchQuery === null || this.searchQuery === undefined) return;
     if (this.searchQuery.match(this.searchRegex)) {
       this.apiData.getMovieData(this.searchQuery).subscribe(res => {
@@ -37,6 +36,19 @@ export class MovieListComponent implements OnInit {
       });
     } else {
       return;
-    }
+    };
+  };
+
+  selectMovie = (movieId) => {
+    console.log(movieId);
+    this.apiData.getSelectedMovieData(movieId);
   }
+
+  isLoaded = () => {
+    if (this.popularData !== undefined || this.searchResponse !== undefined) {
+      return true
+    } else {
+      return false
+    };
+  };
 }
