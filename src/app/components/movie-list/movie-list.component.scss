@@ -5,8 +5,21 @@
     height: 100%;
     overflow: scroll;
 
-    .searchInput {
-      width: 200px;
+    .searchDiv {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .searchInput {
+        width: 14em;
+      }
+
+      .searchTrigger {
+        height: 2.5em;
+        width: 3em;
+        margin-left: 8px;
+        margin-bottom: 8px;
+      }
     }
 
     .listContent {
