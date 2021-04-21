@@ -1,8 +1,73 @@
 .movieDetailContainer {
   height: 92%;
 
-  .selectedMovieImg {
-    height: 260px;
-    width: 180px;
+  .pseudoContainer {
+    .iframeDiv {
+      max-width: 790px;
+      margin: auto;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .topDetails {
+      .nameDetail {
+        border-bottom: 1px solid black;
+        background-color: #dde1e4;
+        padding: 15px;
+
+        .titleDiv {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          .titleSpan {
+            font-size: 18px;
+            font-weight: 700;
+            margin-left: 15px;
+          }
+
+          .dateSpan {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-left: 10px;
+          }
+        }
+
+        .subTitleDiv {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-left: 15px;
+          opacity: 0.8;
+          font-size: 14px;
+
+          .genreDiv {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+
+    .bottomDetails {
+      .mainSummary {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        .selectedMovieImg {
+          height: 180px;
+          width: 120px;
+        }
+
+        .summaryDiv {
+          margin-left: 10px;
+        }
+      }
+    }
   }
 }
