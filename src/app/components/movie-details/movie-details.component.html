@@ -1,49 +1,41 @@
 <div class="movieDetailContainer">
-  <div class="topDiv" *ngIf="movieDetails">
-    <div class="imageDiv">
-      <img
-        class="selectedMovieImg"
-        src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
-      />
+  <div class="pseudoContainer" *ngIf="movieDetails">
+    <div class="iframeDiv" *ngIf="safeSrc">
+      <iframe width="{{ screenWidth }}" height="240" [src]="safeSrc"></iframe>
     </div>
     <div class="topDetails">
       <div class="nameDetail">
         <div class="titleDiv">
-          {{ movieDetails.title }}
+          <span class="titleSpan">{{ movieDetails.title }}</span>
+          <span class="dateSpan">({{ movieDetails.release_date }})</span>
         </div>
-        <div class="taglineDiv">
-          {{ movieDetails.tagline }}
-        </div>
-        <div class="releasedDiv">Released: {{ movieDetails.release_date }}</div>
-        <div class="runtimeDiv">Runtime: {{ movieDetails.runtime }} min.</div>
-      </div>
-      <div class="ratingDetail">
-        <div class="popularityDiv">
-          Popularity: {{ movieDetails.popularity }}
-        </div>
-        <div class="voteCountDiv">
-          Vote Count: {{ movieDetails.vote_count }}
-        </div>
-        <div class="ratingDiv">Rating: {{ movieDetails.vote_average }}</div>
-      </div>
-    </div>
-    <div class="midDetails">
-      <div class="budgetInfo">Budget: ${{ movieDetails.budget }}</div>
-      <div class="productionInfo">
-        Production Companies:
-        <div
-          class="productionCompanies"
-          *ngFor="let company of movieDetails.production_companies"
-        >
-          {{ company.name }}
+        <div class="subTitleDiv">
+          <div class="runtimeDiv">{{ movieDetails.runtime }} min. |</div>
+          <div class="genreDiv" *ngFor="let genre of movieDetails.genres">
+            {{ genre.name }} |
+          </div>
         </div>
       </div>
-    </div>
-    <div class="bottomDetails">
-      <div class="summaryDiv">
-        {{ movieDetails.overview }}
+      <div class="bottomDetails">
+        <div class="mainSummary">
+          <div class="imageDiv">
+            <img
+              class="selectedMovieImg"
+              src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
+            />
+          </div>
+          <div class="summaryDiv">
+            {{ movieDetails.overview }}
+          </div>
+        </div>
+        <div class="ratingDetail">
+          <div class="popularityDiv">
+            Popularity: {{ movieDetails.popularity }}
+          </div>
+          <div class="ratingDiv">{{ movieDetails.vote_average }}/10</div>
+          <div class="voteCountDiv">({{ movieDetails.vote_count }})</div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="bottomDiv"></div>
 </div>
