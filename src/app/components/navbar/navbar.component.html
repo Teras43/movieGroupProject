@@ -10,10 +10,24 @@
     </div>
     <button
       mat-icon-button
-      class="example-icon"
-      aria-label="Example icon-button with menu icon"
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
     >
-      <mat-icon>menu</mat-icon>
+      <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="navHome()">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>list_alt</mat-icon>
+        <span>My List</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon> vpn_key</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </div>

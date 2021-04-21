@@ -1,0 +1,1 @@
+export { MovieData } from './movie-data';
