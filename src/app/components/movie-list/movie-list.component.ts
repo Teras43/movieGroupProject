@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class MovieListComponent implements OnInit {
 
   constructor(
     private apiData: ApiDataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,8 +42,9 @@ export class MovieListComponent implements OnInit {
   };
 
   selectMovie = (movieId) => {
-    console.log(movieId);
-    this.apiData.getSelectedMovieData(movieId);
+    this.router.navigate([`./movie`], { queryParams: {
+      id: movieId
+    } });
   }
 
   isLoaded = () => {

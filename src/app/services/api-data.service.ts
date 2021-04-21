@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MovieData } from '../interfaces';
+import { MovieData, SelectedMovieData } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,10 @@ export class ApiDataService {
     this.apiMovieData = this.http.get<MovieData>(this.apiQuery + this.apiKey + '&query=' + query, { 'headers': this.headers })
   );
 
-  getSelectedMovieData = (movieId) => {
-    this.apiSelectedMovieData = this.http.get(this.apiRequestPath + movieId + '?' + this.apiKey, { 'headers': this.headers })
+  getSelectedMovieData = (movieId): any => {
+    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
+      this.apiSelectedMovieData = res;
+    });
   };
 
   // test = () => {

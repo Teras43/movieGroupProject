@@ -1,1 +1,49 @@
-<p>movie-details works!</p>
+<div class="movieDetailContainer">
+  <div class="topDiv" *ngIf="movieDetails">
+    <div class="imageDiv">
+      <img
+        class="selectedMovieImg"
+        src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
+      />
+    </div>
+    <div class="topDetails">
+      <div class="nameDetail">
+        <div class="titleDiv">
+          {{ movieDetails.title }}
+        </div>
+        <div class="taglineDiv">
+          {{ movieDetails.tagline }}
+        </div>
+        <div class="releasedDiv">Released: {{ movieDetails.release_date }}</div>
+        <div class="runtimeDiv">Runtime: {{ movieDetails.runtime }} min.</div>
+      </div>
+      <div class="ratingDetail">
+        <div class="popularityDiv">
+          Popularity: {{ movieDetails.popularity }}
+        </div>
+        <div class="voteCountDiv">
+          Vote Count: {{ movieDetails.vote_count }}
+        </div>
+        <div class="ratingDiv">Rating: {{ movieDetails.vote_average }}</div>
+      </div>
+    </div>
+    <div class="midDetails">
+      <div class="budgetInfo">Budget: ${{ movieDetails.budget }}</div>
+      <div class="productionInfo">
+        Production Companies:
+        <div
+          class="productionCompanies"
+          *ngFor="let company of movieDetails.production_companies"
+        >
+          {{ company.name }}
+        </div>
+      </div>
+    </div>
+    <div class="bottomDetails">
+      <div class="summaryDiv">
+        {{ movieDetails.overview }}
+      </div>
+    </div>
+  </div>
+  <div class="bottomDiv"></div>
+</div>
