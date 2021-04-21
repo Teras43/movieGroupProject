@@ -20,21 +20,18 @@
       </button>
     </div>
     <div *ngIf="searchResponse">
-      <div
-        class="listContent"
-        *ngFor="let data of searchResponse.results"
-        (click)="selectMovie(data.id)"
-      >
+      <div class="listContent" *ngFor="let data of searchResponse.results">
         <div class="imgDiv">
           <img
             class="movieListThumb"
             src="{{ apiData.apiPosterPath + data.poster_path }}"
+            (click)="selectMovie(data.id)"
           />
         </div>
         <div class="movieInfoDiv">
-          <div class="movieTitleDiv">
+          <a class="movieTitleDiv" (click)="selectMovie(data.id)">
             {{ data.title }}
-          </div>
+          </a>
           <div class="movieDescDiv">
             {{ data.overview }}
           </div>
@@ -57,12 +54,13 @@
           <img
             class="movieListThumb"
             src="{{ apiData.apiPosterPath + data.poster_path }}"
+            (click)="selectMovie(data.id)"
           />
         </div>
         <div class="movieInfoDiv">
-          <div class="movieTitleDiv">
+          <a class="movieTitleDiv" (click)="selectMovie(data.id)">
             {{ data.title }}
-          </div>
+          </a>
           <div class="movieDescDiv">
             {{ data.overview }}
           </div>
