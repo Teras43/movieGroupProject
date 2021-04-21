@@ -11,6 +11,7 @@ import { WatchListComponent } from './components/watch-list/watch-list.component
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
