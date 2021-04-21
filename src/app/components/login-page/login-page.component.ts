@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -9,7 +10,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(public afAuth: AngularFireAuth, public router: RouterModule) { }
+
 
   ngOnInit(): void {
   }
