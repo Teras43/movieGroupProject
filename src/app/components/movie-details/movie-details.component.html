@@ -3,39 +3,104 @@
     <div class="iframeDiv" *ngIf="safeSrc">
       <iframe width="{{ screenWidth }}" height="240" [src]="safeSrc"></iframe>
     </div>
-    <div class="topDetails">
-      <div class="nameDetail">
-        <div class="titleDiv">
-          <span class="titleSpan">{{ movieDetails.title }}</span>
-          <span class="dateSpan">({{ movieDetails.release_date }})</span>
+    <div class="nameDetail">
+      <div class="titleDiv">
+        <span class="titleSpan">{{ movieDetails.title }}</span>
+        <span class="dateSpan">({{ movieDetails.release_date }})</span>
+      </div>
+      <div class="subTitleDiv">
+        <div class="runtimeDiv">
+          <mat-icon>timer</mat-icon>
+          {{ movieDetails.runtime }} min.
         </div>
-        <div class="subTitleDiv">
-          <div class="runtimeDiv">{{ movieDetails.runtime }} min. |</div>
-          <div class="genreDiv" *ngFor="let genre of movieDetails.genres">
+        <div class="genreDiv">
+          <div class="forGenreDivs" *ngFor="let genre of movieDetails.genres">
             {{ genre.name }} |
           </div>
         </div>
       </div>
-      <div class="bottomDetails">
-        <div class="mainSummary">
-          <div class="imageDiv">
-            <img
-              class="selectedMovieImg"
-              src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
-            />
-          </div>
+    </div>
+    <div class="bottomDetails">
+      <div class="mainSummary">
+        <div class="imageDiv">
+          <img
+            class="selectedMovieImg"
+            src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
+          />
+        </div>
+        <div class="bottomRight">
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-        </div>
-        <div class="ratingDetail">
-          <div class="popularityDiv">
-            Popularity: {{ movieDetails.popularity }}
+          <div class="buttonBottomDiv">
+            <button mat-mini-fab class="bottomBtn" color="primary">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button class="addTextBtn">Add to Watch List!</button>
           </div>
+        </div>
+      </div>
+      <div class="ratingDetail">
+        <div class="ratingImg">
+          <mat-icon class="starIcon">star</mat-icon>
+        </div>
+        <div class="ratingInfo">
           <div class="ratingDiv">{{ movieDetails.vote_average }}/10</div>
           <div class="voteCountDiv">({{ movieDetails.vote_count }})</div>
         </div>
+        <div class="rateBtnDiv">
+          <button mat-button class="rateBtn" (click)="rateMovie()">
+            <mat-icon class="starIcon2">star</mat-icon>
+            <span class="star-rating-text">Rate This</span>
+          </button>
+          <div class="popularDiv">
+            <mat-icon color="primary">insert_chart</mat-icon>
+            <div>{{ moviePopRound }}</div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="castCrewContainer">
+      <mat-card class="castCrewCard">
+        <h3 class="castCrewTitle">Cast & Crew</h3>
+        <h4 class="topCastTxt">Top Cast</h4>
+        <div class="topCastDiv">
+          <div
+            class="castOutline"
+            *ngFor="let member of movieDetails.credits.cast | slice: 0:10"
+          >
+            <img
+              class="castImg"
+              src="{{ apiData.apiPosterPath + member.profile_path }}"
+            />
+            <div class="imgTxt">
+              <div class="imgTxtName">
+                {{ member.name }}
+              </div>
+              <div class="imgTxtCharName">
+                {{ member.character }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4 class="topCrewTxt">Top Crew</h4>
+        <div class="topCrewDiv">
+          <div
+            class="crewOutline"
+            *ngFor="let member of movieDetails.credits.crew | slice: 0:10"
+          >
+            <div class="crewTxt">
+              <div class="CrewTxtName">
+                {{ member.name }}
+              </div>
+              <div class="crewTxtCredits">
+                {{ member.department }}: <br />
+                {{ member.job }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
     </div>
   </div>
 </div>

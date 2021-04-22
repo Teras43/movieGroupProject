@@ -10,62 +10,211 @@
       justify-content: center;
     }
 
-    .topDetails {
-      .nameDetail {
-        border-bottom: 1px solid black;
-        background-color: #dde1e4;
-        padding: 15px;
+    .nameDetail {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+      background-color: #dde1e4;
+      padding: 15px;
 
-        .titleDiv {
-          width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
+      .titleDiv {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
 
-          .titleSpan {
-            font-size: 18px;
-            font-weight: 700;
-            margin-left: 15px;
-          }
-
-          .dateSpan {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-left: 10px;
-          }
+        .titleSpan {
+          font-size: 18px;
+          font-weight: 700;
         }
 
-        .subTitleDiv {
-          width: 100%;
+        .dateSpan {
+          font-size: 14px;
+          opacity: 0.8;
+          margin-left: 10px;
+        }
+      }
+
+      .subTitleDiv {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        opacity: 0.8;
+        font-size: 14px;
+
+        .runtimeDiv {
+          display: flex;
+          align-items: center;
+        }
+
+        .genreDiv {
           display: flex;
           justify-content: flex-start;
-          align-items: center;
-          margin-left: 15px;
-          opacity: 0.8;
-          font-size: 14px;
 
-          .genreDiv {
-            margin-left: 5px;
+          .forGenreDivs {
+            margin-right: 5px;
           }
         }
       }
     }
 
     .bottomDetails {
+      margin-left: 15px;
+      margin-right: 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+
       .mainSummary {
         width: 100%;
         display: flex;
         justify-content: center;
         margin-top: 20px;
         margin-bottom: 20px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
         .selectedMovieImg {
           height: 180px;
           width: 120px;
+          border: 1px solid black;
+          box-shadow: 2px -2px;
         }
 
         .summaryDiv {
           margin-left: 10px;
+          height: 135px;
+          overflow: scroll;
+        }
+
+        .buttonBottomDiv {
+          display: flex;
+          margin-left: 10px;
+          margin-top: 10px;
+
+          .addTextBtn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 800;
+            font-style: italic;
+          }
+        }
+      }
+
+      .ratingDetail {
+        display: flex;
+        flex: 3;
+        width: 100%;
+        margin-bottom: 20px;
+
+        .starIcon {
+          display: flex;
+          flex: 0.5;
+          color: gold;
+          font-size: 40px;
+          margin-right: 10px;
+        }
+
+        .ratingInfo {
+          display: flex;
+          flex: 0.5;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .rateBtnDiv {
+          display: flex;
+          flex: 1;
+
+          .rateBtn {
+            display: flex;
+            width: 100%;
+            background: none;
+            border: none;
+            outline: none;
+
+            .starIcon2 {
+              color: silver;
+              font-size: 40px;
+              float: left;
+              margin-right: 15px;
+            }
+
+            .star-rating-text {
+              display: block;
+              padding-top: 10px;
+              font-weight: 500;
+              font-size: 16px;
+            }
+          }
+          .populardiv {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    .castCrewCard {
+      padding-left: 15px;
+      padding-right: 15px;
+
+      .topCastDiv {
+        display: flex;
+        overflow: scroll;
+
+        .castOutline {
+          margin: 0px 8px;
+
+          .castImg {
+            height: 170px;
+            width: 115px;
+          }
+
+          .imgTxt {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .imgTxtName {
+              font-size: 14px;
+              text-align: center;
+              margin-bottom: 5px;
+            }
+
+            .imgTxtCharName {
+              font-size: 14px;
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+
+      .topCrewDiv {
+        display: flex;
+        overflow: scroll;
+
+        .crewOutline {
+          margin: 0px 8px;
+
+          .crewTxt {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .crewTxtName {
+              font-size: 14px;
+              text-align: center;
+              margin-bottom: 10px;
+            }
+
+            .crewTxtCredits {
+              font-size: 14px;
+              opacity: 0.8;
+            }
+          }
         }
       }
     }
