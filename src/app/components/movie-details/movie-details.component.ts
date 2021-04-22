@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {WatchListService} from '../../services/watch-list.service';
+import {WatchListMovie} from '../../interfaces'
 
 @Component({
   selector: 'app-movie-details',
@@ -12,11 +13,12 @@ import {WatchListService} from '../../services/watch-list.service';
 })
 export class MovieDetailsComponent implements OnInit {
   movieId;
-  movieDetails ;
+  movieDetails;
   trailerVar;
   moviePopRound;
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
+  interestedMovies: WatchListMovie[] = [];
 
   constructor(
     public apiData: ApiDataService,
@@ -43,8 +45,13 @@ export class MovieDetailsComponent implements OnInit {
     setTimeout(() => {
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
+      this.interestedMovies.push({
+        title: this.movieDetails.title,
+        vote_average: this.movieDetails.vote_average,
+        poster_path: this.movieDetails.poster_path,
+      })
     }, 100);
-    console.log(this.movieDetails);
+
   }
 
   setTrailer = () => {
@@ -64,10 +71,14 @@ export class MovieDetailsComponent implements OnInit {
     };
   };
 
+  
   addToWatchList = () => {
-   let movieDetails = this.movieDetails;
-    console.log(movieDetails, "wack")
-    this.watchListService.addToWatch(movieDetails)
+  
+    console.log(this.interestedMovies, "wack")
+
+    this.interestedMovies.forEach(data =>{
+      this.watchListService.addToWatch(data)
+    })
 
   }
 
