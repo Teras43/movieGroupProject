@@ -23,18 +23,22 @@ export class MovieListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.callApi();
+
+    // this.apiData.test();
+  };
+
+  callApi = () => {
     this.apiData.getApiData().subscribe(res => {
       this.popData = res;
-    });
+    })
     this.apiData.getTRApiData().subscribe(res => {
       this.topData = res;
     });
     this.apiData.getNPApiData().subscribe(res => {
       this.playData = res;
     });
-
-    // this.apiData.test();
-  };
+  }
 
   searchFn = () => {
     if (this.searchQuery === '' || this.searchQuery === null || this.searchQuery === undefined) return;

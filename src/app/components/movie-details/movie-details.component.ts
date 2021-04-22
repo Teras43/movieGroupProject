@@ -16,6 +16,7 @@ export class MovieDetailsComponent implements OnInit {
   movieDetails;
   trailerVar;
   moviePopRound;
+  updateDate = [];
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
   interestedMovies: WatchListMovie[] = [];
@@ -35,16 +36,20 @@ export class MovieDetailsComponent implements OnInit {
     })
     setTimeout(() => {
       this.setData();
-    }, 500);
+    }, 200);
   }
-
+  
   // Having adblock on will cause web console errors, none will break the app so far. Trailer will still play fine without issues.
   
   setData = () => {
     this.movieDetails = this.apiData.apiSelectedMovieData;
+    this.movieDetails.reviews.results.forEach(result => {
+      this.updateDate.push(new Date(result.updated_at));
+    })
     setTimeout(() => {
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
+      console.log(this.movieDetails)
       this.interestedMovies.push({
         title: this.movieDetails.title,
         vote_average: this.movieDetails.vote_average,
@@ -52,6 +57,11 @@ export class MovieDetailsComponent implements OnInit {
       })
     }, 100);
 
+  }
+
+  getUpdateDate = (updateStr) => {
+    let newUpdate = new Date(updateStr);
+    return newUpdate;
   }
 
   setTrailer = () => {
@@ -64,7 +74,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   isLoaded = () => {
-    if (this.movieDetails !== undefined) {
+    if (this.moviePopRound !== undefined) {
       return true
     } else {
       return false

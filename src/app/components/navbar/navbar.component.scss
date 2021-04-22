@@ -6,7 +6,28 @@
     height: 100%;
     width: 100%;
     display: flex;
-    justify-content: space-around;
-    background-color: #2c5f89;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #181a1b;
+  }
+
+  .firstTwoIcons {
+    display: flex;
+    align-items: center;
+
+    .appNameDiv {
+      font-size: 2em;
+      color: #3f8eb2;
+    }
+  }
+
+  .toolbarBtn {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 0.8em;
+  }
+
+  .menuBtn {
+    float: right;
   }
 }

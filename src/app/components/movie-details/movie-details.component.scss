@@ -45,6 +45,7 @@
         .runtimeDiv {
           display: flex;
           align-items: center;
+          margin: 0.5em 0;
         }
 
         .genreDiv {
@@ -150,8 +151,7 @@
               font-weight: 900;
               font-style: italic;
               font-size: 1.5em;
-              // color: #3f88c5;
-              color: #71289c;
+              color: #3f8eb2;
             }
           }
 
@@ -167,7 +167,7 @@
               margin-right: 0.3em;
               font-size: 2em;
               padding: auto;
-              color: #71298c;
+              color: #3f8eb2;
             }
 
             .popularData {
@@ -182,18 +182,23 @@
     .castCrewCard {
       padding-left: 1em;
       padding-right: 1em;
-      background-color: #4a4a48;
+      background-color: #181a1b;
+
+      .castCrewTitle {
+        color: #3f8eb2;
+      }
 
       .topCastDiv {
         display: flex;
         overflow: scroll;
+        margin-bottom: 3em;
 
         .castOutline {
           margin: 0px 0.6em;
 
           .castImg {
             height: 10.5em;
-            width: 7.5em;
+            width: 7.2em;
             border: 1px solid black;
           }
 
@@ -241,7 +246,7 @@
 
             .crewTxtCredits {
               font-size: 1em;
-              opacity: 0.8;
+              opacity: 0.6;
               text-align: center;
             }
           }
@@ -296,6 +301,37 @@
 
     .commentsContainer {
       margin: 0px 1.5em;
+
+      .commentsDiv {
+        margin-bottom: 1em;
+        background-color: #181a1b;
+
+        .commentUserInfo {
+          display: flex;
+          justify-content: space-evenly;
+          margin-bottom: 1em;
+
+          .nameRatingDiv {
+            .commentsName {
+              color: #3f8eb2;
+              font-weight: 600;
+            }
+
+            .commentsRating {
+              color: gold;
+              margin-left: 1em;
+              margin-top: 0.5em;
+            }
+          }
+        }
+
+        .reviewBody {
+          border-top: 1px solid rgba(255, 255, 255, 0.8);
+          padding: 0.5em;
+          margin: 0.5em;
+          overflow: scroll;
+        }
+      }
     }
   }
 
