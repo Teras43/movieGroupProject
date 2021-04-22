@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 
@@ -30,7 +32,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   exports: [
     MatToolbarModule,
@@ -43,7 +46,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule { }

@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-movie-details',
@@ -12,6 +13,7 @@ export class MovieDetailsComponent implements OnInit {
   movieId;
   movieDetails;
   trailerVar;
+  moviePopRound;
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
 
@@ -36,6 +38,7 @@ export class MovieDetailsComponent implements OnInit {
   setData = () => {
     this.movieDetails = this.apiData.apiSelectedMovieData;
     setTimeout(() => {
+      this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
     }, 100);
     console.log(this.movieDetails);
@@ -44,6 +47,10 @@ export class MovieDetailsComponent implements OnInit {
   setTrailer = () => {
     this.trailerVar = this.movieDetails.videos.results[0].key;
     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
+  }
+
+  rateMovie = () => {
+    console.log("Trigger works.");
   }
 
   @HostListener('window:resize', ['$event'])
