@@ -1,5 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 // @import '~firebaseui/dist/firebaseui.css'
+
+.mat-button.mat-success,
+.mat-stroked-button.mat-success {
+  color: #3f8eb2;
+}
+.mat-button.mat-success:hover,
+.mat-stroked-button.mat-success:hover {
+  background-color: #3f8eb2;
+}
+
+.mat-raised-button.mat-success,
+.mat-flat-button.mat-success,
+.mat-fab.mat-success,
+.mat-mini-fab.mat-success {
+  // color: #f0fff3;
+  background-color: #3f8eb2;
+}
+
+.mat-icon-button.mat-success {
+  color: #3f8eb2;
+}

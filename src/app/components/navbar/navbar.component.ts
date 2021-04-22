@@ -19,12 +19,20 @@ export class NavbarComponent implements OnInit {
 
   goBack = () => {
     this.location.back();
-  }
+  };
 
   navHome = () => {
     this.router.navigate(['./popular']).then(() => {
       window.location.reload();
-    })
+    });
+  };
+
+  navList = () => {
+    this.router.navigate(['./watchlist'])
+  };
+
+  logOut = () => {
+    console.log("Logout route goes here.")
   }
 
 }
