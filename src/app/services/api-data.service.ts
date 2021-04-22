@@ -7,11 +7,12 @@ import { MovieData, SelectedMovieData } from '../interfaces';
 })
 export class ApiDataService {
   apiData;
+  apiDataTR;
+  apiDataNP;
   apiMovieData;
   apiSelectedMovieData;
   apiKey = "api_key=09a06bef76827ed3d24bd5d7fa86e5cc";
   apiQuery = "https://api.themoviedb.org/3/search/movie?"
-  apiPopular = "https://api.themoviedb.org/3/movie/popular?";
   apiPosterPath = "https://image.tmdb.org/t/p/original/";
   apiRequestPath = "https://api.themoviedb.org/3/movie/";
 
@@ -23,7 +24,15 @@ export class ApiDataService {
   ) { }
 
   getApiData = () => (
-    this.apiData = this.http.get(this.apiPopular + this.apiKey, { 'headers': this.headers })
+    this.apiData = this.http.get(this.apiRequestPath + 'popular?' + this.apiKey, { 'headers': this.headers })
+  );
+
+  getTRApiData = () => (
+    this.apiDataTR = this.http.get(this.apiRequestPath + 'top_rated?' + this.apiKey, { 'headers': this.headers })
+  );
+
+  getNPApiData = () => (
+    this.apiData = this.http.get(this.apiRequestPath + 'now_playing?' + this.apiKey, { 'headers': this.headers })
   );
 
   getMovieData = (query): any => (
@@ -31,7 +40,7 @@ export class ApiDataService {
   );
 
   getSelectedMovieData = (movieId): any => {
-    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
+    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,account_states' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
       this.apiSelectedMovieData = res;
     });
   };

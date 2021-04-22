@@ -53,6 +53,14 @@ export class MovieDetailsComponent implements OnInit {
     console.log("Trigger works.");
   }
 
+  isLoaded = () => {
+    if (this.movieDetails !== undefined) {
+      return true
+    } else {
+      return false
+    };
+  };
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth = window.innerWidth;
