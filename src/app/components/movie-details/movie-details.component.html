@@ -38,7 +38,7 @@
             <button mat-mini-fab class="bottomBtn" color="primary">
               <mat-icon>add</mat-icon>
             </button>
-            <button class="addTextBtn">Add to Watch List!</button>
+            <button class="addTextBtn">Add to My List!</button>
           </div>
         </div>
       </div>
@@ -106,6 +106,54 @@
           </div>
         </div>
       </mat-card>
+    </div>
+    <div class="relatedMovies">
+      <h3>Recommended Movies</h3>
+      <h4>Similar to what you like:</h4>
+      <div class="relatedMovieContainer">
+        <div
+          class="relatedOutline"
+          *ngFor="let movie of movieDetails.similar.results | slice: 0:10"
+        >
+          <img
+            *ngIf="movie.poster_path"
+            class="movieImg"
+            src="{{ apiData.apiPosterPath + movie.poster_path }}"
+          />
+          <div class="movieTxt">
+            <div class="movieTxtTitle">
+              {{ movie.title }}
+            </div>
+            <div class="movieTxtAvgRel">
+              <div class="relDiv">({{ movie.release_date }})</div>
+              <div class="avgDiv">{{ movie.vote_average }}/10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="commentsContainer">
+      <h3 class="reviewTxt">Reviews</h3>
+      <div
+        class="commentsDiv"
+        *ngFor="let user of movieDetails.reviews.results"
+      >
+        <div class="commentUserInfo">
+          <div class="nameRatingDiv">
+            <div class="commentsName">{{ user.author }}</div>
+            <div class="commentsRating">
+              {{ user.author_details.rating }}/10
+            </div>
+          </div>
+          <div class="createUpdateCommentDiv">
+            <div class="createdDate">{{ user.created_at }}</div>
+            <div class="updatedDate">{{ user.updated_at }}</div>
+          </div>
+        </div>
+        <div class="reviewBody">
+          <div class="commentsMsg"></div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="spinnerDiv" *ngIf="!isLoaded()">

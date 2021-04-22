@@ -40,7 +40,7 @@ export class MovieDetailsComponent implements OnInit {
     setTimeout(() => {
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
-    }, 100);
+    }, 150);
     console.log(this.movieDetails);
   }
 
