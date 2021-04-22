@@ -1,12 +1,14 @@
 <div class="movieDetailContainer">
-  <div class="pseudoContainer" *ngIf="movieDetails">
+  <div class="pseudoContainer" *ngIf="isLoaded()">
     <div class="iframeDiv" *ngIf="safeSrc">
       <iframe width="{{ screenWidth }}" height="240" [src]="safeSrc"></iframe>
     </div>
     <div class="nameDetail">
       <div class="titleDiv">
-        <span class="titleSpan">{{ movieDetails.title }}</span>
-        <span class="dateSpan">({{ movieDetails.release_date }})</span>
+        <span class="titleSpan">
+          {{ movieDetails.title }}
+          <span class="dateSpan">({{ movieDetails.release_date }})</span>
+        </span>
       </div>
       <div class="subTitleDiv">
         <div class="runtimeDiv">
@@ -54,8 +56,10 @@
             <span class="star-rating-text">Rate This</span>
           </button>
           <div class="popularDiv">
-            <mat-icon color="primary">insert_chart</mat-icon>
-            <div>{{ moviePopRound }}</div>
+            <div class="listIconDiv">
+              <mat-icon class="listIcon">format_list_numbered</mat-icon>
+            </div>
+            <div class="popularData">{{ moviePopRound }}</div>
           </div>
         </div>
       </div>
@@ -70,6 +74,7 @@
             *ngFor="let member of movieDetails.credits.cast | slice: 0:10"
           >
             <img
+              *ngIf="member.profile_path"
               class="castImg"
               src="{{ apiData.apiPosterPath + member.profile_path }}"
             />
@@ -102,5 +107,8 @@
         </div>
       </mat-card>
     </div>
+  </div>
+  <div class="spinnerDiv" *ngIf="!isLoaded()">
+    <mat-spinner></mat-spinner>
   </div>
 </div>

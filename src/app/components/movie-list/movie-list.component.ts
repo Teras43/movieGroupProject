@@ -8,7 +8,9 @@ import { ApiDataService } from 'src/app/services/api-data.service';
   styleUrls: ['./movie-list.component.scss']
 })
 export class MovieListComponent implements OnInit {
-  popularData;
+  popData;
+  topData;
+  playData;
   movieData;
   searchResponse;
   selectedGenre: string;
@@ -22,8 +24,13 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiData.getApiData().subscribe(res => {
-      this.popularData = res;
-      console.log(this.popularData);
+      this.popData = res;
+    });
+    this.apiData.getTRApiData().subscribe(res => {
+      this.topData = res;
+    });
+    this.apiData.getNPApiData().subscribe(res => {
+      this.playData = res;
     });
 
     // this.apiData.test();
@@ -48,7 +55,7 @@ export class MovieListComponent implements OnInit {
   }
 
   isLoaded = () => {
-    if (this.popularData !== undefined || this.searchResponse !== undefined) {
+    if (this.popData !== undefined && this.topData !== undefined && this.playData !== undefined || this.searchResponse !== undefined) {
       return true
     } else {
       return false
