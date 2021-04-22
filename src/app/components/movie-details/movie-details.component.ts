@@ -3,6 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {WatchListService} from '../../services/watch-list.service';
+import {WatchListMovie} from '../../interfaces'
 
 @Component({
   selector: 'app-movie-details',
@@ -16,11 +18,14 @@ export class MovieDetailsComponent implements OnInit {
   moviePopRound;
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
+  interestedMovies: WatchListMovie[] = [];
 
   constructor(
     public apiData: ApiDataService,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private watchListService: WatchListService,
+
   ) { }
   
   ngOnInit(): void {
@@ -40,8 +45,13 @@ export class MovieDetailsComponent implements OnInit {
     setTimeout(() => {
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
-    }, 150);
-    console.log(this.movieDetails);
+      this.interestedMovies.push({
+        title: this.movieDetails.title,
+        vote_average: this.movieDetails.vote_average,
+        poster_path: this.movieDetails.poster_path,
+      })
+    }, 100);
+
   }
 
   setTrailer = () => {
@@ -60,6 +70,18 @@ export class MovieDetailsComponent implements OnInit {
       return false
     };
   };
+
+  
+  addToWatchList = () => {
+  
+    console.log(this.interestedMovies, "wack")
+
+    this.interestedMovies.forEach(data =>{
+      this.watchListService.addToWatch(data)
+    })
+
+  }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

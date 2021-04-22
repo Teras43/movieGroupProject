@@ -35,10 +35,10 @@
             {{ movieDetails.overview }}
           </div>
           <div class="buttonBottomDiv">
-            <button mat-mini-fab class="bottomBtn" color="primary">
+            <button mat-mini-fab class="bottomBtn" color="primary" (click)="addToWatchList()">
               <mat-icon>add</mat-icon>
             </button>
-            <button class="addTextBtn">Add to My List!</button>
+            <button class="addTextBtn" (click)="addToWatchList()">Add to Watch List!</button>
           </div>
         </div>
       </div>
