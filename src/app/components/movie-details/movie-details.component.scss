@@ -40,7 +40,7 @@
         display: flex;
         flex-direction: column;
         opacity: 0.8;
-        font-size: 14px;
+        font-size: 0.9em;
 
         .runtimeDiv {
           display: flex;
@@ -52,49 +52,49 @@
           justify-content: flex-start;
 
           .forGenreDivs {
-            margin-right: 5px;
+            margin-right: 0.5em;
           }
         }
       }
     }
 
     .bottomDetails {
-      margin-left: 15px;
-      margin-right: 15px;
+      margin-left: 1em;
+      margin-right: 1em;
       border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
       .mainSummary {
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding-bottom: 25px;
+        margin-top: 2em;
+        margin-bottom: 1.5em;
+        padding-bottom: 2em;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
         .selectedMovieImg {
-          height: 180px;
-          width: 120px;
+          height: 11.5em;
+          width: 7.5em;
           border: 1px solid black;
           box-shadow: 2px -2px;
         }
 
         .summaryDiv {
-          margin-left: 10px;
-          height: 135px;
+          margin-left: 1.2em;
+          height: 8em;
           overflow: scroll;
         }
 
         .buttonBottomDiv {
           display: flex;
-          margin-left: 10px;
-          margin-top: 10px;
+          margin-left: 1em;
+          margin-top: 1em;
 
           .addTextBtn {
             background: none;
             border: none;
             outline: none;
-            font-size: 16px;
+            font-size: 1.2em;
             font-weight: 800;
             font-style: italic;
           }
@@ -105,13 +105,13 @@
         display: flex;
         justify-content: space-around;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 1em;
 
         .starIcon {
           display: flex;
           flex: 0.5;
           color: gold;
-          font-size: 40px;
+          font-size: 3em;
         }
 
         .ratingInfo {
@@ -139,14 +139,14 @@
 
             .starIcon2 {
               color: silver;
-              font-size: 40px;
+              font-size: 3.2em;
               float: left;
-              margin-right: 15px;
+              margin-right: 0.4em;
             }
 
             .star-rating-text {
               display: block;
-              padding-top: 3px;
+              padding-top: 0.2em;
               font-weight: 900;
               font-style: italic;
               font-size: 1.5em;
@@ -171,7 +171,7 @@
             }
 
             .popularData {
-              margin-top: 10px;
+              margin-top: 1em;
               font-size: 1.1em;
             }
           }
@@ -180,19 +180,21 @@
     }
 
     .castCrewCard {
-      padding-left: 15px;
-      padding-right: 15px;
+      padding-left: 1em;
+      padding-right: 1em;
+      background-color: #4a4a48;
 
       .topCastDiv {
         display: flex;
         overflow: scroll;
 
         .castOutline {
-          margin: 0px 8px;
+          margin: 0px 0.6em;
 
           .castImg {
-            height: 170px;
-            width: 115px;
+            height: 10.5em;
+            width: 7.5em;
+            border: 1px solid black;
           }
 
           .imgTxt {
@@ -202,14 +204,15 @@
             align-items: center;
 
             .imgTxtName {
-              font-size: 14px;
+              font-size: 1em;
               text-align: center;
-              margin-bottom: 5px;
+              margin-bottom: 0.5em;
             }
 
             .imgTxtCharName {
-              font-size: 14px;
+              font-size: 0.8em;
               opacity: 0.8;
+              text-align: center;
             }
           }
         }
@@ -220,24 +223,91 @@
         overflow: scroll;
 
         .crewOutline {
-          margin: 0px 8px;
+          margin: 0px 1.5em;
 
           .crewTxt {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
+            margin-bottom: 1.5em;
 
             .crewTxtName {
-              font-size: 14px;
+              font-size: 2em;
+              margin-bottom: 1em;
               text-align: center;
-              margin-bottom: 10px;
             }
 
             .crewTxtCredits {
-              font-size: 14px;
+              font-size: 1em;
+              opacity: 0.8;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    .relatedMovies {
+      display: flex;
+      flex-direction: column;
+      margin: 1.5em 1.5em;
+      padding-bottom: 2em;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+
+      .relatedMovieContainer {
+        display: flex;
+        overflow: scroll;
+
+        .relatedOutline {
+          margin-right: 1.5em;
+
+          .movieImg {
+            height: 11em;
+            width: 7em;
+            margin-bottom: 0.5em;
+            border: 1px solid black;
+            box-shadow: 2px -2px;
+          }
+
+          .movieTxt {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .movieTxtTitle {
+              font-weight: 600;
+              text-align: center;
+            }
+
+            .movieTxtAvgRel {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
               opacity: 0.8;
             }
+          }
+        }
+      }
+    }
+
+    .commentsContainer {
+      margin: 0px 1.5em;
+
+      .commentsDiv {
+        .nameRatingDiv {
+          .commentsName {
+          }
+
+          .commentsRating {
+          }
+        }
+
+        .reviewBody {
+          .commentsMsg {
           }
         }
       }

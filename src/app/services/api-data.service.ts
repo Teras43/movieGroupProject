@@ -11,6 +11,7 @@ export class ApiDataService {
   apiDataNP;
   apiMovieData;
   apiSelectedMovieData;
+  apiMovieReviews;
   apiKey = "api_key=09a06bef76827ed3d24bd5d7fa86e5cc";
   apiQuery = "https://api.themoviedb.org/3/search/movie?"
   apiPosterPath = "https://image.tmdb.org/t/p/original/";
@@ -40,7 +41,7 @@ export class ApiDataService {
   );
 
   getSelectedMovieData = (movieId): any => {
-    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,account_states' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
+    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,images,similar,reviews,account_states' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
       this.apiSelectedMovieData = res;
     });
   };
