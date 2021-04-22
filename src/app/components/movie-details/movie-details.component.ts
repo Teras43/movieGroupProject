@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {WatchListService} from '../../services/watch-list.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -11,7 +12,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class MovieDetailsComponent implements OnInit {
   movieId;
-  movieDetails;
+  movieDetails ;
   trailerVar;
   moviePopRound;
   safeSrc: SafeResourceUrl;
@@ -20,7 +21,9 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
     public apiData: ApiDataService,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private watchListService: WatchListService,
+
   ) { }
   
   ngOnInit(): void {
@@ -60,6 +63,14 @@ export class MovieDetailsComponent implements OnInit {
       return false
     };
   };
+
+  addToWatchList = () => {
+   let movieDetails = this.movieDetails;
+    console.log(movieDetails, "wack")
+    this.watchListService.addToWatch(movieDetails)
+
+  }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
