@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {FirebaseUIModule, firebase, firebaseui} from 'firebaseui-angular';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 // const firebaseUiAuthConfig: firebaseui.auth.Config = {
 //   signInFlow: 'popup',
@@ -56,6 +57,7 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
     MovieDetailsComponent,
     WatchListComponent,
     NavbarComponent,
+    DialogComponent,
     
   ],
   imports: [
@@ -99,6 +101,7 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
     
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
 export class AppModule { }

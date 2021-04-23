@@ -7,6 +7,7 @@ import {WatchListMovie} from '../interfaces'
   providedIn: 'root'
 })
 export class WatchListService {
+  rating;
 
   constructor(private db: AngularFirestore) { }
   

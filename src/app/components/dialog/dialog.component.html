@@ -1,0 +1,28 @@
+<div class="dialogContainer">
+  <div class="imgDiv">
+    <img
+      src="{{
+        apiData.apiPosterPath + apiData.apiSelectedMovieData.poster_path
+      }}"
+      class="directImg"
+    />
+  </div>
+  <h2 mat-dialog-title>{{ title }}</h2>
+
+  <mat-dialog-content [formGroup]="form" class="dialogContent">
+    <mat-slider
+      thumbLabel
+      tickInterval="1"
+      step="1"
+      min="1"
+      max="10"
+      (change)="getSliderValue($event)"
+      aria-label="score"
+    ></mat-slider>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialogActions">
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="success" (click)="rate()">Rate</button>
+  </mat-dialog-actions>
+</div>

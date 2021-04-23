@@ -34,7 +34,7 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-          <div class="buttonBottomDiv">
+          <div class="buttonBottomDiv" *ngIf="isAdded()">
             <button
               mat-mini-fab
               class="bottomBtn"
@@ -45,6 +45,19 @@
             </button>
             <button class="addTextBtn" (click)="addToWatchList()">
               Add to My List!
+            </button>
+          </div>
+          <div class="buttonBottomDiv" *ngIf="!isAdded()">
+            <button
+              mat-mini-fab
+              class="bottomBtn"
+              color="success"
+              (click)="removeWatchList()"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <button class="addTextBtn" (click)="removeWatchList()">
+              Remove from List!
             </button>
           </div>
         </div>
@@ -58,7 +71,7 @@
           <div class="voteCountDiv">({{ movieDetails.vote_count }})</div>
         </div>
         <div class="rateBtnDiv">
-          <button mat-button class="rateBtn" (click)="rateMovie()">
+          <button mat-button class="rateBtn" (click)="openDialog()">
             <mat-icon class="starIcon2">star</mat-icon>
             <span class="star-rating-text">Rate This</span>
           </button>
