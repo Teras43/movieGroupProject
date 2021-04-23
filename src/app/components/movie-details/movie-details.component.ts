@@ -4,7 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {WatchListService} from '../../services/watch-list.service';
-import {WatchListMovie} from '../../interfaces'
+import {WatchListMovie} from '../../interfaces';
+import {Validator} from '@angular/forms';
+import { AngularFirestore } from "@angular/fire/firestore";
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators'
+
 
 @Component({
   selector: 'app-movie-details',
@@ -12,19 +17,26 @@ import {WatchListMovie} from '../../interfaces'
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
-  movieId;
-  movieDetails;
-  trailerVar;
-  moviePopRound;
+  movieId: any;
+  movieDetails: { popularity: number; title: any; vote_average: any; poster_path: any; videos: { results: { key: any; }[]; }; };
+  trailerVar: any;
+  moviePopRound: number;
+  title: any;
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
-  interestedMovies: WatchListMovie[] = [];
+  watchListMovie: WatchListMovie[] = [];
+  buttonDisabled: boolean = false;
+ 
+ 
+  
 
   constructor(
     public apiData: ApiDataService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
+    private db: AngularFirestore
+    
 
   ) { }
   
@@ -45,11 +57,12 @@ export class MovieDetailsComponent implements OnInit {
     setTimeout(() => {
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
-      this.interestedMovies.push({
+      this.watchListMovie.push({
         title: this.movieDetails.title,
         vote_average: this.movieDetails.vote_average,
         poster_path: this.movieDetails.poster_path,
       })
+ 
     }, 100);
 
   }
@@ -71,14 +84,24 @@ export class MovieDetailsComponent implements OnInit {
     };
   };
 
+
+  // submitted= (watchListMovie: WatchListMovie[]) => {
+  //   console.log(watchListMovie, 'wowowow')
+  //     if(this.movieDetails.title === this.watchListService.db.collection('title').doc(watchListMovie.title)){
+  //       this.buttonDisabled = true;
+      
+  //     }
+  //   }
+  
+
   
   addToWatchList = () => {
   
-    console.log(this.interestedMovies, "wack")
-
-    this.interestedMovies.forEach(data =>{
+    console.log(this.watchListMovie, "wack")
+    this.watchListMovie.forEach((data: any) =>{
       this.watchListService.addToWatch(data)
     })
+    
 
   }
 

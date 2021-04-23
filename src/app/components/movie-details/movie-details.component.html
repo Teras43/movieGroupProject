@@ -35,11 +35,12 @@
             {{ movieDetails.overview }}
           </div>
           <div class="buttonBottomDiv">
-            <button mat-mini-fab class="bottomBtn" color="primary" (click)="addToWatchList()">
+            <button mat-mini-fab class="bottomBtn" color="primary" (click)="addToWatchList()" [button]="disabled">
               <mat-icon>add</mat-icon>
             </button>
-            <button class="addTextBtn" (click)="addToWatchList()">Add to Watch List!</button>
+            <button class="addTextBtn" (click)="addToWatchList()" [button]="disabled">Add to Watch List!</button>
           </div>
+          <!-- <div>This Movie Has Been Added to Your Watchlist! </div> -->
         </div>
       </div>
       <div class="ratingDetail">
