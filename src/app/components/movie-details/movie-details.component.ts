@@ -13,53 +13,64 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
-  movieId;
-  movieDetails;
-  trailerVar;
-  moviePopRound;
-  updateDate = [];
-  isAddedVar;
+  movieId: any;
+  movieDetails: { popularity: number; title: any; vote_average: any; poster_path: any; videos: { results: { key: any; }[]; }; };
+  trailerVar: any;
+  moviePopRound: number;
+  title: any;
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
-  interestedMovies: WatchListMovie[] = [];
+  watchListMovie: WatchListMovie[] = [];
+  buttonDisabled: boolean = false;
+  watchListMovie$;
+  docId;
+  
+  
+  
+ 
+ 
+  
 
   constructor(
     public apiData: ApiDataService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
-    private dialog: MatDialog
+    private userData: WatchListService
+    
+    
+
   ) { }
   
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(res => {
       this.movieId = res.id;
       this.apiData.getSelectedMovieData(this.movieId);
-    })
+      
+    });
+    this.watchListService.getWatchListMovies();
+    ;
+    this.submitted();
     setTimeout(() => {
-      this.isAdded(this.apiData.apiSelectedMovieData.title);
       this.setData();
-    }, 200);
+    }, 500);
   }
-  
+
   // Having adblock on will cause web console errors, none will break the app so far. Trailer will still play fine without issues.
   
   setData = () => {
     this.movieDetails = this.apiData.apiSelectedMovieData;
     setTimeout(() => {
-      this.movieDetails.reviews.results.forEach(result => {
-        this.updateDate.push(new Date(result.updated_at));
-      })
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
-      console.log(this.movieDetails)
+      this.watchListMovie.push({
+        title: this.movieDetails.title,
+        vote_average: this.movieDetails.vote_average,
+        poster_path: this.movieDetails.poster_path,
+      })
+ 
     }, 100);
 
-  }
-
-  getUpdateDate = (updateStr) => {
-    let newUpdate = new Date(updateStr);
-    return newUpdate;
   }
 
   setTrailer = () => {
@@ -67,52 +78,38 @@ export class MovieDetailsComponent implements OnInit {
     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
   }
 
-  openDialog = () => {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-        title: this.movieDetails.title,
-      //   rating: 0
-    }
-
-    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output: ", data)
-    );
-  };
+  rateMovie = () => {
+    console.log(this.userData)
+    
+  }
 
   isLoaded = () => {
-    if (this.moviePopRound !== undefined) {
+    if (this.movieDetails !== undefined) {
       return true
     } else {
       return false
     };
   };
 
-  isAdded = (title) => {
-    this.interestedMovies.forEach(movie => {
-      if(movie.title === title) {
-        console.log('true');
-        this.isAddedVar = true;
-      } else {
-        console.log('false');
-        this.isAddedVar = false;
-      };
-    });
-  };
+
+  submitted= () => {
+      // if(this.movieDetails.title === this.userData.userData[].title){
+        
+      //   console.log('itworkded')
+      //   this.buttonDisabled = true;
+      
+      // }
+    }
+  
+
   
   addToWatchList = () => {
-    this.interestedMovies.push({
-      title: this.movieDetails.title,
-      vote_average: this.movieDetails.vote_average,
-      poster_path: this.movieDetails.poster_path,
-    });
-    console.log(this.interestedMovies, "wack")
-    this.interestedMovies.forEach(data => {
+    this.watchListMovie.forEach((data: any) =>{
       this.watchListService.addToWatch(data)
-    });
-    this.isAdded(this.movieDetails.title);
-  };
+    })
+    
+
+  }
 
 
   @HostListener('window:resize', ['$event'])
