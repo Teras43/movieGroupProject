@@ -34,13 +34,6 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-<<<<<<< HEAD
-          <div class="buttonBottomDiv">
-            <button mat-mini-fab class="bottomBtn" color="primary" (click)="addToWatchList()" [button]="disabled">
-              <mat-icon>add</mat-icon>
-            </button>
-            <button class="addTextBtn" (click)="addToWatchList()" [button]="disabled">Add to Watch List!</button>
-=======
           <div class="buttonBottomDiv" *ngIf="isAdded()">
             <button
               mat-mini-fab
@@ -66,7 +59,6 @@
             <button class="addTextBtn" (click)="removeWatchList()">
               Remove from List!
             </button>
->>>>>>> ae9e1ec4011c984b691ea0dd18527ce2872df767
           </div>
           <!-- <div>This Movie Has Been Added to Your Watchlist! </div> -->
         </div>

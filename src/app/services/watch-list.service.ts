@@ -9,11 +9,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class WatchListService {
-<<<<<<< HEAD
   userData = [];
-=======
   rating;
->>>>>>> ae9e1ec4011c984b691ea0dd18527ce2872df767
 
   constructor(public db: AngularFirestore) {}
   
