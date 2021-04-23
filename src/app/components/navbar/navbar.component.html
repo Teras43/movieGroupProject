@@ -1,17 +1,22 @@
 <div class="navbarContainer">
   <mat-toolbar>
-    <div class="toolbarBtn">
-      <button mat-icon-button (click)="goBack()">
-        <mat-icon>keyboard_backspace</mat-icon>
-      </button>
-    </div>
-    <div class="appNameDiv">
-      <div>The Movie Database</div>
+    <div class="firstTwoIcons">
+      <div class="toolbarBtn">
+        <button mat-icon-button (click)="goBack()">
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </div>
+      <div class="appNameDiv">
+        <div>
+          <span class="tmdbText">TMDB</span>
+        </div>
+      </div>
     </div>
     <button
       mat-icon-button
+      class="menuBtn"
       [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with a menu"
+      aria-label="button with a menu"
     >
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -20,11 +25,11 @@
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item (click)="navList()">
         <mat-icon>list_alt</mat-icon>
         <span>My List</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item (click)="logOut()">
         <mat-icon> vpn_key</mat-icon>
         <span>Logout</span>
       </button>

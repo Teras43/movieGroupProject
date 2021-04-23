@@ -34,11 +34,39 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
+<<<<<<< HEAD
           <div class="buttonBottomDiv">
             <button mat-mini-fab class="bottomBtn" color="primary" (click)="addToWatchList()" [button]="disabled">
               <mat-icon>add</mat-icon>
             </button>
             <button class="addTextBtn" (click)="addToWatchList()" [button]="disabled">Add to Watch List!</button>
+=======
+          <div class="buttonBottomDiv" *ngIf="isAdded()">
+            <button
+              mat-mini-fab
+              class="bottomBtn"
+              color="success"
+              (click)="addToWatchList()"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+            <button class="addTextBtn" (click)="addToWatchList()">
+              Add to My List!
+            </button>
+          </div>
+          <div class="buttonBottomDiv" *ngIf="!isAdded()">
+            <button
+              mat-mini-fab
+              class="bottomBtn"
+              color="success"
+              (click)="removeWatchList()"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <button class="addTextBtn" (click)="removeWatchList()">
+              Remove from List!
+            </button>
+>>>>>>> ae9e1ec4011c984b691ea0dd18527ce2872df767
           </div>
           <!-- <div>This Movie Has Been Added to Your Watchlist! </div> -->
         </div>
@@ -52,7 +80,7 @@
           <div class="voteCountDiv">({{ movieDetails.vote_count }})</div>
         </div>
         <div class="rateBtnDiv">
-          <button mat-button class="rateBtn" (click)="rateMovie()">
+          <button mat-button class="rateBtn" (click)="openDialog()">
             <mat-icon class="starIcon2">star</mat-icon>
             <span class="star-rating-text">Rate This</span>
           </button>
@@ -110,7 +138,7 @@
     </div>
     <div class="relatedMovies">
       <h3>Recommended Movies</h3>
-      <h4>Similar to what you like:</h4>
+      <h4>Similar to this:</h4>
       <div class="relatedMovieContainer">
         <div
           class="relatedOutline"
@@ -135,7 +163,7 @@
     </div>
     <div class="commentsContainer">
       <h3 class="reviewTxt">Reviews</h3>
-      <div
+      <mat-card
         class="commentsDiv"
         *ngFor="let user of movieDetails.reviews.results"
       >
@@ -147,14 +175,15 @@
             </div>
           </div>
           <div class="createUpdateCommentDiv">
-            <div class="createdDate">{{ user.created_at }}</div>
-            <div class="updatedDate">{{ user.updated_at }}</div>
+            <div class="updatedDate">
+              {{ getUpdateDate(user.updated_at) | date: "MM/dd/yyyy" }}
+            </div>
           </div>
         </div>
         <div class="reviewBody">
-          <div class="commentsMsg"></div>
+          <div class="commentsMsg">{{ user.content }}</div>
         </div>
-      </div>
+      </mat-card>
     </div>
   </div>
   <div class="spinnerDiv" *ngIf="!isLoaded()">

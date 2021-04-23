@@ -1,8 +1,8 @@
 <div class="movieListContainer">
-  <mat-card class="movieListCard" *ngIf="isLoaded()">
-    <div class="searchDiv">
-      <mat-form-field class="searchInput">
-        <mat-label>Search Movies!</mat-label>
+  <div class="searchDiv">
+    <mat-form-field class="searchInput">
+      <div class="searchBarDiv">
+        <mat-label class="searchBarLabel">Search Movies!</mat-label>
         <input matInput type="text" [(ngModel)]="searchQuery" />
         <button
           mat-button
@@ -14,11 +14,11 @@
         >
           <mat-icon>close</mat-icon>
         </button>
-      </mat-form-field>
-      <button color="primary" class="searchTrigger" (click)="searchFn()">
-        <mat-icon class="searchIcon">search</mat-icon>
-      </button>
-    </div>
+      </div>
+    </mat-form-field>
+    <button class="searchTrigger" (click)="searchFn()">Search</button>
+  </div>
+  <mat-card class="movieListCard" *ngIf="isLoaded()">
     <div *ngIf="searchResponse">
       <div class="listContent" *ngFor="let data of searchResponse.results">
         <div class="imgDiv">
@@ -37,11 +37,11 @@
           </div>
           <div class="movieRateDiv">
             <div class="ratingDiv">
-              Rating:
+              <span class="ratingVoteColor">Rating:</span>
               {{ data.vote_average }}
             </div>
             <div class="countDiv">
-              Total Votes:
+              <span class="ratingVoteColor">Total Votes:</span>
               {{ data.vote_count }}
             </div>
           </div>
@@ -104,7 +104,7 @@
       </div>
     </div>
     <div *ngIf="!searchResponse">
-      <mat-tab-group *ngIf="popData && topData && playData">
+      <mat-tab-group color="primary" *ngIf="popData && topData && playData">
         <mat-tab label="Popular">
           <div class="listContent" *ngFor="let data of popData.results">
             <div class="imgDiv">
