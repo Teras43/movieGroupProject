@@ -3,8 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {WatchListService} from '../../services/watch-list.service';
-import {WatchListMovie} from '../../interfaces'
+import { WatchListService } from '../../services/watch-list.service';
+import { WatchListMovie } from '../../interfaces'
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
