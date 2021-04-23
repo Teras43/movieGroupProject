@@ -2,15 +2,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {WatchListService} from '../../services/watch-list.service';
-import {WatchListMovie} from '../../interfaces';
-// import {Validator} from '@angular/forms';
-// import { AngularFirestore } from "@angular/fire/firestore";
-// import {Observable} from 'rxjs';
-// import {map} from 'rxjs/operators'
-
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { WatchListService } from '../../services/watch-list.service';
+import { WatchListMovie } from '../../interfaces'
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-movie-details',
