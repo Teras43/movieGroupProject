@@ -14,6 +14,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 
 
@@ -33,7 +35,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatDividerModule,
     MatMenuModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSliderModule
   ],
   exports: [
     MatToolbarModule,
@@ -48,7 +51,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatDividerModule,
     MatMenuModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSliderModule
   ]
 })
 export class MaterialModule { }

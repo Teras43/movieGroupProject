@@ -1,0 +1,20 @@
+.mat-dialog-content {
+  padding-top: 1em;
+}
+
+.dialogContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .imgDiv {
+    object-fit: cover;
+
+    .directImg {
+      width: 10em;
+      height: 12em;
+      margin-bottom: 1em;
+    }
+  }
+}
