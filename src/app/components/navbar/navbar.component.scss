@@ -17,7 +17,12 @@
 
     .appNameDiv {
       font-size: 2em;
-      color: #3f8eb2;
+
+      .tmdbText {
+        background-image: linear-gradient(to right, #98caa7, #3f8eb2);
+        color: transparent;
+        background-clip: text;
+      }
     }
   }
 
