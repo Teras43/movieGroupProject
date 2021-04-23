@@ -9,12 +9,23 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class WatchListService {
+  userData = [];
+
   constructor(public db: AngularFirestore) {}
+  
 
   addToWatch(watchListMovie: WatchListMovie): any {
     this.db.collection('users').add(watchListMovie);
   }
-//   getWatchListMovies(title: string): Observable<WatchListMovie[]> {
-//     return this.db.collection('users').valueChanges().pipe(map() => );
-//   }
+  getWatchListMovies() {
+    return this.db.collection('users').get().toPromise().then((querySnapshot) =>{
+      querySnapshot.forEach((doc) => {
+        this.userData.push({
+          id: doc.id,
+          data: doc.data()
+        })
+      });
+    });
+
+}
 }

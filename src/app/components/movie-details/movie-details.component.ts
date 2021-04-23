@@ -5,10 +5,11 @@ import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {WatchListService} from '../../services/watch-list.service';
 import {WatchListMovie} from '../../interfaces';
-import {Validator} from '@angular/forms';
-import { AngularFirestore } from "@angular/fire/firestore";
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators'
+// import {Validator} from '@angular/forms';
+// import { AngularFirestore } from "@angular/fire/firestore";
+// import {Observable} from 'rxjs';
+// import {map} from 'rxjs/operators'
+
 
 
 @Component({
@@ -26,6 +27,11 @@ export class MovieDetailsComponent implements OnInit {
   screenWidth = window.innerWidth;
   watchListMovie: WatchListMovie[] = [];
   buttonDisabled: boolean = false;
+  watchListMovie$;
+  docId;
+  
+  
+  
  
  
   
@@ -35,7 +41,8 @@ export class MovieDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
-    private db: AngularFirestore
+    private userData: WatchListService
+    
     
 
   ) { }
@@ -44,7 +51,11 @@ export class MovieDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(res => {
       this.movieId = res.id;
       this.apiData.getSelectedMovieData(this.movieId);
-    })
+      
+    });
+    this.watchListService.getWatchListMovies();
+    ;
+    this.submitted();
     setTimeout(() => {
       this.setData();
     }, 500);
@@ -73,7 +84,8 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   rateMovie = () => {
-    console.log("Trigger works.");
+    console.log(this.userData)
+    
   }
 
   isLoaded = () => {
@@ -85,22 +97,23 @@ export class MovieDetailsComponent implements OnInit {
   };
 
 
-  // submitted= (watchListMovie: WatchListMovie[]) => {
-  //   console.log(watchListMovie, 'wowowow')
-  //     if(this.movieDetails.title === this.watchListService.db.collection('title').doc(watchListMovie.title)){
-  //       this.buttonDisabled = true;
+  submitted= () => {
+      // if(this.movieDetails.title === this.userData.userData[].title){
+        
+      //   console.log('itworkded')
+      //   this.buttonDisabled = true;
       
-  //     }
-  //   }
+      // }
+    }
   
 
   
   addToWatchList = () => {
   
-    console.log(this.watchListMovie, "wack")
-    this.watchListMovie.forEach((data: any) =>{
-      this.watchListService.addToWatch(data)
-    })
+    // console.log(this.watchListMovie, "wack")
+    // this.watchListMovie.forEach((data: any) =>{
+    //   this.watchListService.addToWatch(data)
+    // })
     
 
   }
