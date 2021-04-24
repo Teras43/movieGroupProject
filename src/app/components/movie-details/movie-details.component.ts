@@ -40,11 +40,9 @@ export class MovieDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(res => {
       this.movieId = res.id;
       this.apiData.getSelectedMovieData(this.movieId);
-      
     });
     this.watchListService.getWatchListMovies();
-    ;
-    this.submitted();
+    // this.submitted();
     setTimeout(() => {
       this.isAdded(this.apiData.apiSelectedMovieData.title);
       this.setData();
@@ -120,10 +118,8 @@ export class MovieDetailsComponent implements OnInit {
   isAdded = (title) => {
     this.watchListMovie.forEach(movie => {
       if(movie.title === title) {
-        console.log('true');
         this.isAddedVar = true;
       } else {
-        console.log('false');
         this.isAddedVar = false;
       };
     });
