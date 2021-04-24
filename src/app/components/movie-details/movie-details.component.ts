@@ -14,32 +14,26 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class MovieDetailsComponent implements OnInit {
   movieId: any;
-  movieDetails: { popularity: number; title: any; vote_average: any; poster_path: any; videos: { results: { key: any; }[]; }; };
+  movieDetails;
   trailerVar: any;
   moviePopRound: number;
   title: any;
+  docId;
+  isAddedVar;
+  updateDate = [];
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
   watchListMovie: WatchListMovie[] = [];
   buttonDisabled: boolean = false;
   watchListMovie$;
-  docId;
-  
-  
-  
- 
- 
-  
 
   constructor(
     public apiData: ApiDataService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
+    private dialog: MatDialog,
     private userData: WatchListService
-    
-    
-
   ) { }
   
   ngOnInit(): void {
@@ -52,8 +46,9 @@ export class MovieDetailsComponent implements OnInit {
     ;
     this.submitted();
     setTimeout(() => {
+      this.isAdded(this.apiData.apiSelectedMovieData.title);
       this.setData();
-    }, 500);
+    }, 200);
   }
 
   // Having adblock on will cause web console errors, none will break the app so far. Trailer will still play fine without issues.
@@ -61,16 +56,23 @@ export class MovieDetailsComponent implements OnInit {
   setData = () => {
     this.movieDetails = this.apiData.apiSelectedMovieData;
     setTimeout(() => {
+      this.movieDetails.reviews.results.forEach(result => {
+        this.updateDate.push(new Date(result.updated_at));
+      })
       this.moviePopRound = Math.round(this.movieDetails.popularity)
       this.setTrailer();
+      console.log(this.movieDetails)
       this.watchListMovie.push({
         title: this.movieDetails.title,
         vote_average: this.movieDetails.vote_average,
         poster_path: this.movieDetails.poster_path,
       })
- 
     }, 100);
+  }
 
+  getUpdateDate = (updateStr) => {
+    let newUpdate = new Date(updateStr);
+    return newUpdate;
   }
 
   setTrailer = () => {
@@ -78,13 +80,27 @@ export class MovieDetailsComponent implements OnInit {
     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
   }
 
+  openDialog = () => {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+        title: this.movieDetails.title,
+      //   rating: 0
+    }
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output: ", data)
+    );
+  };
+
   rateMovie = () => {
     console.log(this.userData)
     
   }
 
   isLoaded = () => {
-    if (this.movieDetails !== undefined) {
+    if (this.moviePopRound !== undefined) {
       return true
     } else {
       return false
@@ -92,24 +108,39 @@ export class MovieDetailsComponent implements OnInit {
   };
 
 
-  submitted= () => {
+  submitted = () => {
       // if(this.movieDetails.title === this.userData.userData[].title){
         
       //   console.log('itworkded')
       //   this.buttonDisabled = true;
       
       // }
-    }
-  
+  }
 
+  isAdded = (title) => {
+    this.watchListMovie.forEach(movie => {
+      if(movie.title === title) {
+        console.log('true');
+        this.isAddedVar = true;
+      } else {
+        console.log('false');
+        this.isAddedVar = false;
+      };
+    });
+  };
   
   addToWatchList = () => {
-    this.watchListMovie.forEach((data: any) =>{
+    this.watchListMovie.forEach((data) =>{
       this.watchListService.addToWatch(data)
     })
-    
-
-  }
+    this.watchListMovie.push({
+      title: this.movieDetails.title,
+      vote_average: this.movieDetails.vote_average,
+      poster_path: this.movieDetails.poster_path,
+    });
+    console.log(this.watchListMovie, "wack")
+    this.isAdded(this.movieDetails.title);
+  };
 
 
   @HostListener('window:resize', ['$event'])
