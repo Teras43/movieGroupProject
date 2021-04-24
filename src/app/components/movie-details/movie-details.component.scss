@@ -51,6 +51,7 @@
         .genreDiv {
           display: flex;
           justify-content: flex-start;
+          flex-wrap: wrap;
 
           .forGenreDivs {
             margin-right: 0.5em;
