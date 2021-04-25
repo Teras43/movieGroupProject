@@ -19,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 import {FirebaseUIModule, firebase, firebaseui} from 'firebaseui-angular';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { CastCrewPageComponent } from './components/cast-crew/cast-crew-page/cast-crew-page.component';
+import { PhotoViewerComponent } from './components/cast-crew/photo-viewer/photo-viewer.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     WatchListComponent,
     NavbarComponent,
     DialogComponent,
+    CastCrewPageComponent,
+    PhotoViewerComponent,
     
   ],
   imports: [

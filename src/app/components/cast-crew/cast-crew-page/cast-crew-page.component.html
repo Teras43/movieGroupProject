@@ -1,0 +1,89 @@
+<div class="peopleContainer">
+  <div class="pseudoContainer" *ngIf="isLoaded()">
+    <div class="nameDiv">
+      {{ peopleDetails.name }}
+    </div>
+    <div class="knownForDiv">
+      {{ peopleDetails.known_for_department }}
+    </div>
+    <div class="personDetail">
+      <div class="imgDiv">
+        <img
+          class="personImg"
+          src="{{ apiData.apiPosterPath + peopleDetails.profile_path }}"
+        />
+      </div>
+      <div class="infoDiv">
+        <div class="bioDiv">
+          {{ peopleDetails.biography }}
+        </div>
+        <div class="birthDeathDiv">
+          {{ getUpdateDate(peopleDetails.birthday) | date: "MM/dd/yyyy" }} -
+          {{ isAlive() }}
+        </div>
+        <div class="creditDiv">
+          Movie Credits: {{ peopleDetails.movie_credits.cast.length }}
+        </div>
+      </div>
+    </div>
+    <div class="otherNames">
+      <div class="otherNameTitle">Name Translations:</div>
+      <div class="otherNameListContainer">
+        <div
+          class="otherNameList"
+          *ngFor="let name of peopleDetails.also_known_as"
+        >
+          {{ name }}
+        </div>
+      </div>
+    </div>
+    <mat-card class="photoDiv">
+      <div class="photoTitleContainer">
+        <div>Photos</div>
+      </div>
+      <div class="photoSlideContainer">
+        <div
+          class="imgDiv"
+          *ngFor="let photo of peopleDetails.images.profiles | slice: 0:4"
+        >
+          <img
+            class="slideImg"
+            src="{{ apiData.apiPosterPath + photo.file_path }}"
+          />
+        </div>
+      </div>
+      <div class="allPhotosDiv" (click)="goToPhotos()">
+        <div class="allPhotosTxt">See All Photos</div>
+        <mat-icon class="arrowIcon">keyboard_arrow_right</mat-icon>
+      </div>
+    </mat-card>
+    <mat-card class="filmCard">
+      <div class="filmTitleContainer">
+        <div>Filmography</div>
+      </div>
+      <div class="filmSliderContainer">
+        <div
+          class="filmImgDiv"
+          *ngFor="let film of peopleDetails.movie_credits.cast"
+        >
+          <img
+            class="filmImg"
+            src="{{ apiData.apiPosterPath + film.poster_path }}"
+            *ngIf="apiData.apiPosterPath + film.poster_path"
+          />
+          <div class="movieName">
+            <div class="movieTitle">
+              {{ film.title }}
+            </div>
+            <div class="characterName">
+              {{ film.character }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="spinnerDiv" *ngIf="!isLoaded()">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

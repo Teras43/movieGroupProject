@@ -53,7 +53,7 @@ export class MovieListComponent implements OnInit {
   };
 
   selectMovie = (movieId) => {
-    this.router.navigate([`./movie`], { queryParams: {
+    this.router.navigate([`/movie`], { queryParams: {
       id: movieId
     } });
   }

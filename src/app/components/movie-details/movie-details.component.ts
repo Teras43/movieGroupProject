@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
@@ -33,7 +33,8 @@ export class MovieDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
     private dialog: MatDialog,
-    private userData: WatchListService
+    private userData: WatchListService,
+    private router: Router
   ) { }
   
   ngOnInit(): void {
@@ -42,11 +43,14 @@ export class MovieDetailsComponent implements OnInit {
       this.apiData.getSelectedMovieData(this.movieId);
     });
     this.watchListService.getWatchListMovies();
+    // console.log(this.watchListService.userData);
     // this.submitted();
     setTimeout(() => {
-      this.isAdded(this.apiData.apiSelectedMovieData.title);
+      if (this.apiData.apiSelectedMovieData !== undefined) {
+        this.isAdded(this.apiData.apiSelectedMovieData.title);
+      }
       this.setData();
-    }, 200);
+    }, 300);
   }
 
   // Having adblock on will cause web console errors, none will break the app so far. Trailer will still play fine without issues.
@@ -94,7 +98,6 @@ export class MovieDetailsComponent implements OnInit {
 
   rateMovie = () => {
     console.log(this.userData)
-    
   }
 
   isLoaded = () => {
@@ -137,6 +140,24 @@ export class MovieDetailsComponent implements OnInit {
     console.log(this.watchListMovie, "wack")
     this.isAdded(this.movieDetails.title);
   };
+
+  removeWatchList = (title) => {
+    console.log(this.watchListMovie);
+    if ( this.isAddedVar = true) {
+      let index = this.watchListMovie.indexOf(title);
+      this.watchListMovie.splice(index, 1);
+      this.isAddedVar = false;
+    } else {
+      console.log("Nope.");
+      return
+    };
+  };
+
+  peopleNav = (personId) => {
+    this.router.navigate([`/people`], { queryParams: {
+      id: personId,
+    } });
+  }
 
 
   @HostListener('window:resize', ['$event'])

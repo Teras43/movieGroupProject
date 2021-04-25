@@ -56,7 +56,10 @@
             >
               <mat-icon>remove</mat-icon>
             </button>
-            <button class="addTextBtn" (click)="removeWatchList()">
+            <button
+              class="addTextBtn"
+              (click)="removeWatchList(movieDetails.title)"
+            >
               Remove from List!
             </button>
           </div>
@@ -76,10 +79,8 @@
             <span class="star-rating-text">Rate This</span>
           </button>
           <div class="popularDiv">
-            <div class="listIconDiv">
-              <mat-icon class="listIcon">format_list_numbered</mat-icon>
-            </div>
-            <div class="popularData">{{ moviePopRound }}</div>
+            <div class="popTitle">Rank</div>
+            <div class="popularData">#{{ moviePopRound }}</div>
           </div>
         </div>
       </div>
@@ -97,9 +98,10 @@
               *ngIf="member.profile_path"
               class="castImg"
               src="{{ apiData.apiPosterPath + member.profile_path }}"
+              (click)="peopleNav(member.id)"
             />
             <div class="imgTxt">
-              <div class="imgTxtName">
+              <div class="imgTxtName" (click)="peopleNav(member.id)">
                 {{ member.name }}
               </div>
               <div class="imgTxtCharName">

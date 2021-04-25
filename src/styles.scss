@@ -34,7 +34,12 @@ body {
   color: #3f8eb2;
 }
 
+// md-tabs.md-default-theme md-ink-bar,
+// md-tabs md-ink-bar {
+//   color: #3f8eb2 !important;
+// }
+
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  color: #3f8eb2;
+  color: #3f8eb2 !important;
 }
