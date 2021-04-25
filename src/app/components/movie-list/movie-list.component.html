@@ -103,12 +103,13 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!searchResponse">
+    <div *ngIf="!searchResponse && popData.results">
       <mat-tab-group color="primary" *ngIf="popData && topData && playData">
         <mat-tab label="Popular">
           <div class="listContent" *ngFor="let data of popData.results">
             <div class="imgDiv">
               <img
+                *ngIf="data.id"
                 class="movieListThumb"
                 src="{{ apiData.apiPosterPath + data.poster_path }}"
                 (click)="selectMovie(data.id)"

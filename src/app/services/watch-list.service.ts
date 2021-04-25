@@ -17,7 +17,8 @@ export class WatchListService {
 
   addToWatch(watchListMovie: WatchListMovie): any {
     this.db.collection('users').add(watchListMovie);
-  }
+  };
+
   getWatchListMovies() {
     return this.db.collection('users').get().toPromise().then((querySnapshot) =>{
       querySnapshot.forEach((doc) => {
@@ -27,6 +28,5 @@ export class WatchListService {
         })
       });
     });
-
-}
+  };
 }

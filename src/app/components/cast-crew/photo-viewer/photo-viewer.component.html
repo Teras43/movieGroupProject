@@ -1,0 +1,24 @@
+<div class="photoContainer">
+  <div class="pseudeoContainer" *ngIf="isLoaded()">
+    <div class="infoContainer">
+      <div class="nameContainer" (click)="goBack()">
+        <div class="nameDiv">{{ currentName }}</div>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </div>
+      <div class="photoTitleLength">
+        Photos <span class="photoNumber">({{ images.profiles.length }})</span>
+      </div>
+    </div>
+    <div class="allPhotosContainer">
+      <div class="imgContainer" *ngFor="let image of images.profiles">
+        <img
+          class="allImages"
+          src="{{ apiData.apiPosterPath + image.file_path }}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="spinnerDiv" *ngIf="!isLoaded()">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
