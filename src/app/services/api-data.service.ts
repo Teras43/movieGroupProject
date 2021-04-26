@@ -44,7 +44,7 @@ export class ApiDataService {
   );
 
   getSelectedMovieData = (movieId): Observable<SelectedMovieData> => (
-    this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,images,similar,reviews,account_states' + '&language=en-US', { 'headers': this.headers })
+    this.apiSelectedMovieData = this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,images,similar,reviews,account_states' + '&language=en-US', { 'headers': this.headers })
   );
 
   getPeopleData = (personId) => {

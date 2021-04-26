@@ -21,9 +21,13 @@
         <div class="bioDiv">
           {{ peopleDetails.biography ? peopleDetails.biography : noBioFound }}
         </div>
-        <div class="birthDeathDiv" *ngIf="isAliveVar !== undefined">
-          {{ getUpdateDate(peopleDetails.birthday) | date: "MM/dd/yyyy" }} -
+        <div class="birthDeathDiv" *ngIf="newUpdate !== noBirthdayFound">
+          {{ newUpdate | date: "MM/dd/yyyy" }}
+          -
           {{ isAlive() }}
+        </div>
+        <div class="birthDeathDiv" *ngIf="newUpdate === noBirthdayFound">
+          {{ newUpdate }}
         </div>
         <div class="creditDiv">
           Movie Credits: {{ peopleDetails.movie_credits.cast.length }}
@@ -79,7 +83,7 @@
         </div>
       </div>
       <div class="allPhotosDiv">
-        <div class="allPhotosTxt">No Photos Found</div>
+        <div class="allPhotosTxt">No More Photos Found</div>
       </div>
     </mat-card>
     <mat-card class="filmCard">
@@ -111,6 +115,7 @@
         </div>
       </div>
     </mat-card>
+    <div>&nbsp;</div>
   </div>
   <div class="spinnerDiv" *ngIf="!isLoaded()">
     <mat-spinner></mat-spinner>
