@@ -1,201 +1,203 @@
 <div class="movieListContainer">
-  <div class="searchDiv">
-    <mat-form-field class="searchInput">
-      <div class="searchBarDiv">
-        <mat-label class="searchBarLabel">Search Movies!</mat-label>
-        <input matInput type="text" [(ngModel)]="searchQuery" />
-        <button
-          mat-button
-          *ngIf="searchQuery"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="searchQuery = ''"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
+  <div class="pseudoContainer" *ngIf="isLoaded()">
+    <div class="searchDiv">
+      <mat-form-field class="searchInput">
+        <div class="searchBarDiv">
+          <mat-label class="searchBarLabel">Search Movies!</mat-label>
+          <input matInput type="text" [(ngModel)]="searchQuery" />
+          <button
+            mat-button
+            *ngIf="searchQuery"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="searchQuery = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </mat-form-field>
+      <button class="searchTrigger" (click)="searchFn()">Search</button>
+    </div>
+    <mat-card class="movieListCard">
+      <div *ngIf="searchResponse">
+        <div class="listContent" *ngFor="let data of searchResponse.results">
+          <div class="imgDiv">
+            <img
+              class="movieListThumb"
+              src="{{ apiData.apiPosterPath + data.poster_path }}"
+              (click)="selectMovie(data.id)"
+            />
+          </div>
+          <div class="movieInfoDiv">
+            <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+              {{ data.title }}
+            </a>
+            <div class="movieDescDiv">
+              {{ data.overview }}
+            </div>
+            <div class="movieRateDiv">
+              <div class="ratingDiv">
+                <span class="ratingVoteColor">Rating:</span>
+                {{ data.vote_average }}
+              </div>
+              <div class="countDiv">
+                <span class="ratingVoteColor">Total Votes:</span>
+                {{ data.vote_count }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="listContent" *ngFor="let data of searchResponse.results">
+          <div class="imgDiv">
+            <img
+              class="movieListThumb"
+              src="{{ apiData.apiPosterPath + data.poster_path }}"
+              (click)="selectMovie(data.id)"
+            />
+          </div>
+          <div class="movieInfoDiv">
+            <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+              {{ data.title }}
+            </a>
+            <div class="movieDescDiv">
+              {{ data.overview }}
+            </div>
+            <div class="movieRateDiv">
+              <div class="ratingDiv">
+                Rating:
+                {{ data.vote_average }}
+              </div>
+              <div class="countDiv">
+                Total Votes:
+                {{ data.vote_count }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="listContent" *ngFor="let data of searchResponse.results">
+          <div class="imgDiv">
+            <img
+              class="movieListThumb"
+              src="{{ apiData.apiPosterPath + data.poster_path }}"
+              (click)="selectMovie(data.id)"
+              alt="No Image Available"
+            />
+          </div>
+          <div class="movieInfoDiv">
+            <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+              {{ data.title }}
+            </a>
+            <div class="movieDescDiv">
+              {{ data.overview }}
+            </div>
+            <div class="movieRateDiv">
+              <div class="ratingDiv">
+                Rating:
+                {{ data.vote_average }}
+              </div>
+              <div class="countDiv">
+                Total Votes:
+                {{ data.vote_count }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </mat-form-field>
-    <button class="searchTrigger" (click)="searchFn()">Search</button>
+      <div *ngIf="!searchResponse && popData.results">
+        <mat-tab-group color="primary" *ngIf="popData && topData && playData">
+          <mat-tab label="Popular">
+            <div class="listContent" *ngFor="let data of popData.results">
+              <div class="imgDiv">
+                <img
+                  *ngIf="data.id"
+                  class="movieListThumb"
+                  src="{{ apiData.apiPosterPath + data.poster_path }}"
+                  (click)="selectMovie(data.id)"
+                />
+              </div>
+              <div class="movieInfoDiv">
+                <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+                  {{ data.title }}
+                </a>
+                <div class="movieDescDiv">
+                  {{ data.overview }}
+                </div>
+                <div class="movieRateDiv">
+                  <div class="ratingDiv">
+                    Rating:
+                    {{ data.vote_average }}
+                  </div>
+                  <div class="countDiv">
+                    Total Votes:
+                    {{ data.vote_count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Top Rated">
+            <div class="listContent" *ngFor="let data of topData.results">
+              <div class="imgDiv">
+                <img
+                  class="movieListThumb"
+                  src="{{ apiData.apiPosterPath + data.poster_path }}"
+                  (click)="selectMovie(data.id)"
+                />
+              </div>
+              <div class="movieInfoDiv">
+                <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+                  {{ data.title }}
+                </a>
+                <div class="movieDescDiv">
+                  {{ data.overview }}
+                </div>
+                <div class="movieRateDiv">
+                  <div class="ratingDiv">
+                    Rating:
+                    {{ data.vote_average }}
+                  </div>
+                  <div class="countDiv">
+                    Total Votes:
+                    {{ data.vote_count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Now Playing">
+            <div class="listContent" *ngFor="let data of playData.results">
+              <div class="imgDiv">
+                <img
+                  class="movieListThumb"
+                  src="{{ apiData.apiPosterPath + data.poster_path }}"
+                  (click)="selectMovie(data.id)"
+                />
+              </div>
+              <div class="movieInfoDiv">
+                <a class="movieTitleDiv" (click)="selectMovie(data.id)">
+                  {{ data.title }}
+                </a>
+                <div class="movieDescDiv">
+                  {{ data.overview }}
+                </div>
+                <div class="movieRateDiv">
+                  <div class="ratingDiv">
+                    Rating:
+                    {{ data.vote_average }}
+                  </div>
+                  <div class="countDiv">
+                    Total Votes:
+                    {{ data.vote_count }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-card>
   </div>
-  <mat-card class="movieListCard" *ngIf="isLoaded()">
-    <div *ngIf="searchResponse">
-      <div class="listContent" *ngFor="let data of searchResponse.results">
-        <div class="imgDiv">
-          <img
-            class="movieListThumb"
-            src="{{ apiData.apiPosterPath + data.poster_path }}"
-            (click)="selectMovie(data.id)"
-          />
-        </div>
-        <div class="movieInfoDiv">
-          <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-            {{ data.title }}
-          </a>
-          <div class="movieDescDiv">
-            {{ data.overview }}
-          </div>
-          <div class="movieRateDiv">
-            <div class="ratingDiv">
-              <span class="ratingVoteColor">Rating:</span>
-              {{ data.vote_average }}
-            </div>
-            <div class="countDiv">
-              <span class="ratingVoteColor">Total Votes:</span>
-              {{ data.vote_count }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="listContent" *ngFor="let data of searchResponse.results">
-        <div class="imgDiv">
-          <img
-            class="movieListThumb"
-            src="{{ apiData.apiPosterPath + data.poster_path }}"
-            (click)="selectMovie(data.id)"
-          />
-        </div>
-        <div class="movieInfoDiv">
-          <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-            {{ data.title }}
-          </a>
-          <div class="movieDescDiv">
-            {{ data.overview }}
-          </div>
-          <div class="movieRateDiv">
-            <div class="ratingDiv">
-              Rating:
-              {{ data.vote_average }}
-            </div>
-            <div class="countDiv">
-              Total Votes:
-              {{ data.vote_count }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="listContent" *ngFor="let data of searchResponse.results">
-        <div class="imgDiv">
-          <img
-            class="movieListThumb"
-            src="{{ apiData.apiPosterPath + data.poster_path }}"
-            (click)="selectMovie(data.id)"
-            alt="No Image Available"
-          />
-        </div>
-        <div class="movieInfoDiv">
-          <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-            {{ data.title }}
-          </a>
-          <div class="movieDescDiv">
-            {{ data.overview }}
-          </div>
-          <div class="movieRateDiv">
-            <div class="ratingDiv">
-              Rating:
-              {{ data.vote_average }}
-            </div>
-            <div class="countDiv">
-              Total Votes:
-              {{ data.vote_count }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="!searchResponse && popData.results">
-      <mat-tab-group color="primary" *ngIf="popData && topData && playData">
-        <mat-tab label="Popular">
-          <div class="listContent" *ngFor="let data of popData.results">
-            <div class="imgDiv">
-              <img
-                *ngIf="data.id"
-                class="movieListThumb"
-                src="{{ apiData.apiPosterPath + data.poster_path }}"
-                (click)="selectMovie(data.id)"
-              />
-            </div>
-            <div class="movieInfoDiv">
-              <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-                {{ data.title }}
-              </a>
-              <div class="movieDescDiv">
-                {{ data.overview }}
-              </div>
-              <div class="movieRateDiv">
-                <div class="ratingDiv">
-                  Rating:
-                  {{ data.vote_average }}
-                </div>
-                <div class="countDiv">
-                  Total Votes:
-                  {{ data.vote_count }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Top Rated">
-          <div class="listContent" *ngFor="let data of topData.results">
-            <div class="imgDiv">
-              <img
-                class="movieListThumb"
-                src="{{ apiData.apiPosterPath + data.poster_path }}"
-                (click)="selectMovie(data.id)"
-              />
-            </div>
-            <div class="movieInfoDiv">
-              <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-                {{ data.title }}
-              </a>
-              <div class="movieDescDiv">
-                {{ data.overview }}
-              </div>
-              <div class="movieRateDiv">
-                <div class="ratingDiv">
-                  Rating:
-                  {{ data.vote_average }}
-                </div>
-                <div class="countDiv">
-                  Total Votes:
-                  {{ data.vote_count }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-        <mat-tab label="Now Playing">
-          <div class="listContent" *ngFor="let data of playData.results">
-            <div class="imgDiv">
-              <img
-                class="movieListThumb"
-                src="{{ apiData.apiPosterPath + data.poster_path }}"
-                (click)="selectMovie(data.id)"
-              />
-            </div>
-            <div class="movieInfoDiv">
-              <a class="movieTitleDiv" (click)="selectMovie(data.id)">
-                {{ data.title }}
-              </a>
-              <div class="movieDescDiv">
-                {{ data.overview }}
-              </div>
-              <div class="movieRateDiv">
-                <div class="ratingDiv">
-                  Rating:
-                  {{ data.vote_average }}
-                </div>
-                <div class="countDiv">
-                  Total Votes:
-                  {{ data.vote_count }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-  </mat-card>
   <div class="spinnerDiv" *ngIf="!isLoaded()">
     <mat-spinner></mat-spinner>
   </div>

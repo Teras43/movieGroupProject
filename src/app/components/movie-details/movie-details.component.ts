@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
 import { WatchListMovie } from '../../interfaces'
 import { DialogComponent } from '../dialog/dialog.component';
+import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -29,6 +30,7 @@ export class MovieDetailsComponent implements OnInit {
 
   constructor(
     public apiData: ApiDataService,
+    public dataShare: DataShareService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private watchListService: WatchListService,
@@ -78,8 +80,12 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   setTrailer = () => {
-    this.trailerVar = this.movieDetails.videos.results[0].key;
-    this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
+    if (this.movieDetails.videos.results.length !== 0) {
+      this.trailerVar = this.movieDetails.videos.results[0].key;
+      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
+    } else {
+      this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
+    }
   }
 
   openDialog = () => {
@@ -159,6 +165,11 @@ export class MovieDetailsComponent implements OnInit {
     } });
   }
 
+  selectMovie = (movieId) => {
+    this.router.navigate([`/movie`], { queryParams: {
+      id: movieId
+    } });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

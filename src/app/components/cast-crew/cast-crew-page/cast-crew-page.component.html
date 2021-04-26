@@ -68,11 +68,15 @@
         >
           <img
             class="filmImg"
-            src="{{ apiData.apiPosterPath + film.poster_path }}"
-            *ngIf="apiData.apiPosterPath + film.poster_path"
+            src="{{
+              film.poster_path
+                ? apiData.apiPosterPath + film.poster_path
+                : dataShare.jpgNotFound
+            }}"
+            (click)="selectMovie(film.id)"
           />
           <div class="movieName">
-            <div class="movieTitle">
+            <div class="movieTitle" (click)="selectMovie(film.id)">
               {{ film.title }}
             </div>
             <div class="characterName">

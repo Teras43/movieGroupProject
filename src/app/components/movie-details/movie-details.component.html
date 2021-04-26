@@ -1,6 +1,6 @@
 <div class="movieDetailContainer">
   <div class="pseudoContainer" *ngIf="isLoaded()">
-    <div class="iframeDiv" *ngIf="safeSrc">
+    <div class="iframeDiv" *ngIf="trailerVar">
       <iframe width="{{ screenWidth }}" height="240" [src]="safeSrc"></iframe>
     </div>
     <div class="nameDetail">
@@ -27,7 +27,11 @@
         <div class="imageDiv">
           <img
             class="selectedMovieImg"
-            src="{{ apiData.apiPosterPath + movieDetails.poster_path }}"
+            src="{{
+              movieDetails.poster_path
+                ? apiData.apiPosterPath + movieDetails.poster_path
+                : dataShare.jpgNotFound
+            }}"
           />
         </div>
         <div class="bottomRight">
@@ -141,9 +145,10 @@
             *ngIf="movie.poster_path"
             class="movieImg"
             src="{{ apiData.apiPosterPath + movie.poster_path }}"
+            (click)="selectMovie(movie.id)"
           />
           <div class="movieTxt">
-            <div class="movieTxtTitle">
+            <div class="movieTxtTitle" (click)="selectMovie(movie.id)">
               {{ movie.title }}
             </div>
             <div class="movieTxtAvgRel">
@@ -154,7 +159,7 @@
         </div>
       </div>
     </div>
-    <div class="commentsContainer">
+    <div class="commentsContainer" *ngIf="movieDetails.reviews !== undefined">
       <h3 class="reviewTxt">Reviews</h3>
       <mat-card
         class="commentsDiv"

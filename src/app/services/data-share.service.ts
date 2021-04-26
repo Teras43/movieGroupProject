@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class DataShareService {
   peopleImages;
   peoplePhotoName;
+  jpgNotFound = "../../../assets/images/error-512.png";
 
   constructor() { }
 
