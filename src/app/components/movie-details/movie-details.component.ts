@@ -44,7 +44,7 @@ export class MovieDetailsComponent implements OnInit {
       this.movieId = res.id;
       this.apiData.getSelectedMovieData(this.movieId);
     });
-    this.watchListService.getWatchListMovies();
+    // this.watchListService.getWatchListMovies();
     // console.log(this.watchListService.userData);
     // this.submitted();
     setTimeout(() => {
@@ -114,15 +114,6 @@ export class MovieDetailsComponent implements OnInit {
     };
   };
 
-
-  submitted = () => {
-      // if(this.movieDetails.title === this.userData.userData[].title){
-        
-      //   console.log('itworkded')
-      //   this.buttonDisabled = true;
-      
-      // }
-  }
 
   isAdded = (title) => {
     this.watchListMovie.forEach(movie => {
