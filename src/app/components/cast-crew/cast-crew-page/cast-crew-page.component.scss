@@ -119,6 +119,7 @@
   .filmCard {
     margin-top: 1.5em;
     background-color: #181a1b;
+    margin-bottom: 3em;
 
     .filmTitleContainer {
       margin-bottom: 1em;
@@ -133,20 +134,34 @@
 
       .filmImgDiv {
         margin-right: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         .filmImg {
           height: 10em;
           width: 7em;
+          background-color: white;
         }
 
         .movieName {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
           .movieTitle {
+            margin-top: 0.5em;
             margin-bottom: 0.5em;
+            font-size: 1em;
+            text-align: center;
           }
 
           .characterName {
             margin-bottom: 0.5em;
             opacity: 0.6;
+            text-align: center;
+            font-size: 0.8em;
           }
         }
       }

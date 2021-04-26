@@ -44,7 +44,6 @@ export class ApiDataService {
 
   getSelectedMovieData = (movieId): any => {
     this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,images,similar,reviews,account_states' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
-      console.log("res", res);
       this.apiSelectedMovieData = res;
     });
   };

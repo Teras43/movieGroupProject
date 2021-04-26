@@ -32,7 +32,9 @@ export class CastCrewPageComponent implements OnInit {
 
   setData = () => {
     this.peopleDetails = this.apiData.apiPeopleData;
-    this.isAliveVar = this.peopleDetails.deathday;
+    setTimeout(() => {
+      this.isAliveVar = this.peopleDetails.deathday;
+    }, 300);
     console.log(this.peopleDetails);
   };
 
@@ -50,7 +52,7 @@ export class CastCrewPageComponent implements OnInit {
   };
 
   isLoaded = () => {
-    if (this.peopleDetails !== undefined) {
+    if (this.isAliveVar !== undefined) {
       return true
     } else {
       return false
@@ -61,6 +63,11 @@ export class CastCrewPageComponent implements OnInit {
     this.dataShare.setImages(this.peopleDetails.images);
     this.dataShare.peoplePhotoName = this.peopleDetails.name;
     this.router.navigate([`/people/${this.personId}/photos`]);
-  }
+  };
 
+  selectMovie = (movieId) => {
+    this.router.navigate([`/movie`], { queryParams: {
+      id: movieId
+    } });
+  };
 }
