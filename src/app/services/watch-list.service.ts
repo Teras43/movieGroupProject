@@ -15,30 +15,21 @@ export class WatchListService {
    
   ];
   rating;
+  uid = '';
+
 
   constructor(public db: AngularFirestore) {}
   
 
   addToWatch(watchListMovie: WatchListMovie): any {
-    this.db.collection('users').doc(uid).update({
-      array: firebase.firestore.FieldValue.arrayUnion("value")
-    })
+    
+    // this.db.collection('users').doc(uid).update({
+    //   array: firebase.firestore.FieldValue.arrayUnion("value")
+    // })
     
 
-<<<<<<< HEAD
-    })
+    
     // this.db.collection('users').add(watchListMovie);
-=======
-  getWatchListMovies = async () => {
-    await this.db.collection('users').get().subscribe(querySnapshot => {
-      querySnapshot.forEach((doc) => {
-        this.userData.push({
-          id: doc.id,
-          data: doc.data()
-        })
-      });
-    });
->>>>>>> cc65ca9eb3562aa4563a10a695db8b9926fdb7be
   };
 
   // getWatchListMovies() {

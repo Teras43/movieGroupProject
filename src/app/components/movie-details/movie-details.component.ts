@@ -42,14 +42,10 @@ export class MovieDetailsComponent implements OnInit {
       this.movieId = res.id;
       this.setData();
     });
-<<<<<<< HEAD
-    // this.watchListService.getWatchListMovies();
-=======
    };
   
   ngOnInit(): void {
     // this.setData();
->>>>>>> cc65ca9eb3562aa4563a10a695db8b9926fdb7be
     // console.log(this.watchListService.userData);
     // this.submitted();
   };
