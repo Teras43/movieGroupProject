@@ -83,8 +83,8 @@
             <span class="star-rating-text">Rate This</span>
           </button>
           <div class="popularDiv">
-            <div class="popTitle">Rank</div>
-            <div class="popularData">#{{ moviePopRound }}</div>
+            <div class="popTitle">Pop.</div>
+            <div class="popularData">{{ moviePopRound }}</div>
           </div>
         </div>
       </div>
@@ -99,9 +99,12 @@
             *ngFor="let member of movieDetails.credits.cast | slice: 0:10"
           >
             <img
-              *ngIf="member.profile_path"
               class="castImg"
-              src="{{ apiData.apiPosterPath + member.profile_path }}"
+              src="{{
+                member.profile_path
+                  ? apiData.apiPosterPath + member.profile_path
+                  : dataShare.jpgNotFound
+              }}"
               (click)="peopleNav(member.id)"
             />
             <div class="imgTxt">
@@ -136,7 +139,10 @@
     <div class="relatedMovies">
       <h3>Recommended Movies</h3>
       <h4>Similar to this:</h4>
-      <div class="relatedMovieContainer">
+      <div
+        class="relatedMovieContainer"
+        *ngIf="movieDetails.similar.results.length !== 0"
+      >
         <div
           class="relatedOutline"
           *ngFor="let movie of movieDetails.similar.results | slice: 0:10"
@@ -158,8 +164,22 @@
           </div>
         </div>
       </div>
+      <div
+        class="relatedMovieContainer"
+        *ngIf="movieDetails.similar.results.length === 0"
+      >
+        <div class="relatedOutline">
+          <img class="movieImg" src="{{ dataShare.jpgNotFound }}" />
+          <div class="movieTxt">
+            <div class="movieTxtTitle">No movies found!</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="commentsContainer" *ngIf="movieDetails.reviews !== undefined">
+    <div
+      class="commentsContainer"
+      *ngIf="movieDetails.reviews.results.length !== 0"
+    >
       <h3 class="reviewTxt">Reviews</h3>
       <mat-card
         class="commentsDiv"
@@ -181,6 +201,15 @@
         <div class="reviewBody">
           <div class="commentsMsg">{{ user.content }}</div>
         </div>
+      </mat-card>
+    </div>
+    <div
+      class="commentsContainer"
+      *ngIf="movieDetails.reviews.results.length === 0"
+    >
+      <h3 class="reviewTxt">Reviews</h3>
+      <mat-card class="commentsDiv">
+        <div class="noReviewsDiv">There are no reviews for this movie!</div>
       </mat-card>
     </div>
   </div>

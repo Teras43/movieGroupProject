@@ -19,8 +19,8 @@ export class WatchListService {
     this.db.collection('users').add(watchListMovie);
   };
 
-  getWatchListMovies() {
-    return this.db.collection('users').get().toPromise().then((querySnapshot) =>{
+  getWatchListMovies = async () => {
+    await this.db.collection('users').get().subscribe(querySnapshot => {
       querySnapshot.forEach((doc) => {
         this.userData.push({
           id: doc.id,
