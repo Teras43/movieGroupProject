@@ -12,6 +12,8 @@ export class CastCrewPageComponent implements OnInit {
   personId;
   peopleDetails;
   isAliveVar;
+  noBioFound = "No Bio Found!";
+  noOtherNames = "No other names found!";
 
   constructor(
     public apiData: ApiDataService,
@@ -22,19 +24,19 @@ export class CastCrewPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(res => {
+      this.apiData.getPeopleData(res.id);
       this.personId = res.id;
-      this.apiData.getPeopleData(this.personId);
     });
     setTimeout(() => {
       this.setData();
-    }, 300);
+    }, 500);
   };
 
   setData = () => {
     this.peopleDetails = this.apiData.apiPeopleData;
     setTimeout(() => {
       this.isAliveVar = this.peopleDetails.deathday;
-    }, 300);
+    }, 200);
     console.log(this.peopleDetails);
   };
 
