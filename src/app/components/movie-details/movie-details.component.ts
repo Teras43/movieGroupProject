@@ -37,51 +37,64 @@ export class MovieDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private userData: WatchListService,
     private router: Router
-  ) { }
-  
-  ngOnInit(): void {
+  ) {
     this.activatedRoute.queryParams.subscribe(res => {
       this.movieId = res.id;
-      this.apiData.getSelectedMovieData(this.movieId);
+      this.setData();
     });
+<<<<<<< HEAD
     // this.watchListService.getWatchListMovies();
+=======
+   };
+  
+  ngOnInit(): void {
+    // this.setData();
+>>>>>>> cc65ca9eb3562aa4563a10a695db8b9926fdb7be
     // console.log(this.watchListService.userData);
     // this.submitted();
-    setTimeout(() => {
-      if (this.apiData.apiSelectedMovieData !== undefined) {
-        this.isAdded(this.apiData.apiSelectedMovieData.title);
-      }
-      this.setData();
-    }, 300);
+  };
+
+  setData = () => {
+    try {
+      this.apiData.getSelectedMovieData(this.movieId)
+    } finally {
+      this.apiData.getSelectedMovieData(this.movieId).subscribe(res => {
+        this.movieDetails = res;
+        console.log("Details: ", this.movieDetails)
+        // this.watchListService.getWatchListMovies();
+        this.updateData();
+      });
+    }
+      // this.watchListMovie.push({
+      //   title: this.movieDetails.title,
+      //   vote_average: this.movieDetails.vote_average,
+      //   poster_path: this.movieDetails.poster_path,
+      // })
+  }
+
+  updateData = () => {
+    try {
+      this.setTrailer();
+      this.moviePopRound = Math.round(this.movieDetails.popularity);
+      this.movieDetails.reviews.results.forEach(result => {
+        this.updateDate.push(new Date(result.updated_at));
+      });
+    } finally {
+      this.isAdded(this.movieDetails.title);
+    }
   }
 
   // Having adblock on will cause web console errors, none will break the app so far. Trailer will still play fine without issues.
   
-  setData = () => {
-    this.movieDetails = this.apiData.apiSelectedMovieData;
-    setTimeout(() => {
-      this.movieDetails.reviews.results.forEach(result => {
-        this.updateDate.push(new Date(result.updated_at));
-      })
-      this.moviePopRound = Math.round(this.movieDetails.popularity)
-      this.setTrailer();
-      console.log(this.movieDetails)
-      this.watchListMovie.push({
-        title: this.movieDetails.title,
-        vote_average: this.movieDetails.vote_average,
-        poster_path: this.movieDetails.poster_path,
-      })
-    }, 100);
-  }
 
   getUpdateDate = (updateStr) => {
     let newUpdate = new Date(updateStr);
     return newUpdate;
-  }
+  };
 
-  setTrailer = () => {
+  setTrailer = async () => {
     if (this.movieDetails.videos.results.length !== 0) {
-      this.trailerVar = this.movieDetails.videos.results[0].key;
+      this.trailerVar = await this.movieDetails.videos.results[0].key;
       this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
     } else {
       this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.trailerVar}`);
@@ -107,7 +120,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   isLoaded = () => {
-    if (this.moviePopRound !== undefined) {
+    if (this.movieDetails !== undefined) {
       return true
     } else {
       return false

@@ -177,6 +177,7 @@
             .popularData {
               margin-top: 0.2em;
               font-size: 1.1em;
+              text-align: center;
             }
           }
         }
@@ -309,6 +310,14 @@
       .commentsDiv {
         margin-bottom: 1em;
         background-color: #181a1b;
+
+        .noReviewsDiv {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
         .commentUserInfo {
           display: flex;

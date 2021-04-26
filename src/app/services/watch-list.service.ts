@@ -25,8 +25,20 @@ export class WatchListService {
     })
     
 
+<<<<<<< HEAD
     })
     // this.db.collection('users').add(watchListMovie);
+=======
+  getWatchListMovies = async () => {
+    await this.db.collection('users').get().subscribe(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        this.userData.push({
+          id: doc.id,
+          data: doc.data()
+        })
+      });
+    });
+>>>>>>> cc65ca9eb3562aa4563a10a695db8b9926fdb7be
   };
 
   // getWatchListMovies() {
