@@ -7,28 +7,29 @@ import { WatchListService } from '../../services/watch-list.service';
 import { User } from '../../interfaces/user';
 import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss'],
 })
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit, OnDestroy {
   movieDetails;
+  currentUser;
+  isAddedVar;
+  getUsersVar;
   trailerVar: any;
   moviePopRound: number;
   title: any;
-  docId;
-  isAddedVar;
   updateDate = [];
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
   user: User[] = [];
   buttonDisabled: boolean = false;
   watchListMovie$;
-  interested = [];
+  movieData = [];
 
   constructor(
     public apiData: ApiDataService,
@@ -37,7 +38,7 @@ export class MovieDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     public watchListService: WatchListService,
     private dialog: MatDialog,
-
+    private fireAuth: AngularFireAuth,
     private router: Router
   ) {
     this.activatedRoute.queryParams.subscribe(res => {
@@ -47,13 +48,26 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.setData();
-    // console.log(this.watchListService.userData);
-    this.watchListService.updateUser;
+    this.watchListService.getUser();
+    this.parseUserInfo();
+  }
+
+  ngOnDestroy(): void {
+    this.watchListService.getUserVar = [];
+  }
+
+  parseUserInfo = async () => {
+    await this.fireAuth.user.subscribe(data => {
+      this.currentUser = data
+    });
+    setTimeout(() => {
+      this.watchListService.docId = this.currentUser.uid;
+    }, 300);
   }
 
   setData = () => {
     try {
+      this.getUsersVar = this.watchListService.getUserVar;
       this.apiData.getSelectedMovieData(this.dataShare.movieId)
     } finally {
       this.apiData.getSelectedMovieData(this.dataShare.movieId).subscribe(res => {
@@ -63,11 +77,6 @@ export class MovieDetailsComponent implements OnInit {
         this.updateData();
       });
     }
-    // this.watchListMovie.push({
-    //   title: this.movieDetails.title,
-    //   vote_average: this.movieDetails.vote_average,
-    //   poster_path: this.movieDetails.poster_path,
-    // })
   };
 
   updateData = () => {
@@ -135,32 +144,37 @@ export class MovieDetailsComponent implements OnInit {
   // };
 
   addToWatchList = async () => {
-    await this.interested.push({
+    await this.movieData.push({
       title: this.movieDetails.title,
       vote_average: this.movieDetails.vote_average,
       poster_path: this.movieDetails.poster_path,
     });
     let subscription = this.watchListService.users.subscribe((res) => {
       res.forEach((item) => {
-        this.watchListService.docId = item.payload.doc.id;
-        this.watchListService.updateUser(this.interested);
-        // console.log(item, 'wack')
+        this.watchListService.updateUser(this.movieData);
       });
       subscription.unsubscribe();
     });
+    // Line 159 might need to be removed. Haven't check this.
+    this.movieData = [];
   };
 
-  // removeWatchList = (title) => {
-  //   console.log(this.user);
-  //   if ( this.isAddedVar = true) {
-  //     let index = this.user.indexOf(title);
-  //     this.user.splice(index, 1);
-  //     this.isAddedVar = false;
-  //   } else {
-  //     console.log("Nope.");
-  //     return
-  //   };
-  // };
+  removeWatchList = (title) => {
+    try {
+      this.watchListService.getUserVar.forEach(user => {
+        if (user.id === this.currentUser.uid) {
+          user.data.interested.forEach(movie => {
+            if (movie.title === title) {
+              this.watchListService.deleteInterestedMovie({movie});
+            };
+          });
+        }
+      });
+    } finally {
+      this.watchListService.getUserVar = [];
+      console.log(this.watchListService.getUserVar);
+    }
+  };
 
   peopleNav = async (personId) => {
     this.dataShare.personId = await personId;
