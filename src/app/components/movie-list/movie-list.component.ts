@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
+import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -19,6 +20,7 @@ export class MovieListComponent implements OnInit {
 
   constructor(
     private apiData: ApiDataService,
+    public dataShare: DataShareService,
     private router: Router
   ) { }
 
@@ -53,7 +55,8 @@ export class MovieListComponent implements OnInit {
   };
 
   selectMovie = (movieId) => {
-    this.router.navigate([`/movie`], { queryParams: {
+    this.dataShare.movieId = movieId;
+    this.router.navigate([`/movie/${movieId}`], { queryParams: {
       id: movieId
     } });
   }

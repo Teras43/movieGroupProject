@@ -6,12 +6,13 @@ import { LoginPageComponent } from '../components/login-page/login-page.componen
 import { MovieDetailsComponent } from '../components/movie-details/movie-details.component';
 import { MovieListComponent } from '../components/movie-list/movie-list.component';
 import { WatchListComponent } from '../components/watch-list/watch-list.component';
+import { MovieDetailsGuard } from '../components/movie-details/movie-details-guard.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: 'popular', component: MovieListComponent },
-  { path: 'movie', component: MovieDetailsComponent },
-  { path: 'people', component: CastCrewPageComponent },
+  { path: 'popular', component: MovieListComponent }, 
+  { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ MovieDetailsGuard ] },
+  { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ MovieDetailsGuard ] },
   { path: 'people/:id/photos', component: PhotoViewerComponent },
   { path: 'watchlist', component: WatchListComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
