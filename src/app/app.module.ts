@@ -9,14 +9,13 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { WatchListComponent } from './components/watch-list/watch-list.component';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule} from "@angular/fire/auth";
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {FirebaseUIModule, firebase, firebaseui} from 'firebaseui-angular';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { CastCrewPageComponent } from './components/cast-crew/cast-crew-page/cast-crew-page.component';
@@ -76,7 +75,7 @@ import { PhotoViewerComponent } from './components/cast-crew/photo-viewer/photo-
     }),
     
   ],
-  providers: [],
+  providers: [AngularFirestore],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent]
 })

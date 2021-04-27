@@ -1,49 +1,40 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { WatchListMovie } from '../interfaces';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
+import { User } from '../interfaces';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as firebase from 'firebase';
-
+import { Router } from '@angular/router';
+import 'firebase/firestore';
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WatchListService {
-  interested= [
-   
-  ];
   rating;
-  uid = '';
+  users: Observable<any>;
+  docId;
+  private usersRef: AngularFirestoreCollection<User>;
 
+  constructor(
+    public db: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private router: Router
+  ) {
+    this.usersRef = this.db.collection<User>('users');
+    this.users = this.usersRef.snapshotChanges();
+  }
+  updateUser = async (movieData) => {
+    this.db
+      .collection('users')
+      .doc(this.docId)
+      .update({
+        interested: firebase.firestore.FieldValue.arrayUnion({ movieData }),
+      });
 
-  constructor(public db: AngularFirestore) {}
-  
-
-  addToWatch(watchListMovie: WatchListMovie): any {
-    
-    // this.db.collection('users').doc(uid).update({
-    //   array: firebase.firestore.FieldValue.arrayUnion("value")
-    // })
-    
-
-    
-    // this.db.collection('users').add(watchListMovie);
+    // console.log(this.user.data(), 'yeahyeahyea')
   };
-
-  // getWatchListMovies() {
-  //   return this.db.collection('users').get().toPromise().then((querySnapshot) =>{
-  //     querySnapshot.forEach((doc) => {
-  //       this.interested.push({
-  //         title: ,
-  //         data: doc.data()
-  //       })
-  //     });
-  //   });
-  // };
-  // addToInterestedList(user){
-
-
-  // }
 }

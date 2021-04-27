@@ -40,7 +40,7 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-          <div class="buttonBottomDiv" *ngIf="isAdded()">
+          <div class="buttonBottomDiv" >
             <button
               mat-mini-fab
               class="bottomBtn"
@@ -53,7 +53,7 @@
               Add to My List!
             </button>
           </div>
-          <div class="buttonBottomDiv" *ngIf="!isAdded()">
+          <!-- <div class="buttonBottomDiv">
             <button
               mat-mini-fab
               class="bottomBtn"
@@ -61,14 +61,14 @@
               (click)="removeWatchList()"
             >
               <mat-icon>remove</mat-icon>
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class="addTextBtn"
               (click)="removeWatchList(movieDetails.title)"
             >
               Remove from List!
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="ratingDetail">
