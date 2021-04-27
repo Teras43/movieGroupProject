@@ -9,7 +9,6 @@ import { DataShareService } from 'src/app/services/data-share.service';
   styleUrls: ['./cast-crew-page.component.scss']
 })
 export class CastCrewPageComponent implements OnInit {
-  personId;
   peopleDetails;
   isAliveVar;
   newUpdate;
@@ -27,7 +26,7 @@ export class CastCrewPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(res => {
       this.apiData.getPeopleData(res.id);
-      this.personId = res.id;
+      this.dataShare.personId = res.id;
     });
     setTimeout(() => {
       this.setData();
@@ -75,11 +74,12 @@ export class CastCrewPageComponent implements OnInit {
   goToPhotos = () => {
     this.dataShare.setImages(this.peopleDetails.images);
     this.dataShare.peoplePhotoName = this.peopleDetails.name;
-    this.router.navigate([`/people/${this.personId}/photos`]);
+    this.router.navigate([`/people/${this.dataShare.personId}/photos`]);
   };
 
-  selectMovie = (movieId) => {
-    this.router.navigate([`/movie`], { queryParams: {
+  selectMovie = async (movieId) => {
+    this.dataShare.movieId = await movieId;
+    this.router.navigate([`/movie/${movieId}`], { queryParams: {
       id: movieId
     } });
   };
