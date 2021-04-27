@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 export class DataShareService {
   peopleImages;
   peoplePhotoName;
+  movieId: any;
+  personId: any;
   jpgNotFound = "../../../assets/images/error-512.png";
 
   constructor() { }
