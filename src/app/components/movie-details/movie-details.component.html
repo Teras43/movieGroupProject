@@ -40,7 +40,7 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-          <div class="buttonBottomDiv" >
+          <div class="buttonBottomDiv">
             <button
               mat-mini-fab
               class="bottomBtn"
@@ -53,22 +53,22 @@
               Add to My List!
             </button>
           </div>
-          <!-- <div class="buttonBottomDiv">
+          <div class="buttonBottomDiv">
             <button
               mat-mini-fab
               class="bottomBtn"
               color="success"
-              (click)="removeWatchList()"
+              (click)="removeWatchList(movieDetails.title)"
             >
               <mat-icon>remove</mat-icon>
-            </button> -->
-            <!-- <button
+            </button>
+            <button
               class="addTextBtn"
               (click)="removeWatchList(movieDetails.title)"
             >
               Remove from List!
             </button>
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="ratingDetail">
