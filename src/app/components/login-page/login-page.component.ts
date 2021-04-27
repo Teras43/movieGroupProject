@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -10,11 +10,17 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth, public router: RouterModule) { }
+  constructor(
+    public afAuth: AngularFireAuth, 
+    public router: RouterModule,
+    private route: Router
+    ) { }
 
 
   ngOnInit(): void {
   }
 
-
+  appNav = () => {
+    this.route.navigate(['./popular']);
+  };
 }
