@@ -34,7 +34,7 @@ export class WatchListService {
       .update({
         interested: firebase.firestore.FieldValue.arrayUnion({ movieData }),
       });
-
-    // console.log(this.user.data(), 'yeahyeahyea')
   };
+
+  
 }
