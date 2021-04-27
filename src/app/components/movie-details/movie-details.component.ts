@@ -7,8 +7,7 @@ import { WatchListService } from '../../services/watch-list.service';
 import { User } from '../../interfaces/user';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-movie-details',
@@ -51,6 +50,7 @@ export class MovieDetailsComponent implements OnInit {
     // this.setData();
     // console.log(this.watchListService.userData);
     this.watchListService.updateUser;
+    console.log(this.user, 'consoled user')
   }
 
   setData = () => {
@@ -60,15 +60,9 @@ export class MovieDetailsComponent implements OnInit {
       this.apiData.getSelectedMovieData(this.movieId).subscribe((res) => {
         this.movieDetails = res;
         console.log('Details: ', this.movieDetails);
-        // this.watchListService.getWatchListMovies();
         this.updateData();
       });
     }
-    // this.watchListMovie.push({
-    //   title: this.movieDetails.title,
-    //   vote_average: this.movieDetails.vote_average,
-    //   poster_path: this.movieDetails.poster_path,
-    // })
   };
 
   updateData = () => {
