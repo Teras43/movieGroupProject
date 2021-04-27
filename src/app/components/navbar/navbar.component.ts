@@ -28,11 +28,11 @@ export class NavbarComponent implements OnInit {
   };
 
   navList = () => {
-    this.router.navigate(['./watchlist'])
+    this.router.navigate(['./watchlist']);
   };
 
   logOut = () => {
-    console.log("Logout route goes here.")
-  }
+    this.router.navigate(['./login']);
+  };
 
 }

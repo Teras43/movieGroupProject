@@ -143,11 +143,8 @@ export class MovieDetailsComponent implements OnInit {
     let subscription = this.watchListService.users.subscribe((res) => {
       res.forEach((item) => {
         this.watchListService.docId = item.payload.doc.id;
-        // console.log(item, 'wack')
-      });
-
-      res.forEach(() => {
         this.watchListService.updateUser(this.interested);
+        // console.log(item, 'wack')
       });
       subscription.unsubscribe();
     });

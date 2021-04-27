@@ -21,12 +21,11 @@ export class MovieListComponent implements OnInit {
   constructor(
     private apiData: ApiDataService,
     public dataShare: DataShareService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.callApi();
-
     // this.apiData.test();
   };
 

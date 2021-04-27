@@ -20,10 +20,8 @@ export class MovieDetailsGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const id = +route.url[1].path;
-    console.log(route.url);
     if (id === this.dataShare.personId) return true;
     if (isNaN(Number(id)) || id !== this.dataShare.movieId) {
-      console.log("movies");
       this.openDialog();
       this.router.navigate(['/popular']);
       return false;
