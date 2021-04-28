@@ -48,9 +48,7 @@ export class ApiDataService {
   );
 
   getPeopleData = (personId) => {
-    this.http.get(this.apiPeopleRequest + personId + '?' + this.apiKey + '&append_to_response=images,movie_credits' + '&language=en-US', { 'headers': this.headers }).subscribe(res => {
-      this.apiPeopleData = res;
-    });
+    this.apiPeopleData = this.http.get(this.apiPeopleRequest + personId + '?' + this.apiKey + '&append_to_response=images,movie_credits' + '&language=en-US', { 'headers': this.headers })
   };
 
   // test = () => {

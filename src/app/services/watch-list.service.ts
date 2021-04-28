@@ -11,7 +11,7 @@ import 'firebase/firestore';
 export class WatchListService {
   rating;
   docId;
-  movieTitle;
+  movieTitle: boolean;
   comparisonTitle = [];
   getUserVar = [];
   users: Observable<any>;
@@ -27,15 +27,21 @@ export class WatchListService {
   }
 
   getUser = (): Promise<any> => {
-    return this.db.collection('users').get().toPromise().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        this.getUserVar.push({id: doc.id, data: doc.data()}); 
-      });
-    });
+    try {
+      this.getUserVar = [];
+    } finally {
+      if(this.getUserVar.length === 0) {
+        return this.db.collection('users').get().toPromise().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.getUserVar.push({id: doc.id, data: doc.data()}); 
+          });
+        });
+      }
+    }
   };
 
   updateUser = async (movieData) => {
-    this.db
+    await this.db
       .collection('users')
       .doc(this.docId)
       .update({
@@ -44,29 +50,35 @@ export class WatchListService {
   };
 
   deleteInterestedMovie = async (movieData) => {
-    this.db.collection('users').doc(this.docId).update({interested: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
+    await this.db.collection('users').doc(this.docId).update({interested: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
   };
 
   checkTitle = async (movieTitle, userId) => {
-    console.log(movieTitle);
-    await this.getUserVar.forEach(user => {
-      if (user.id === userId) {
-        user.data.interested.forEach(movie => {
-          if (movie.title === movieTitle) {
-            this.comparisonTitle.push(movieTitle);
-          } else {
-            return
-          };
-        });
+    if (this.getUserVar.length !== 0) {
+      await this.getUser();
+    }
+    try {
+      await this.getUserVar.forEach(user => {
+        if (user.id === userId) {
+          user.data.interested.forEach(movie => {
+            if (movie.title === movieTitle) {
+              console.log("title: ", movieTitle);
+              this.comparisonTitle.push(movieTitle);
+            } else {
+              return
+            };
+          });
+        };
+      });
+    } finally {
+      if (this.comparisonTitle.length !== 0) {
+        this.movieTitle = true;
+        this.comparisonTitle = [];
+      } else {
+        this.movieTitle = false;
+        this.comparisonTitle = [];
       };
-    });
-    if (this.comparisonTitle.length !== 0) {
-      this.movieTitle = true;
-      this.comparisonTitle = [];
-    } else {
-      this.movieTitle = false;
-      this.comparisonTitle = [];
-    };
-    console.log(this.movieTitle);
+      console.log(this.movieTitle);
+    }
   };
 }
