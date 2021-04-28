@@ -40,19 +40,40 @@
           <div class="summaryDiv">
             {{ movieDetails.overview }}
           </div>
-          <div class="buttonBottomDiv" >
-            <button
-              mat-mini-fab
-              class="bottomBtn"
-              color="success"
-              (click)="addToWatchList()"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-            <button class="addTextBtn" (click)="addToWatchList()">
-              Add to My List!
-            </button>
+          <div class="buttonBottomDiv">
+            <ng-template [ngIf]="!watchListService.movieTitle">
+              <button
+                mat-mini-fab
+                class="bottomBtn"
+                color="success"
+                (click)="addToWatchList()"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+              <button class="addTextBtn" (click)="addToWatchList()">
+                Add to My List!
+              </button>
+            </ng-template>
           </div>
+          <div class="buttonBottomDiv">
+            <ng-template [ngIf]="watchListService.movieTitle">
+              <button
+                mat-mini-fab
+                class="bottomBtn"
+                color="success"
+                (click)="removeWatchList(movieDetails.title)"
+              >
+                <mat-icon>remove</mat-icon>
+              </button>
+              <button
+                class="addTextBtn"
+                (click)="removeWatchList(movieDetails.title)"
+              >
+                Remove from List!
+              </button>
+            </ng-template>
+          </div>
+<<<<<<< HEAD
           <div class="buttonBottomDiv">
             <button
               mat-mini-fab
@@ -69,6 +90,8 @@
               Remove from List!
             </button>
           </div>
+=======
+>>>>>>> cc62a0672d7a71436e5504e853abb6d1c9345571
         </div>
       </div>
       <div class="ratingDetail">

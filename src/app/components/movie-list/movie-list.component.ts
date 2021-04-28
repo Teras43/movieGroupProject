@@ -21,16 +21,8 @@ export class MovieListComponent implements OnInit {
   constructor(
     private apiData: ApiDataService,
     public dataShare: DataShareService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.callApi();
-
-    // this.apiData.test();
-  };
-
-  callApi = () => {
+    private router: Router,
+  ) {
     this.apiData.getApiData().subscribe(res => {
       this.popData = res;
     })
@@ -40,7 +32,15 @@ export class MovieListComponent implements OnInit {
     this.apiData.getNPApiData().subscribe(res => {
       this.playData = res;
     });
-  }
+   }
+
+  ngOnInit(): void {
+    // this.callApi();
+    // this.apiData.test();
+  };
+
+  // callApi = () => {
+  // }
 
   searchFn = () => {
     if (this.searchQuery === '' || this.searchQuery === null || this.searchQuery === undefined) return;

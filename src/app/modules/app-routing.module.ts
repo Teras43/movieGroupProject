@@ -7,15 +7,17 @@ import { MovieDetailsComponent } from '../components/movie-details/movie-details
 import { MovieListComponent } from '../components/movie-list/movie-list.component';
 import { WatchListComponent } from '../components/watch-list/watch-list.component';
 import { MovieDetailsGuard } from '../components/movie-details/movie-details-guard.guard';
+import { LoggedInGuard } from 'ngx-auth-firebaseui';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: 'popular', component: MovieListComponent }, 
-  { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ MovieDetailsGuard ] },
-  { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ MovieDetailsGuard ] },
-  { path: 'people/:id/photos', component: PhotoViewerComponent },
-  { path: 'watchlist', component: WatchListComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: 'popular', component: MovieListComponent, canActivate: [ LoggedInGuard ] }, 
+  { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ LoggedInGuard, MovieDetailsGuard ] },
+  { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ LoggedInGuard, MovieDetailsGuard ] },
+  { path: 'people/:id/photos', component: PhotoViewerComponent, canActivate: [ LoggedInGuard ] },
+  { path: 'watchlist', component: WatchListComponent, canActivate: [ LoggedInGuard ] },
+  { path: 'loggedout', component: LoginPageComponent },
+  { path: '', redirectTo: 'popular', pathMatch: 'full' }
 ];
 
 @NgModule({
