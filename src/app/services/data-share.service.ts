@@ -30,6 +30,6 @@ export class DataShareService {
     });
     setTimeout(() => {
       this.watchListService.docId = this.currentUser.uid;
-    }, 300);
+    }, 200);
   };
 }

@@ -130,7 +130,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         vote_average: this.movieDetails.vote_average,
         poster_path: this.movieDetails.poster_path,
       });
-      // console.log("here");
       await this.watchListService.getUserVar.forEach(user => {
         if (user.id === this.dataShare.currentUser.uid) {
           if (user.data.interested.length === 0) {
