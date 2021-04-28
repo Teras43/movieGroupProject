@@ -5,7 +5,7 @@ import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
 import { User } from '../../interfaces/user';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 
 
@@ -15,7 +15,6 @@ import { DataShareService } from 'src/app/services/data-share.service';
   styleUrls: ['./movie-details.component.scss'],
 })
 export class MovieDetailsComponent implements OnInit {
-  movieId: any;
   movieDetails;
   trailerVar: any;
   moviePopRound: number;
@@ -40,8 +39,8 @@ export class MovieDetailsComponent implements OnInit {
 
     private router: Router
   ) {
-    this.activatedRoute.queryParams.subscribe((res) => {
-      this.movieId = res.id;
+    this.activatedRoute.queryParams.subscribe(res => {
+      this.dataShare.movieId = res.id;
       this.setData();
     });
   }
@@ -55,9 +54,9 @@ export class MovieDetailsComponent implements OnInit {
 
   setData = () => {
     try {
-      this.apiData.getSelectedMovieData(this.movieId);
+      this.apiData.getSelectedMovieData(this.dataShare.movieId)
     } finally {
-      this.apiData.getSelectedMovieData(this.movieId).subscribe((res) => {
+      this.apiData.getSelectedMovieData(this.dataShare.movieId).subscribe(res => {
         this.movieDetails = res;
         console.log('Details: ', this.movieDetails);
         this.updateData();
@@ -160,22 +159,20 @@ export class MovieDetailsComponent implements OnInit {
   //   };
   // };
 
-  peopleNav = (personId) => {
-    this.router.navigate([`/people`], {
-      queryParams: {
-        id: personId,
-      },
-    });
-  };
+  peopleNav = async (personId) => {
+    this.dataShare.personId = await personId;
+    this.router.navigate([`/people/${personId}`], { queryParams: {
+      id: personId,
+    } });
+  }
 
-  selectMovie = (movieId) => {
-    this.router.navigate([`/movie`], {
-      queryParams: {
-        id: movieId,
-      },
-    });
-  };
-
+  selectMovie = async (movieId) => {
+    this.dataShare.movieId = await movieId;
+    this.router.navigate([`/movie/${movieId}`], { queryParams: {
+      id: movieId
+    } });
+  }
+  
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth = window.innerWidth;

@@ -17,9 +17,10 @@ import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogComponent } from './components/dialogs/dialog/dialog.component';
 import { CastCrewPageComponent } from './components/cast-crew/cast-crew-page/cast-crew-page.component';
 import { PhotoViewerComponent } from './components/cast-crew/photo-viewer/photo-viewer.component';
+import { GuardDialogComponent } from './components/dialogs/guard-dialog/guard-dialog.component';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { PhotoViewerComponent } from './components/cast-crew/photo-viewer/photo-
     DialogComponent,
     CastCrewPageComponent,
     PhotoViewerComponent,
-    
+    GuardDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +78,6 @@ import { PhotoViewerComponent } from './components/cast-crew/photo-viewer/photo-
   ],
   providers: [AngularFirestore],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent, GuardDialogComponent]
 })
 export class AppModule { }
