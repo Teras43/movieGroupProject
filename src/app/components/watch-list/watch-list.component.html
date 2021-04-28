@@ -2,17 +2,19 @@
     <div>
         <mat-tab-group>
             <mat-tab label="Interested">
-                <div *ngFor="let user of getUserVar">
-                    <p>{{user.data.displayName}}</p>
-                    <div *ngFor="let item of user.data.interested">
-                        <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
-                        <div>{{item.title}}</div>
-                        <div>Average Rating: {{item.vote_average}}</div>
-                    
+                <div class="interestedContainer">
+                    <div *ngFor="let user of getUserVar">
+                        <p>{{user.data.displayName}}</p>
+                        <div *ngFor="let item of user.data.interested">
+                            <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
+                            <div>{{item.title}}</div>
+                            <div>Average Rating: {{item.vote_average}}</div>
+
+                        </div>
+                        <!-- {{user}} -->
                     </div>
-                    <!-- {{user}} -->
+                    <!-- <button (click)="wack()">Temp button for getUserVar reference</button> -->
                 </div>
-                <button (click)="wack()">Temp button for getUserVar reference</button>
             </mat-tab>
             <mat-tab label="meh">
             </mat-tab>
