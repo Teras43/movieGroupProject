@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { DataShareService } from 'src/app/services/data-share.service';
 
@@ -8,7 +9,7 @@ import { DataShareService } from 'src/app/services/data-share.service';
   templateUrl: './cast-crew-page.component.html',
   styleUrls: ['./cast-crew-page.component.scss']
 })
-export class CastCrewPageComponent implements OnInit {
+export class CastCrewPageComponent implements OnInit, OnDestroy {
   peopleDetails;
   isAliveVar;
   newUpdate;
@@ -16,26 +17,34 @@ export class CastCrewPageComponent implements OnInit {
   noOtherNames = "No other names found!";
   noBirthdayFound = "No birthday found!";
 
+  // Subscription Variables
+  private actQueryParams: Subscription;
+
   constructor(
     public apiData: ApiDataService,
     public dataShare: DataShareService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) { }
-
+  ) {
+  }
+  
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
       this.apiData.getPeopleData(res.id);
       this.dataShare.personId = res.id;
-    });
-    setTimeout(() => {
       this.setData();
-    }, 500);
+    });
   };
 
-  setData =  async () => {
+  ngOnDestroy(): void {
+    this.actQueryParams.unsubscribe();
+  }
+
+  setData = () => {
     try {
-      this.peopleDetails = this.apiData.apiPeopleData;
+      this.apiData.apiPeopleData.subscribe(res => {
+        this.peopleDetails = res;
+      })
       console.log(this.peopleDetails);
     } finally {
       setTimeout(() => {
@@ -64,7 +73,7 @@ export class CastCrewPageComponent implements OnInit {
   };
 
   isLoaded = () => {
-    if (this.isAliveVar !== undefined) {
+    if (this.peopleDetails !== undefined) {
       return true
     } else {
       return false
