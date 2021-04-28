@@ -167,18 +167,22 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   peopleNav = async (personId) => {
     this.dataShare.personId = await personId;
-    this.router.navigate([`/people/${personId}`], { queryParams: {
-      id: personId,
-    } });
-  }
+    this.router.navigate([`/people/${personId}`], {
+      queryParams: {
+        id: personId,
+      },
+    });
+  };
 
   selectMovie = async (movieId) => {
     this.dataShare.movieId = await movieId;
-    this.router.navigate([`/movie/${movieId}`], { queryParams: {
-      id: movieId
-    } });
-  }
-  
+    this.router.navigate([`/movie/${movieId}`], {
+      queryParams: {
+        id: movieId,
+      },
+    });
+  };
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth = window.innerWidth;
