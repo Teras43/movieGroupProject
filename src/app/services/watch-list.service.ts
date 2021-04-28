@@ -16,8 +16,6 @@ export class WatchListService {
   getUserVar = [];
   users: Observable<any>;
   private usersRef: AngularFirestoreCollection<User>;
-  // private movieExistsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // public existsObs: Observable<boolean> = this.movieExistsSubject.asObservable();
 
   constructor(
     public db: AngularFirestore,
@@ -62,7 +60,6 @@ export class WatchListService {
         if (user.id === userId) {
           user.data.interested.forEach(movie => {
             if (movie.title === movieTitle) {
-              console.log("title: ", movieTitle);
               this.comparisonTitle.push(movieTitle);
             } else {
               return
@@ -78,7 +75,6 @@ export class WatchListService {
         this.movieTitle = false;
         this.comparisonTitle = [];
       };
-      console.log(this.movieTitle);
     }
   };
 }

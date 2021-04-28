@@ -50,12 +50,4 @@ export class ApiDataService {
   getPeopleData = (personId) => {
     this.apiPeopleData = this.http.get(this.apiPeopleRequest + personId + '?' + this.apiKey + '&append_to_response=images,movie_credits' + '&language=en-US', { 'headers': this.headers })
   };
-
-  // test = () => {
-  //   this.http.get('https://api.themoviedb.org/3/movie/157336?' + this.apiKey).subscribe(res => {
-  //     console.log(res);
-  //   })
-  // }
-
-
 }
