@@ -4,11 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
-import { User } from '../../interfaces/user';
 import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-movie-details',
@@ -19,18 +17,13 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   movieDetails;
   currentUser;
   isAddedVar;
-  getUsersVar;
   trailerVar: any;
   moviePopRound: number;
-  title: any;
   updateDate = [];
+  movieData = [];
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
-  user: User[] = [];
-  buttonDisabled: boolean = false;
-  watchListMovie$;
-  movieData = [];
-
+  
   constructor(
     public apiData: ApiDataService,
     public dataShare: DataShareService,
@@ -42,19 +35,23 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.activatedRoute.queryParams.subscribe(res => {
+      this.watchListService.getUser();
       this.dataShare.movieId = res.id;
       this.setData();
+      this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
+        this.watchListService.checkTitle(res2.title, this.currentUser.uid);
+      });
     });
   }
-
+  
   ngOnInit(): void {
-    this.watchListService.getUser();
     this.parseUserInfo();
-  }
+  };
 
   ngOnDestroy(): void {
     this.watchListService.getUserVar = [];
-  }
+    this.movieData = [];
+  };
 
   parseUserInfo = async () => {
     await this.fireAuth.user.subscribe(data => {
@@ -63,22 +60,20 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.watchListService.docId = this.currentUser.uid;
     }, 300);
-  }
+  };
 
   setData = () => {
     try {
-      this.getUsersVar = this.watchListService.getUserVar;
-      this.apiData.getSelectedMovieData(this.dataShare.movieId)
-    } finally {
       this.apiData.getSelectedMovieData(this.dataShare.movieId).subscribe(res => {
         this.movieDetails = res;
         console.log('Details: ', this.movieDetails);
-        // this.watchListService.getWatchListMovies();
         this.updateData();
       });
-    }
+    } finally {
+      return
+    };
   };
-
+  
   updateData = () => {
     try {
       this.setTrailer();
@@ -87,7 +82,10 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         this.updateDate.push(new Date(result.updated_at));
       });
     } finally {
-      // this.isAdded(this.movieDetails.title);
+      this.moviePopRound = Math.round(this.movieDetails.popularity);
+      this.movieDetails.reviews.results.forEach((result) => {
+        this.updateDate.push(new Date(result.updated_at));
+      });
     }
   };
 
@@ -133,47 +131,40 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     }
   };
 
-  // isAdded = (title) => {
-  //   this.user.forEach(movie => {
-  //     if(movie.interested[title] === title) {
-  //       this.isAddedVar = true;
-  //     } else {
-  //       this.isAddedVar = false;
-  //     };
-  //   });
-  // };
-
   addToWatchList = async () => {
-    await this.movieData.push({
+    this.movieData.push({
       title: this.movieDetails.title,
       vote_average: this.movieDetails.vote_average,
       poster_path: this.movieDetails.poster_path,
     });
-    let subscription = this.watchListService.users.subscribe((res) => {
-      res.forEach((item) => {
-        this.watchListService.updateUser(this.movieData);
-      });
-      subscription.unsubscribe();
+    await this.watchListService.getUserVar.forEach(user => {
+      if (user.id === this.currentUser.uid) {
+        if (user.data.interested.length === 0) {
+          this.watchListService.updateUser(this.movieData);
+        }
+        user.data.interested.forEach(movie => {
+          if (movie.title !== this.movieDetails.title) {
+            this.watchListService.updateUser(this.movieData);
+          }
+        })
+      } else {
+        return
+      }
     });
-    // Line 159 might need to be removed. Haven't check this.
-    this.movieData = [];
+    this.watchListService.checkTitle(this.movieDetails.title, this.currentUser.uid);
   };
 
-  removeWatchList = (title) => {
-    try {
-      this.watchListService.getUserVar.forEach(user => {
-        if (user.id === this.currentUser.uid) {
-          user.data.interested.forEach(movie => {
-            if (movie.title === title) {
-              this.watchListService.deleteInterestedMovie({movie});
-            };
-          });
-        }
-      });
-    } finally {
-      this.watchListService.getUserVar = [];
-      console.log(this.watchListService.getUserVar);
-    }
+  removeWatchList = async (title) => {
+    await this.watchListService.getUserVar.forEach(user => {
+      if (user.id === this.currentUser.uid) {
+        user.data.interested.forEach(movie => {
+          if (movie.title === title) {
+            this.watchListService.deleteInterestedMovie({movie});
+          };
+        });
+      }
+    });
+    this.watchListService.checkTitle(this.movieDetails.title, this.currentUser.uid);
   };
 
   peopleNav = async (personId) => {
