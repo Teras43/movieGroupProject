@@ -6,7 +6,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
 import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,7 +15,6 @@ import { Subscription } from 'rxjs';
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   movieDetails;
-  currentUser;
   isAddedVar;
   trailerVar: any;
   moviePopRound: number;
@@ -27,7 +25,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   // Subscription Variables
   private actQueryParams: Subscription;
-  private parseUserSub: Subscription;
   
   constructor(
     public apiData: ApiDataService,
@@ -36,7 +33,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     public watchListService: WatchListService,
     private dialog: MatDialog,
-    private fireAuth: AngularFireAuth,
     private router: Router
   ) {
     this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
@@ -44,29 +40,20 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       this.dataShare.movieId = res.id;
       this.setData();
       this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
-        this.watchListService.checkTitle(res2.title, this.currentUser.uid);
+        this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
       });
     });
   }
   
   ngOnInit(): void {
-    this.parseUserInfo();
+    this.dataShare.parseUserInfo();
   };
 
   ngOnDestroy(): void {
     this.watchListService.getUserVar = [];
     this.movieData = [];
     this.actQueryParams.unsubscribe();
-    this.parseUserSub.unsubscribe();
-  };
-
-  parseUserInfo = async () => {
-    this.parseUserSub = await this.fireAuth.user.subscribe(data => {
-      this.currentUser = data
-    });
-    setTimeout(() => {
-      this.watchListService.docId = this.currentUser.uid;
-    }, 300);
+    this.dataShare.parseUserSub.unsubscribe();
   };
 
   setData = () => {
@@ -145,19 +132,19 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       });
       // console.log("here");
       await this.watchListService.getUserVar.forEach(user => {
-        if (user.id === this.currentUser.uid) {
+        if (user.id === this.dataShare.currentUser.uid) {
           if (user.data.interested.length === 0) {
-            this.watchListService.updateUser(this.movieData);
+            this.watchListService.updateInterestedMovie(this.movieData);
           }
           user.data.interested.forEach(movie => {
             if (movie.title !== this.movieDetails.title) {
-              this.watchListService.updateUser(this.movieData);
+              this.watchListService.updateInterestedMovie(this.movieData);
             }
           })
         };
       });
     } finally {
-      this.watchListService.checkTitle(this.movieDetails.title, this.currentUser.uid);
+      this.watchListService.checkTitle(this.movieDetails.title, this.dataShare.currentUser.uid);
       this.movieData = [];
     }
   };
@@ -165,7 +152,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   removeWatchList = async (title) => {
     try {
       await this.watchListService.getUserVar.forEach(user => {
-        if (user.id === this.currentUser.uid) {
+        if (user.id === this.dataShare.currentUser.uid) {
           user.data.interested.forEach(movie => {
             if (movie.title === title) {
               this.watchListService.deleteInterestedMovie({movie});
@@ -174,7 +161,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         }
       });
     } finally {
-      this.watchListService.checkTitle(this.movieDetails.title, this.currentUser.uid);
+      this.watchListService.checkTitle(this.movieDetails.title, this.dataShare.currentUser.uid);
     }
   };
 

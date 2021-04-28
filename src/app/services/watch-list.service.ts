@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from '../interfaces';
-import { Observable, ReplaySubject, AsyncSubject, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -40,7 +40,7 @@ export class WatchListService {
     }
   };
 
-  updateUser = async (movieData) => {
+  updateInterestedMovie = async (movieData) => {
     await this.db
       .collection('users')
       .doc(this.docId)
