@@ -8,7 +8,6 @@ import { User } from '../../interfaces/user';
 import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 
-
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
@@ -25,9 +24,7 @@ export class MovieDetailsComponent implements OnInit {
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
   user: User[] = [];
-  buttonDisabled: boolean = false;
-  watchListMovie$;
-  interested = [];
+  movieData = [];
 
   constructor(
     public apiData: ApiDataService,
@@ -39,7 +36,7 @@ export class MovieDetailsComponent implements OnInit {
 
     private router: Router
   ) {
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.activatedRoute.queryParams.subscribe((res) => {
       this.dataShare.movieId = res.id;
       this.setData();
     });
@@ -47,20 +44,22 @@ export class MovieDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // this.setData();
-    // console.log(this.watchListService.userData);
+
     this.watchListService.updateUser;
-    console.log(this.user, 'consoled user')
+    console.log(this.user, 'consoled user');
   }
 
   setData = () => {
     try {
-      this.apiData.getSelectedMovieData(this.dataShare.movieId)
+      this.apiData.getSelectedMovieData(this.dataShare.movieId);
     } finally {
-      this.apiData.getSelectedMovieData(this.dataShare.movieId).subscribe(res => {
-        this.movieDetails = res;
-        console.log('Details: ', this.movieDetails);
-        this.updateData();
-      });
+      this.apiData
+        .getSelectedMovieData(this.dataShare.movieId)
+        .subscribe((res) => {
+          this.movieDetails = res;
+          console.log('Details: ', this.movieDetails);
+          this.updateData();
+        });
     }
   };
 
@@ -129,7 +128,8 @@ export class MovieDetailsComponent implements OnInit {
   // };
 
   addToWatchList = async () => {
-    await this.interested.push({
+    
+    await this.movieData.push({
       title: this.movieDetails.title,
       vote_average: this.movieDetails.vote_average,
       poster_path: this.movieDetails.poster_path,
@@ -137,42 +137,37 @@ export class MovieDetailsComponent implements OnInit {
     let subscription = this.watchListService.users.subscribe((res) => {
       res.forEach((item) => {
         this.watchListService.docId = item.payload.doc.id;
+        this.watchListService.updateUser(this.movieData);
         // console.log(item, 'wack')
-      });
-
-      res.forEach(() => {
-        this.watchListService.updateUser(this.interested);
       });
       subscription.unsubscribe();
     });
   };
 
-  // removeWatchList = (title) => {
-  //   console.log(this.user);
-  //   if ( this.isAddedVar = true) {
-  //     let index = this.user.indexOf(title);
-  //     this.user.splice(index, 1);
-  //     this.isAddedVar = false;
-  //   } else {
-  //     console.log("Nope.");
-  //     return
-  //   };
-  // };
+  removeWatchList = () => {
+    console.log(this.title)
+    let title = this.movieDetails.title
+    this.watchListService.deleteInterestedMovie(title)
+  };
 
   peopleNav = async (personId) => {
     this.dataShare.personId = await personId;
-    this.router.navigate([`/people/${personId}`], { queryParams: {
-      id: personId,
-    } });
-  }
+    this.router.navigate([`/people/${personId}`], {
+      queryParams: {
+        id: personId,
+      },
+    });
+  };
 
   selectMovie = async (movieId) => {
     this.dataShare.movieId = await movieId;
-    this.router.navigate([`/movie/${movieId}`], { queryParams: {
-      id: movieId
-    } });
-  }
-  
+    this.router.navigate([`/movie/${movieId}`], {
+      queryParams: {
+        id: movieId,
+      },
+    });
+  };
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth = window.innerWidth;

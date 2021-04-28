@@ -32,9 +32,17 @@ export class WatchListService {
       .collection('users')
       .doc(this.docId)
       .update({
-        interested: firebase.firestore.FieldValue.arrayUnion({ movieData }),
+        interested: firebase.firestore.FieldValue.arrayUnion(movieData[0]),
       });
+  };
 
-    // console.log(this.user.data(), 'yeahyeahyea')
+  deleteInterestedMovie = async (title) => {
+    // this.db.collection('users').doc(this.docId).update({interested: firebase.firestore.FieldValue.arrayRemove({movieData})})
+    this.db
+    .collection('users')
+      .doc(this.docId)
+      .update({
+        interested: firebase.firestore.FieldValue.arrayRemove(title)
+      })
   };
 }
