@@ -35,12 +35,8 @@ export class MovieListComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // this.callApi();
-    // this.apiData.test();
+    
   };
-
-  // callApi = () => {
-  // }
 
   searchFn = () => {
     if (this.searchQuery === '' || this.searchQuery === null || this.searchQuery === undefined) return;

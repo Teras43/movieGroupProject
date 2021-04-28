@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from '../interfaces';
-import { Observable, ReplaySubject, AsyncSubject, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -16,8 +16,6 @@ export class WatchListService {
   getUserVar = [];
   users: Observable<any>;
   private usersRef: AngularFirestoreCollection<User>;
-  // private movieExistsSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // public existsObs: Observable<boolean> = this.movieExistsSubject.asObservable();
 
   constructor(
     public db: AngularFirestore,
@@ -40,7 +38,7 @@ export class WatchListService {
     }
   };
 
-  updateUser = async (movieData) => {
+  updateInterestedMovie = async (movieData) => {
     await this.db
       .collection('users')
       .doc(this.docId)
@@ -62,7 +60,6 @@ export class WatchListService {
         if (user.id === userId) {
           user.data.interested.forEach(movie => {
             if (movie.title === movieTitle) {
-              console.log("title: ", movieTitle);
               this.comparisonTitle.push(movieTitle);
             } else {
               return
@@ -78,7 +75,6 @@ export class WatchListService {
         this.movieTitle = false;
         this.comparisonTitle = [];
       };
-      console.log(this.movieTitle);
     }
   };
 }
