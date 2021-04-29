@@ -4,6 +4,7 @@ import { User } from '../interfaces';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { DataShareService } from './data-share.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import 'firebase/firestore';
 export class WatchListService {
   rating;
   docId;
+  preUpdateMovie;
   didRate: boolean;
   movieTitle: boolean;
   ratedComparison = [];
@@ -27,17 +29,15 @@ export class WatchListService {
     this.users = this.usersRef.snapshotChanges();
   }
 
-  getUser = (): Promise<any> => {
+  getUser = async (): Promise<any> => {
     try {
       this.getUserVar = [];
     } finally {
-      if(this.getUserVar.length === 0) {
-        return this.db.collection('users').get().toPromise().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            this.getUserVar.push({id: doc.id, data: doc.data()}); 
-          });
+      return await this.db.collection('users').get().toPromise().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.getUserVar.push({id: doc.id, data: doc.data()}); 
         });
-      }
+      });
     }
   };
 
@@ -64,18 +64,15 @@ export class WatchListService {
           try {
             user.data.interested.forEach(movie => {
               if (movie.title === movieTitle) {
-                console.log("Movie Title Initial: ", movieTitle);
                 this.comparisonTitle.push(movieTitle);
               }
             });
           } finally {
             user.data.rated.forEach(movie => {
               if (movie.title === movieTitle) {
-                console.log("Movie title rated test: ", movieTitle);
+                this.preUpdateMovie = {movie};
                 this.ratedComparison.push(movieTitle);
                 this.userRating = of(movie.userRating);
-                console.log("userRating = good");
-                return
               } else {
                 return
               }
@@ -102,11 +99,38 @@ export class WatchListService {
     }
   };
 
+  checkRatingExisting = async (movieTitle, userId) => {
+    await this.getUser();
+    try {
+      this.getUserVar.forEach(user => {
+       if (user.id === userId) {
+         user.data.rated.forEach(movie => {
+           if (movie.title === movieTitle) {
+              this.preUpdateMovie = {movie};
+              this.ratedComparison.push(movieTitle);
+              this.userRating = of(movie.userRating);
+            }
+          });
+        }
+      });
+    } finally {
+      if (this.ratedComparison.length !== 0) {
+        this.didRate = true;
+        this.ratedComparison = [];
+      } else {
+        this.didRate = false;
+        this.userRating = of(undefined);
+        this.ratedComparison = [];
+      };
+    }
+  }
+
   updateRatedList = async (movieData) => {
-    console.log("movieData: ", movieData);
-    await this.db.collection('users').doc(this.docId).update({
-      rated: firebase.firestore.FieldValue.arrayRemove(movieData[0])
-    });
+    if (this.preUpdateMovie !== undefined) {
+      await this.db.collection('users').doc(this.docId).update({
+        rated: firebase.firestore.FieldValue.arrayRemove(this.preUpdateMovie.movie)
+      });
+    }
     await this.db
       .collection('users')
       .doc(this.docId)
