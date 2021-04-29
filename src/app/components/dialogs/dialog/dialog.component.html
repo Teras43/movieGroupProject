@@ -1,16 +1,19 @@
 <div class="dialogContainer">
   <div class="imgDiv">
-    <img
-      src="{{
-        apiData.apiPosterPath + apiData.apiSelectedMovieData.poster_path
-      }}"
-      class="directImg"
-    />
+    <img src="{{ apiData.apiPosterPath + poster_path }}" class="directImg" />
   </div>
   <h2 mat-dialog-title>{{ title }}</h2>
 
-  <mat-dialog-content [formGroup]="form" class="dialogContent">
-    <mat-slider
+  <mat-dialog-content class="dialogContent">
+    <mat-form-field appearance="fill" *ngIf="isLoaded">
+      <mat-label>Rating:</mat-label>
+      <mat-select [(value)]="curRating">
+        <mat-option *ngFor="let rating of ratingNumbers" [value]="rating.value"
+          >{{ rating.value }} {{ rating.tag }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <!-- <mat-slider
       thumbLabel
       tickInterval="1"
       step="1"
@@ -18,11 +21,14 @@
       max="10"
       (change)="getSliderValue($event)"
       aria-label="score"
-    ></mat-slider>
+    ></mat-slider> -->
   </mat-dialog-content>
 
   <mat-dialog-actions class="dialogActions">
-    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button (click)="close()" *ngIf="!rated">Close</button>
+    <button mat-raised-button (click)="removeClose()" *ngIf="rated">
+      Remove
+    </button>
     <button mat-raised-button color="success" (click)="rate()">Rate</button>
   </mat-dialog-actions>
 </div>

@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
 import { DialogComponent } from '../dialogs/dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie-details',
@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   movieDetails;
   isAddedVar;
+  rateData;
   trailerVar: any;
   moviePopRound: number;
   updateDate = [];
@@ -25,6 +26,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   // Subscription Variables
   private actQueryParams: Subscription;
+  private sub1: Subscription;
+  private sub2: Subscription;
+  private sub3: Subscription;
   
   constructor(
     public apiData: ApiDataService,
@@ -36,12 +40,16 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
-      this.watchListService.getUser();
       this.dataShare.movieId = res.id;
-      this.setData();
-      this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
-        this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
-      });
+      this.watchListService.getUser().then(() => {
+        this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
+          setTimeout(() => {
+            this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
+          }, 100)
+        });
+      }).then(() => {
+        this.setData();
+      })
     });
   }
   
@@ -53,13 +61,23 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.watchListService.getUserVar = [];
     this.movieData = [];
     this.actQueryParams.unsubscribe();
-    this.dataShare.parseUserSub.unsubscribe();
+    if (this.sub1 !== undefined) {
+      this.sub1.unsubscribe();
+    }
+    if (this.sub2 !== undefined) {
+      this.sub2.unsubscribe();
+    }
+    if (this.sub3 !== undefined) {
+      this.sub3.unsubscribe();
+    }
   };
 
   setData = () => {
     try {
       this.apiData.getSelectedMovieData(this.dataShare.movieId).subscribe(res => {
         this.movieDetails = res;
+        this.dataShare.dialogImg = res.poster_path;
+        this.dataShare.dialogTitle = res.title;
         console.log('Details: ', this.movieDetails);
         this.updateData();
       });
@@ -103,14 +121,25 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     }
   };
 
+  
   openDialog = () => {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      title: this.movieDetails.title,
-      //   rating: 0
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      panelClass: 'newBackground',
+      data: {
+        curRating: this.watchListService.userRating,
+      }
     };
 
-    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    let dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    
+    this.sub1 = this.watchListService.userRating.subscribe(res => {
+      console.log("sub res: ", res);
+      if (dialogRef && dialogRef.componentInstance) {
+        dialogRef.componentInstance.curRating = res;
+        console.log("componentInstance: ", dialogRef.componentInstance.curRating);
+      };
+    });
 
     dialogRef.afterClosed();
   };
