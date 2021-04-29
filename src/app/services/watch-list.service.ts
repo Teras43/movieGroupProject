@@ -4,7 +4,6 @@ import { User } from '../interfaces';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { ThisReceiver } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -70,31 +69,20 @@ export class WatchListService {
               }
             });
           } finally {
-            this.checkTitlePart2(movieTitle, userId);
+            user.data.rated.forEach(movie => {
+              if (movie.title === movieTitle) {
+                console.log("Movie title rated test: ", movieTitle);
+                this.ratedComparison.push(movieTitle);
+                this.userRating = of(movie.userRating);
+                console.log("userRating = good");
+                return
+              } else {
+                return
+              }
+            })
           }
         };
       });
-    } finally {
-      return
-    }
-  };
-
-  checkTitlePart2 = (movieTitle, userId) => {
-    try {
-      this.getUserVar.forEach(user => {
-        if (user.id === userId) {
-          user.data.rated.forEach(movie => {
-            console.log("Movie title rated test: ", movieTitle);
-            console.log("movie title: ", movie.title);
-            if (movie.title === movieTitle) {
-              this.ratedComparison.push(movieTitle);
-              this.userRating = of(movie.userRating);
-            } else {
-              this.userRating = of(undefined);
-            }
-          })
-        }
-      })
     } finally {
       if (this.comparisonTitle.length !== 0) {
         this.movieTitle = true;
@@ -108,13 +96,17 @@ export class WatchListService {
         this.ratedComparison = [];
       } else {
         this.didRate = false;
+        this.userRating = of(undefined);
         this.ratedComparison = [];
       };
     }
-  }
+  };
 
   updateRatedList = async (movieData) => {
     console.log("movieData: ", movieData);
+    await this.db.collection('users').doc(this.docId).update({
+      rated: firebase.firestore.FieldValue.arrayRemove(movieData[0])
+    });
     await this.db
       .collection('users')
       .doc(this.docId)
