@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from '../interfaces';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -11,9 +11,12 @@ import 'firebase/firestore';
 export class WatchListService {
   rating;
   docId;
+  didRate: boolean;
   movieTitle: boolean;
+  ratedComparison = [];
   comparisonTitle = [];
   getUserVar = [];
+  userRating: Observable<number>;
   users: Observable<any>;
   private usersRef: AngularFirestoreCollection<User>;
 
@@ -56,15 +59,28 @@ export class WatchListService {
       await this.getUser();
     }
     try {
-      await this.getUserVar.forEach(user => {
+      this.getUserVar.forEach(user => {
         if (user.id === userId) {
-          user.data.interested.forEach(movie => {
-            if (movie.title === movieTitle) {
-              this.comparisonTitle.push(movieTitle);
-            } else {
-              return
-            };
-          });
+          try {
+            user.data.interested.forEach(movie => {
+              if (movie.title === movieTitle) {
+                console.log("Movie Title Initial: ", movieTitle);
+                this.comparisonTitle.push(movieTitle);
+              }
+            });
+          } finally {
+            user.data.rated.forEach(movie => {
+              if (movie.title === movieTitle) {
+                console.log("Movie title rated test: ", movieTitle);
+                this.ratedComparison.push(movieTitle);
+                this.userRating = of(movie.userRating);
+                console.log("userRating = good");
+                return
+              } else {
+                return
+              }
+            })
+          }
         };
       });
     } finally {
@@ -75,6 +91,31 @@ export class WatchListService {
         this.movieTitle = false;
         this.comparisonTitle = [];
       };
+      if (this.ratedComparison.length !== 0) {
+        this.didRate = true;
+        this.ratedComparison = [];
+      } else {
+        this.didRate = false;
+        this.userRating = of(undefined);
+        this.ratedComparison = [];
+      };
     }
+  };
+
+  updateRatedList = async (movieData) => {
+    console.log("movieData: ", movieData);
+    await this.db.collection('users').doc(this.docId).update({
+      rated: firebase.firestore.FieldValue.arrayRemove(movieData[0])
+    });
+    await this.db
+      .collection('users')
+      .doc(this.docId)
+      .update({
+        rated: firebase.firestore.FieldValue.arrayUnion(movieData[0]),
+      });
+  };
+
+  deleteRatedMovie = async (movieData) => {
+    await this.db.collection('users').doc(this.docId).update({rated: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
   };
 }

@@ -13,8 +13,14 @@
 
     .directImg {
       width: 10em;
-      height: 12em;
+      height: 14em;
       margin-bottom: 1em;
+      border: 1px solid white;
     }
+  }
+
+  mat-dialogActions {
+    width: 100%;
+    display: flex;
   }
 }
