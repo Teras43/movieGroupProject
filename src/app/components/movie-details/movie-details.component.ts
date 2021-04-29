@@ -17,6 +17,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   movieDetails;
   isAddedVar;
   rateData;
+  curRating = 5;
   trailerVar: any;
   moviePopRound: number;
   updateDate = [];
@@ -122,19 +123,15 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   };
 
   
-  openDialog = () => {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig = {
+  openDialog = async () => {
+    let dialogRef = this.dialog.open(DialogComponent, {
       panelClass: 'newBackground',
-      data: {
-        curRating: this.watchListService.userRating,
-      }
-    };
-
-    let dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+      data: { curRating: this.curRating}
+    });
     
-    this.sub1 = this.watchListService.userRating.subscribe(res => {
-      console.log("sub res: ", res);
+    this.sub1 = await this.watchListService.userRating.subscribe(res => {
+      console.log("sub1 = res: ", res);
+      console.log("dialogRef.componentInstance: ", dialogRef.componentInstance);
       if (dialogRef && dialogRef.componentInstance) {
         dialogRef.componentInstance.curRating = res;
         console.log("componentInstance: ", dialogRef.componentInstance.curRating);

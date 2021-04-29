@@ -41,7 +41,6 @@ export class DialogComponent implements OnInit {
     ) {
     this.poster_path = this.dataShare.dialogImg;
     this.title = this.dataShare.dialogTitle;
-    console.log("cur: ", data.curRating);
     this.curRating = data.curRating;
   };
   
@@ -54,14 +53,12 @@ export class DialogComponent implements OnInit {
       this.curRating = ratingData
       this.rated = true;
     } else {
-      console.log("false: ", ratingData);
       this.curRating = 5;
       this.rated = false;
     }
   }
 
   rate = () => {
-    console.log(this.curRating);
     this.movieData.push({
       poster_path: this.poster_path,
       title: this.title,
