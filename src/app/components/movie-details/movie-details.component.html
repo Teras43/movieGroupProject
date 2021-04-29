@@ -85,7 +85,11 @@
         </div>
         <div class="rateBtnDiv">
           <button mat-button class="rateBtn" (click)="openDialog()">
-            <mat-icon class="starIcon2">star</mat-icon>
+            <mat-icon
+              class="starIcon2"
+              [class.ABRated]="watchListService.didRate"
+              >star</mat-icon
+            >
             <span class="star-rating-text">Rate This</span>
           </button>
           <div class="popularDiv">

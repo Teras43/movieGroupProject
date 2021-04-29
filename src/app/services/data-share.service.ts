@@ -7,6 +7,8 @@ import { WatchListService } from './watch-list.service';
   providedIn: 'root'
 })
 export class DataShareService {
+  dialogImg;
+  dialogTitle;
   peopleImages;
   peoplePhotoName;
   currentUser;
