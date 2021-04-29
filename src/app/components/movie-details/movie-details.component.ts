@@ -130,15 +130,10 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     });
     
     this.sub1 = await this.watchListService.userRating.subscribe(res => {
-      console.log("sub1 = res: ", res);
-      console.log("dialogRef.componentInstance: ", dialogRef.componentInstance);
       if (dialogRef && dialogRef.componentInstance) {
         dialogRef.componentInstance.curRating = res;
-        console.log("componentInstance: ", dialogRef.componentInstance.curRating);
       };
     });
-
-    dialogRef.afterClosed();
   };
 
   isLoaded = () => {
