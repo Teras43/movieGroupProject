@@ -77,12 +77,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     if (this.sub1 !== undefined) {
       this.sub1.unsubscribe();
     }
-    if (this.sub2 !== undefined) {
-      this.sub2.unsubscribe();
-    }
-    if (this.sub3 !== undefined) {
-      this.sub3.unsubscribe();
-    }
   };
 
   setData = () => {
