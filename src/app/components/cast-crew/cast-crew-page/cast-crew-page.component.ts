@@ -11,11 +11,13 @@ import { DataShareService } from 'src/app/services/data-share.service';
 })
 export class CastCrewPageComponent implements OnInit, OnDestroy {
   peopleDetails;
-  isAliveVar;
-  newUpdate;
+  newUpdateBirth;
+  newUpdateDeath;
+  hasBirthAndDeath: boolean;
   noBioFound = "No bio found!";
   noOtherNames = "No other names found!";
   noBirthdayFound = "No birthday found!";
+  noDeathdayFound = "Present";
 
   // Subscription Variables
   private actQueryParams: Subscription;
@@ -26,51 +28,69 @@ export class CastCrewPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
+    this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
+      this.dataShare.personId = res.id;
+      this.apiData.getPeopleData(res.id).subscribe(
+        (res) => {
+          if (res.success) {
+            this.router.navigate(['./error404'])
+          };
+        },
+        (error) => {
+          this.router.navigate(['./error404'])
+        }
+      )
+      this.setData();
+    });
   }
   
   ngOnInit(): void {
-    this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
-      this.apiData.getPeopleData(res.id);
-      this.dataShare.personId = res.id;
-      this.setData();
-    });
   };
-
+  
   ngOnDestroy(): void {
     this.actQueryParams.unsubscribe();
   }
-
-  setData = () => {
+  
+  setData = async () => {
     try {
-      this.apiData.apiPeopleData.subscribe(res => {
-        this.peopleDetails = res;
-      })
-      console.log(this.peopleDetails);
+      await this.apiData.apiPeopleData.subscribe(
+        (res) => {
+          if (res.success) {
+            this.router.navigate(['./error404'])
+            return
+          };
+          this.peopleDetails = res;
+          console.log("People details: ", this.peopleDetails);
+          // setTimeout(() => {
+            this.getUpdateDates(this.peopleDetails.birthday, this.peopleDetails.deathday);
+          // }, 300);
+        },
+        (error) => {
+          this.router.navigate(['./error404'])
+        }
+      );
     } finally {
-      setTimeout(() => {
-        this.getUpdateDate(this.peopleDetails.birthday);
-        this.isAliveVar = this.peopleDetails.deathday;
-      }, 200);
+      return
     }
   };
 
-  getUpdateDate = (updateStr) => {
-    if (updateStr === null) {
-      this.newUpdate = this.noBirthdayFound;
-      return this.newUpdate
+  getUpdateDates = (birthday, deathday) => {
+    if (birthday === null && deathday === null) {
+      this.hasBirthAndDeath = false;
+    } else if (birthday !== null && deathday !== null) {
+      this.hasBirthAndDeath = true;
+    }
+    if (birthday === null) {
+      return
     } else {
-      this.newUpdate = new Date(updateStr)
-      return this.newUpdate;
+      this.newUpdateBirth = new Date(birthday);
+    }
+    if (deathday === null) {
+      return
+    } else {
+      this.newUpdateDeath = new Date(deathday);
     }
   }
-
-  isAlive = () => {
-    if (this.isAliveVar === null) {
-      return "Present"
-    } else {
-      return this.isAliveVar
-    };
-  };
 
   isLoaded = () => {
     if (this.peopleDetails !== undefined) {
