@@ -46,15 +46,25 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
           setTimeout(() => {
             this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
-          }, 100)
+          }, 50)
         });
       }).then(() => {
+        if (this.watchListService.didRate === false) {
+          this.watchListService.displayEmptyCheckBox = true;
+        } else {
+          this.watchListService.displayEmptyCheckBox = false;
+        };
         this.setData();
       })
     });
   }
   
   ngOnInit(): void {
+    // if (this.watchListService.didRate === false) {
+    //   this.displayEmptyCheckBox = true;
+    // } else {
+    //   this.displayEmptyCheckBox = false;
+    // };
     this.dataShare.parseUserInfo();
   };
 
@@ -122,6 +132,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     }
   };
 
+  seenIt = () => {
+    this.watchListService.displayEmptyCheckBox = !this.watchListService.displayEmptyCheckBox;
+  }
   
   openDialog = async () => {
     let dialogRef = this.dialog.open(DialogComponent, {

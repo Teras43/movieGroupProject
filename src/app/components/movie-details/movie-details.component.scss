@@ -106,7 +106,7 @@
 
       .ratingDetail {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 100%;
         margin-bottom: 1em;
 
@@ -122,6 +122,8 @@
           flex: 0.5;
           flex-direction: column;
           align-items: center;
+          margin-left: 1.2em;
+          margin-right: 1.5em;
 
           .voteCountDiv {
             opacity: 0.7;
@@ -131,59 +133,109 @@
 
         .rateBtnDiv {
           display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           flex: 1;
 
-          .rateBtn {
+          .checkedBoxDiv {
             display: flex;
-            width: 100%;
-            background: none;
-            border: none;
-            outline: none;
-            padding-left: 0;
+            align-items: center;
+            margin-bottom: 0.5em;
 
-            .starIcon2 {
-              color: silver;
-              font-size: 3.2em;
-              float: left;
-              margin-right: 0.4em;
-            }
-
-            .ABRated {
-              color: gold;
-            }
-
-            .star-rating-text {
-              display: block;
-              padding-top: 0.2em;
-              font-weight: 900;
-              font-style: italic;
-              font-size: 1.5em;
+            .checkedBoxImg {
               color: #3f8eb2;
+            }
+
+            .checkedBoxTxt {
+              font-weight: 600;
+              font-style: italic;
             }
           }
-
-          .popularDiv {
+          .rateBtnDiv2 {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            flex: 1;
+            margin-right: 1em;
 
-            .popTitle {
+            .rateBtn {
               display: flex;
-              margin-right: 0.3em;
-              font-size: 1em;
-              padding: auto;
+              width: 100%;
+              background: none;
+              border: none;
+              outline: none;
+              padding-left: 0;
+
+              .starIcon2 {
+                color: silver;
+                font-size: 2.5em;
+                float: left;
+                margin-right: 0.4em;
+              }
+
+              .ABRated {
+                color: gold;
+              }
+
+              .star-rating-text {
+                display: block;
+                padding-right: 1em;
+                font-weight: 900;
+                font-style: italic;
+                font-size: 1.5em;
+                color: #3f8eb2;
+              }
+            }
+          }
+        }
+
+        .seenMovieCheck {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+
+          .seenMovieBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            outline: none;
+            outline: none;
+
+            .emptyCheckBox {
               color: #3f8eb2;
-              text-decoration: underline;
-              font-weight: 600;
+              // font-size: 2em;
             }
 
-            .popularData {
-              margin-top: 0.2em;
-              font-size: 1.1em;
-              text-align: center;
+            .seenMovieTxt {
+              // margin-left: 0.5em;
+              font-size: 1em;
+              font-weight: 600;
+              font-style: italic;
             }
+          }
+        }
+
+        .popularDiv {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          flex: 1;
+
+          .popTitle {
+            display: flex;
+            margin-right: 0.3em;
+            font-size: 1em;
+            padding: auto;
+            color: #3f8eb2;
+            text-decoration: underline;
+            font-weight: 600;
+          }
+
+          .popularData {
+            margin-top: 0.2em;
+            font-size: 1.1em;
+            text-align: center;
           }
         }
       }
