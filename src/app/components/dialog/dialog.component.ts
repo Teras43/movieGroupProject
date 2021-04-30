@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiDataService } from 'src/app/services/api-data.service';
-import { WatchListService } from '../../../services/watch-list.service';
-import { RatingInterface } from '../../../interfaces';
+import { WatchListService } from '../../services/watch-list.service';
+import { RatingInterface } from '../../interfaces';
 import { DataShareService } from 'src/app/services/data-share.service';
 
 @Component({

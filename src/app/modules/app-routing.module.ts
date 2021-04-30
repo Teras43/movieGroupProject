@@ -6,18 +6,20 @@ import { LoginPageComponent } from '../components/login-page/login-page.componen
 import { MovieDetailsComponent } from '../components/movie-details/movie-details.component';
 import { MovieListComponent } from '../components/movie-list/movie-list.component';
 import { WatchListComponent } from '../components/watch-list/watch-list.component';
-import { MovieDetailsGuard } from '../components/movie-details/movie-details-guard.guard';
 import { LoggedInGuard } from 'ngx-auth-firebaseui';
+import { NotFoundComponent } from '../components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
+  { path: '', redirectTo: 'popular', pathMatch: 'full' },
   { path: 'popular', component: MovieListComponent, canActivate: [ LoggedInGuard ] }, 
-  { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ LoggedInGuard, MovieDetailsGuard ] },
-  { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ LoggedInGuard, MovieDetailsGuard ] },
+  { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ LoggedInGuard ] },
+  { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ LoggedInGuard ] },
   { path: 'people/:id/photos', component: PhotoViewerComponent, canActivate: [ LoggedInGuard ] },
   { path: 'watchlist', component: WatchListComponent, canActivate: [ LoggedInGuard ] },
   { path: 'loggedout', component: LoginPageComponent },
-  { path: '', redirectTo: 'popular', pathMatch: 'full' }
+  { path: 'error404', component: NotFoundComponent },
+  { path: '**', redirectTo: '/error404' }
 ];
 
 @NgModule({
