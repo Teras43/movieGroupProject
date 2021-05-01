@@ -375,10 +375,17 @@
         .reviewFormField {
           height: 100%;
           width: 100%;
+          background-color: #f1f2eb;
+          margin-bottom: 1em;
+
+          .reviewLabel {
+            color: #3f8eb2;
+          }
 
           .reviewText {
             overflow: visible;
             height: 100%;
+            color: #181a1b;
           }
         }
       }
@@ -389,7 +396,52 @@
       }
 
       .submitBtn {
+        display: flex;
+        justify-content: space-between;
+
         .saveReviewBtn {
+          background-color: #3f8eb2;
+        }
+
+        .clearReviewBtn {
+          background-color: #3f8eb2;
+        }
+      }
+    }
+
+    .userReviewDiv {
+      margin: 0 1.5em;
+
+      .userReviewIfExists {
+        background-color: #181a1b;
+
+        .commentUserInfo {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 1em;
+
+          .nameRatingDiv {
+            .commentsName {
+              color: #3f8eb2;
+              font-weight: 600;
+            }
+
+            .commentsRating {
+              color: gold;
+              margin-left: 1em;
+              margin-top: 0.5em;
+            }
+          }
+        }
+
+        .reviewBody {
+          border-top: 1px solid rgba(255, 255, 255, 0.8);
+          padding: 0.5em;
+          margin: 0.5em;
+          overflow: scroll;
+        }
+
+        .editReviewBtn {
           background-color: #3f8eb2;
         }
       }

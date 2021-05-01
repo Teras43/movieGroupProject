@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
@@ -7,6 +7,7 @@ import { WatchListService } from '../../services/watch-list.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { Subscription } from 'rxjs';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-movie-details',
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./movie-details.component.scss'],
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
+  @ViewChild("textArea") inputEl: ElementRef;
   movieDetails;
   isAddedVar;
   rateData;
@@ -50,7 +52,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
               this.router.navigate(['./error404'])
               return
             };
-            this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
+            this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid).then(() => {
+              this.watchListService.hasReview(res2.title, this.dataShare.currentUser.uid);
+            })
           },
           (error) => {
             this.router.navigate(['./error404']);
@@ -74,13 +78,18 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.watchListService.getUserVar = [];
     this.movieData = [];
+    this.watchListService.reviewExists = [];
+    this.watchListService.alreadyReviewed = undefined;
     this.actQueryParams.unsubscribe();
     if (this.sub1 !== undefined) {
       this.sub1.unsubscribe();
-    }
+    };
     if (this.sub2 !== undefined) {
       this.sub1.unsubscribe();
-    }
+    };
+    if (this.watchListService.snapShotSub !== undefined) {
+      this.watchListService.snapShotSub.unsubscribe();
+    };
   };
 
   setData = () => {
@@ -105,10 +114,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         this.updateDate.push(new Date(result.updated_at));
       });
     } finally {
-      this.moviePopRound = Math.round(this.movieDetails.popularity);
-      this.movieDetails.reviews.results.forEach((result) => {
-        this.updateDate.push(new Date(result.updated_at));
-      });
+      return
     }
   };
 
@@ -217,6 +223,10 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   };
 
   addReviewDb = async (movieTitle) => {
+    let currentDate = new Date();
+    let cDay = currentDate.getDate();
+    let cMonth = currentDate.getMonth() + 1;
+    let cYear = currentDate.getFullYear();
     await this.watchListService.checkReviewExisting(movieTitle, this.dataShare.currentUser.uid)
     await this.watchListService.getUserVar.forEach(user => {
       if (user.id === this.dataShare.currentUser.uid) {
@@ -225,13 +235,25 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
             this.reviewData.push({
               reviewRating: movie.userRating,
               movieTitle: movie.title,
-              review: this.reviewString
+              review: this.reviewString,
+              dateCreated: cDay + "/" + cMonth + "/" + cYear
             });
           }
         })
       }
     })
-    this.watchListService.saveReview(this.reviewData);
+    this.watchListService.saveReview(this.reviewData).then(() => {
+      this.watchListService.hasReview(this.movieDetails.title, this.dataShare.currentUser.uid);
+    })
+    this.reviewString = '';
+  };
+
+  editReview = () => {
+    this.reviewString = this.watchListService.reviewExists[0].review
+    this.inputEl.nativeElement.focus()
+  };
+
+  clearReviewField = () => {
     this.reviewString = '';
   }
 

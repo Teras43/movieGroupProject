@@ -4,7 +4,6 @@ import { User } from '../interfaces';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { DataShareService } from './data-share.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +13,13 @@ export class WatchListService {
   docId;
   preUpdateMovie;
   preUpdateReview;
+  snapShotData;
+  snapShotSub;
+  alreadyReviewed: boolean;
   displayEmptyCheckBox: boolean;
   didRate: boolean;
   movieTitle: boolean;
+  reviewExists = [];
   ratedComparison = [];
   comparisonTitle = [];
   getUserVar = [];
@@ -167,5 +170,38 @@ export class WatchListService {
       });
     };
     await this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
+    this.getUser();
+  }
+
+  hasReview = async (movieTitle, userId) => {
+    this.snapShotSub = await this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
+      try {
+        this.snapShotData = res.payload.data();
+      } finally {
+        if (this.reviewExists.length !== 0) {
+          this.reviewExists = [];
+        };
+        if (this.snapShotData.uid === userId) {
+          this.snapShotData.reviews.forEach(review => {
+            if (review.movieTitle === movieTitle) {
+              this.alreadyReviewed = true;
+              this.reviewExists.push({
+                movieTitle: review.movieTitle,
+                review: review.review,
+                reviewRating: review.reviewRating,
+                dateCreated: review.dateCreated
+              });
+            } else {
+              this.alreadyReviewed = false;
+            }
+          })
+        }
+        // if (this.reviewExists.length !== 0) {
+        //   this.alreadyReviewed = true;
+        // } else {
+        //   this.alreadyReviewed = false;
+        // };
+      }
+    })
   }
 }
