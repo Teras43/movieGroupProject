@@ -2,11 +2,11 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDataService } from 'src/app/services/api-data.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { WatchListService } from '../../services/watch-list.service';
-import { DialogComponent } from '../dialogs/dialog/dialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie-details',
@@ -43,12 +43,24 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.actQueryParams = this.activatedRoute.queryParams.subscribe(res => {
       this.dataShare.movieId = res.id;
       this.watchListService.getUser().then(() => {
-        this.apiData.getSelectedMovieData(res.id).subscribe(res2 => {
-          setTimeout(() => {
+        this.apiData.getSelectedMovieData(res.id).subscribe(
+          (res2) => {
+            if (res2.success) {
+              this.router.navigate(['./error404'])
+              return
+            };
             this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid);
-          }, 100)
-        });
+          },
+          (error) => {
+            this.router.navigate(['./error404']);
+          }
+        );
       }).then(() => {
+        if (this.watchListService.didRate === false) {
+          this.watchListService.displayEmptyCheckBox = true;
+        } else {
+          this.watchListService.displayEmptyCheckBox = false;
+        };
         this.setData();
       })
     });
@@ -64,12 +76,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.actQueryParams.unsubscribe();
     if (this.sub1 !== undefined) {
       this.sub1.unsubscribe();
-    }
-    if (this.sub2 !== undefined) {
-      this.sub2.unsubscribe();
-    }
-    if (this.sub3 !== undefined) {
-      this.sub3.unsubscribe();
     }
   };
 
@@ -122,6 +128,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     }
   };
 
+  seenIt = () => {
+    this.watchListService.displayEmptyCheckBox = !this.watchListService.displayEmptyCheckBox;
+  }
   
   openDialog = async () => {
     let dialogRef = this.dialog.open(DialogComponent, {

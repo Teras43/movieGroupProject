@@ -13,6 +13,7 @@ export class WatchListService {
   rating;
   docId;
   preUpdateMovie;
+  displayEmptyCheckBox: boolean;
   didRate: boolean;
   movieTitle: boolean;
   ratedComparison = [];
@@ -90,9 +91,11 @@ export class WatchListService {
       };
       if (this.ratedComparison.length !== 0) {
         this.didRate = true;
+        this.displayEmptyCheckBox = false;
         this.ratedComparison = [];
       } else {
         this.didRate = false;
+        this.displayEmptyCheckBox = true;
         this.userRating = of(undefined);
         this.ratedComparison = [];
       };

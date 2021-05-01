@@ -83,19 +83,34 @@
           <div class="ratingDiv">{{ movieDetails.vote_average }}/10</div>
           <div class="voteCountDiv">({{ movieDetails.vote_count }})</div>
         </div>
-        <div class="rateBtnDiv">
-          <button mat-button class="rateBtn" (click)="openDialog()">
-            <mat-icon
-              class="starIcon2"
-              [class.ABRated]="watchListService.didRate"
-              >star</mat-icon
-            >
-            <span class="star-rating-text">Rate This</span>
-          </button>
-          <div class="popularDiv">
-            <div class="popTitle">Pop.</div>
-            <div class="popularData">{{ moviePopRound }}</div>
+        <div class="rateBtnDiv" *ngIf="!watchListService.displayEmptyCheckBox">
+          <div class="checkedBoxDiv" (click)="seenIt()">
+            <mat-icon class="checkedBoxImg">check_box</mat-icon>
+            <span class="checkedBoxTxt">Watched it!</span>
           </div>
+          <div class="rateBtnDiv2">
+            <button mat-button class="rateBtn" (click)="openDialog()">
+              <mat-icon
+                class="starIcon2"
+                [class.ABRated]="watchListService.didRate"
+                >star</mat-icon
+              >
+              <span class="star-rating-text">Rate This</span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="seenMovieCheck"
+          *ngIf="watchListService.displayEmptyCheckBox"
+        >
+          <div class="seenMovieBtn" (click)="seenIt()">
+            <mat-icon class="emptyCheckBox">check_box_outline_blank</mat-icon>
+            <span class="seenMovieTxt">Watched it!</span>
+          </div>
+        </div>
+        <div class="popularDiv">
+          <div class="popTitle">Pop.</div>
+          <div class="popularData">{{ moviePopRound }}</div>
         </div>
       </div>
     </div>

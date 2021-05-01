@@ -21,13 +21,15 @@
         <div class="bioDiv">
           {{ peopleDetails.biography ? peopleDetails.biography : noBioFound }}
         </div>
-        <div class="birthDeathDiv" *ngIf="newUpdate !== noBirthdayFound">
-          {{ newUpdate | date: "MM/dd/yyyy" }}
+        <div class="birthDeathDiv" *ngIf="hasBirthAndDeath">
+          {{ newUpdateBirth | date: "MM/dd/yyyy" }}
           -
-          {{ isAlive() }}
+          {{ newUpdateDeath | date: "MM/dd/yyyy" }}
         </div>
-        <div class="birthDeathDiv" *ngIf="newUpdate === noBirthdayFound">
-          {{ newUpdate }}
+        <div class="birthDeathDiv" *ngIf="!hasBirthAndDeath">
+          {{ newUpdateBirth | date: "MM/dd/yyyy" }}
+          -
+          {{ noDeathdayFound }}
         </div>
         <div class="creditDiv">
           Movie Credits: {{ peopleDetails.movie_credits.cast.length }}

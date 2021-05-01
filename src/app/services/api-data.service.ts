@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MovieData, SelectedMovieData } from '../interfaces';
+import { MovieData, PeopleInterface, SelectedMovieData } from '../interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -47,7 +47,7 @@ export class ApiDataService {
     this.apiSelectedMovieData = this.http.get<SelectedMovieData>(this.apiRequestPath + movieId + '?' + this.apiKey + '&append_to_response=videos,credits,images,similar,reviews,account_states' + '&language=en-US', { 'headers': this.headers })
   );
 
-  getPeopleData = (personId) => {
-    this.apiPeopleData = this.http.get(this.apiPeopleRequest + personId + '?' + this.apiKey + '&append_to_response=images,movie_credits' + '&language=en-US', { 'headers': this.headers })
-  };
+  getPeopleData = (personId): Observable<PeopleInterface> => (
+    this.apiPeopleData = this.http.get<PeopleInterface>(this.apiPeopleRequest + personId + '?' + this.apiKey + '&append_to_response=images,movie_credits' + '&language=en-US', { 'headers': this.headers })
+  );
 }

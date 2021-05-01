@@ -14,7 +14,7 @@ export class DataShareService {
   currentUser;
   movieId: any;
   personId: any;
-  jpgNotFound = "../../../assets/images/error-512.png";
+  jpgNotFound = '../../../assets/images/error-512.png';
   public parseUserSub: Subscription;
 
   constructor(
