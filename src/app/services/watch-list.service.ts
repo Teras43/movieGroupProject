@@ -4,7 +4,6 @@ import { User } from '../interfaces';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { DataShareService } from './data-share.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +12,14 @@ export class WatchListService {
   rating;
   docId;
   preUpdateMovie;
+  preUpdateReview;
+  snapShotData;
+  snapShotSub;
+  alreadyReviewed: boolean;
   displayEmptyCheckBox: boolean;
   didRate: boolean;
   movieTitle: boolean;
+  reviewExists = [];
   ratedComparison = [];
   comparisonTitle = [];
   getUserVar = [];
@@ -128,6 +132,19 @@ export class WatchListService {
     }
   }
 
+  checkReviewExisting = async (movieTitle, userId) => {
+    await this.getUser();
+    this.getUserVar.forEach(user => {
+      if (user.id === userId) {
+        user.data.reviews.forEach(review => {
+          if (review.movieTitle === movieTitle) {
+            this.preUpdateReview = {review};
+          }
+        })
+      }
+    })
+  }
+
   updateRatedList = async (movieData) => {
     if (this.preUpdateMovie !== undefined) {
       await this.db.collection('users').doc(this.docId).update({
@@ -145,4 +162,46 @@ export class WatchListService {
   deleteRatedMovie = async (movieData) => {
     await this.db.collection('users').doc(this.docId).update({rated: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
   };
+
+  saveReview = async (reviewData) => {
+    if (this.preUpdateReview !== undefined) {
+      await this.db.collection('users').doc(this.docId).update({
+        reviews: firebase.firestore.FieldValue.arrayRemove(this.preUpdateReview.review)
+      });
+    };
+    await this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
+    this.getUser();
+  }
+
+  hasReview = async (movieTitle, userId) => {
+    this.snapShotSub = await this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
+      try {
+        this.snapShotData = res.payload.data();
+      } finally {
+        if (this.reviewExists.length !== 0) {
+          this.reviewExists = [];
+        };
+        if (this.snapShotData.uid === userId) {
+          this.snapShotData.reviews.forEach(review => {
+            if (review.movieTitle === movieTitle) {
+              this.alreadyReviewed = true;
+              this.reviewExists.push({
+                movieTitle: review.movieTitle,
+                review: review.review,
+                reviewRating: review.reviewRating,
+                dateCreated: review.dateCreated
+              });
+            } else {
+              this.alreadyReviewed = false;
+            }
+          })
+        }
+        // if (this.reviewExists.length !== 0) {
+        //   this.alreadyReviewed = true;
+        // } else {
+        //   this.alreadyReviewed = false;
+        // };
+      }
+    })
+  }
 }
