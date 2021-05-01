@@ -7,7 +7,6 @@ import { WatchListService } from '../../services/watch-list.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { Subscription } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-movie-details',
@@ -172,8 +171,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       });
       await this.watchListService.getUserVar.forEach(user => {
         if (user.id === this.dataShare.currentUser.uid) {
-          if (user.data.interested.length === 0) {
+          if (user.data.interested === undefined) {
             this.watchListService.updateInterestedMovie(this.movieData);
+            return
           }
           user.data.interested.forEach(movie => {
             if (movie.title !== this.movieDetails.title) {

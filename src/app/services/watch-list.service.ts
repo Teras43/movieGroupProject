@@ -67,12 +67,16 @@ export class WatchListService {
       this.getUserVar.forEach(user => {
         if (user.id === userId) {
           try {
+            if (user.data.interested === undefined)
+            return
             user.data.interested.forEach(movie => {
               if (movie.title === movieTitle) {
                 this.comparisonTitle.push(movieTitle);
               }
             });
           } finally {
+            if (user.data.rated === undefined)
+            return
             user.data.rated.forEach(movie => {
               if (movie.title === movieTitle) {
                 this.preUpdateMovie = {movie};
@@ -136,6 +140,7 @@ export class WatchListService {
     await this.getUser();
     this.getUserVar.forEach(user => {
       if (user.id === userId) {
+        if (user.data.reviews === undefined) return;
         user.data.reviews.forEach(review => {
           if (review.movieTitle === movieTitle) {
             this.preUpdateReview = {review};
@@ -174,6 +179,7 @@ export class WatchListService {
   }
 
   hasReview = async (movieTitle, userId) => {
+    if (this.preUpdateReview === undefined) return;
     this.snapShotSub = await this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
       try {
         this.snapShotData = res.payload.data();
@@ -196,11 +202,6 @@ export class WatchListService {
             }
           })
         }
-        // if (this.reviewExists.length !== 0) {
-        //   this.alreadyReviewed = true;
-        // } else {
-        //   this.alreadyReviewed = false;
-        // };
       }
     })
   }

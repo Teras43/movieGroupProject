@@ -3,19 +3,43 @@
         <mat-tab-group>
             <mat-tab label="Interested">
                 <div class="interestedContainer" *ngIf="interestedUser">
-                    <div *ngFor="let user of interestedUser">
-                        <p>{{user.data.displayName}}</p>
-                        <div *ngFor="let item of user.data.interested">
+                    <div *ngFor="let user of interestedUser; let i = index">
+                        <p>{{user.displayName}}</p>
+                        <div *ngFor="let item of user.interested">
                             <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
                             <div>{{item.title}}</div>
                             <div>Average Rating: {{item.vote_average}}</div>
+                            <button (click)="deleteMovie(user,i)">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Watched">
+                <div class="" *ngIf="interestedUser">
+                    <div *ngFor="let user of interestedUser">
+                        <p>{{user.displayName}}</p>
+                        <div *ngFor="let item of user.rated">
+                            <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
+                            <div>{{item.title}}</div>
+                            <div>Your Rating: {{item.userRating}}/10</div>
 
                         </div>
                     </div>
-                    <button (click)="yes()">Temp button for getUserVar reference</button>
                 </div>
             </mat-tab>
-            <mat-tab label="meh">
+            <mat-tab label="Reviews">
+                <div class="" *ngIf="interestedUser">
+                    <div *ngFor="let user of interestedUser">
+                        <p>{{user.displayName}}</p>
+                        <div *ngFor="let item of user.reviews">
+                            <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
+                            <div>{{item.title}}</div>
+                            <div>Your Rating: {{item.reviewRating}}/10</div>
+                            <div>Your Review: "{{item.review}}"</div>
+
+                        </div>
+                    </div>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>
