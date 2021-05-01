@@ -18,10 +18,12 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   isAddedVar;
   rateData;
   curRating = 5;
+  reviewString: string;
   trailerVar: any;
   moviePopRound: number;
   updateDate = [];
   movieData = [];
+  reviewData = [];
   safeSrc: SafeResourceUrl;
   screenWidth = window.innerWidth;
 
@@ -29,7 +31,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   private actQueryParams: Subscription;
   private sub1: Subscription;
   private sub2: Subscription;
-  private sub3: Subscription;
   
   constructor(
     public apiData: ApiDataService,
@@ -75,6 +76,9 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.movieData = [];
     this.actQueryParams.unsubscribe();
     if (this.sub1 !== undefined) {
+      this.sub1.unsubscribe();
+    }
+    if (this.sub2 !== undefined) {
       this.sub1.unsubscribe();
     }
   };
@@ -212,8 +216,28 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     });
   };
 
+  addReviewDb = async (movieTitle) => {
+    await this.watchListService.checkReviewExisting(movieTitle, this.dataShare.currentUser.uid)
+    await this.watchListService.getUserVar.forEach(user => {
+      if (user.id === this.dataShare.currentUser.uid) {
+        user.data.rated.forEach(movie => {
+          if (movie.title === movieTitle) {
+            this.reviewData.push({
+              reviewRating: movie.userRating,
+              movieTitle: movie.title,
+              review: this.reviewString
+            });
+          }
+        })
+      }
+    })
+    this.watchListService.saveReview(this.reviewData);
+    this.reviewString = '';
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth = window.innerWidth;
   }
+
 }
