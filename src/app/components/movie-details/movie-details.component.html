@@ -203,6 +203,32 @@
         </div>
       </div>
     </div>
+    <mat-card class="userReviewContainer">
+      <h3 class="writeReviewTxt">Write a Review:</h3>
+      <div class="writeReviewDiv" *ngIf="watchListService.didRate">
+        <mat-form-field appearance="fill" class="reviewFormField">
+          <mat-label class="reviewLabel">Write a review!</mat-label>
+          <textarea
+            matInput
+            class="reviewText"
+            [(ngModel)]="reviewString"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="didNotRateDiv" *ngIf="!watchListService.didRate">
+        Check seen and rate the movie to write a review!
+      </div>
+      <div class="submitBtn">
+        <button
+          mat-raised-button
+          class="saveReviewBtn"
+          (click)="addReviewDb(movieDetails.title)"
+          [disabled]="!watchListService.didRate"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
     <div
       class="commentsContainer"
       *ngIf="movieDetails.reviews.results.length !== 0"

@@ -13,6 +13,7 @@ export class WatchListService {
   rating;
   docId;
   preUpdateMovie;
+  preUpdateReview;
   displayEmptyCheckBox: boolean;
   didRate: boolean;
   movieTitle: boolean;
@@ -128,6 +129,19 @@ export class WatchListService {
     }
   }
 
+  checkReviewExisting = async (movieTitle, userId) => {
+    await this.getUser();
+    this.getUserVar.forEach(user => {
+      if (user.id === userId) {
+        user.data.reviews.forEach(review => {
+          if (review.movieTitle === movieTitle) {
+            this.preUpdateReview = {review};
+          }
+        })
+      }
+    })
+  }
+
   updateRatedList = async (movieData) => {
     if (this.preUpdateMovie !== undefined) {
       await this.db.collection('users').doc(this.docId).update({
@@ -145,4 +159,13 @@ export class WatchListService {
   deleteRatedMovie = async (movieData) => {
     await this.db.collection('users').doc(this.docId).update({rated: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
   };
+
+  saveReview = async (reviewData) => {
+    if (this.preUpdateReview !== undefined) {
+      await this.db.collection('users').doc(this.docId).update({
+        reviews: firebase.firestore.FieldValue.arrayRemove(this.preUpdateReview.review)
+      });
+    };
+    await this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
+  }
 }
