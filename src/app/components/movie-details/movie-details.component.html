@@ -48,10 +48,10 @@
                 color="success"
                 (click)="addToWatchList()"
               >
-                <mat-icon>add</mat-icon>
+                <mat-icon class="addIcon">add</mat-icon>
               </button>
               <button class="addTextBtn" (click)="addToWatchList()">
-                Add to My List!
+                Want to watch!
               </button>
             </ng-template>
           </div>
@@ -63,13 +63,13 @@
                 color="success"
                 (click)="removeWatchList(movieDetails.title)"
               >
-                <mat-icon>remove</mat-icon>
+                <mat-icon class="addIcon">remove</mat-icon>
               </button>
               <button
                 class="addTextBtn"
                 (click)="removeWatchList(movieDetails.title)"
               >
-                Remove from List!
+                Remove from watch list!
               </button>
             </ng-template>
           </div>

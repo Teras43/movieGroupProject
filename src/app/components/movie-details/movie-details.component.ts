@@ -7,7 +7,6 @@ import { WatchListService } from '../../services/watch-list.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataShareService } from 'src/app/services/data-share.service';
 import { Subscription } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-movie-details',
