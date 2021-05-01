@@ -210,6 +210,7 @@
           <mat-label class="reviewLabel">Write a review!</mat-label>
           <textarea
             matInput
+            #textArea
             class="reviewText"
             [(ngModel)]="reviewString"
           ></textarea>
@@ -227,8 +228,50 @@
         >
           Save
         </button>
+        <button
+          mat-raised-button
+          class="clearReviewBtn"
+          (click)="clearReviewField()"
+          [disabled]="!watchListService.didRate"
+        >
+          Clear
+        </button>
       </div>
     </mat-card>
+    <div class="userReviewDiv" *ngIf="watchListService.alreadyReviewed">
+      <h3>Your Review:</h3>
+      <mat-card class="userReviewIfExists commentsDiv">
+        <div class="commentUserInfo">
+          <div class="nameRatingDiv">
+            <div class="commentsName">
+              {{ dataShare.currentUser.displayName }}
+            </div>
+            <div class="commentsRating">
+              {{ watchListService.reviewExists[0].reviewRating }}/10
+            </div>
+          </div>
+          <div class="createUpdateCommentDiv">
+            <div class="updatedDate">
+              {{ watchListService.reviewExists[0].dateCreated }}
+            </div>
+          </div>
+        </div>
+        <div class="reviewBody">
+          <div class="commentsMsg">
+            {{ watchListService.reviewExists[0].review }}
+          </div>
+        </div>
+        <div class="editBtn">
+          <button
+            mat-raised-button
+            class="editReviewBtn"
+            (click)="editReview()"
+          >
+            Edit
+          </button>
+        </div>
+      </mat-card>
+    </div>
     <div
       class="commentsContainer"
       *ngIf="movieDetails.reviews.results.length !== 0"
