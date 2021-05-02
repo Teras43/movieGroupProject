@@ -12,9 +12,11 @@ export class WatchListService {
   rating;
   docId;
   preUpdateMovie;
-  preUpdateReview;
   snapShotData;
-  snapShotSub;
+  snapShotReviewData;
+  hasReviewShotSub;
+  checkReviewSub;
+  preUpdateReview;
   alreadyReviewed: boolean;
   displayEmptyCheckBox: boolean;
   didRate: boolean;
@@ -35,15 +37,12 @@ export class WatchListService {
   }
 
   getUser = async (): Promise<any> => {
-    try {
       this.getUserVar = [];
-    } finally {
       return await this.db.collection('users').get().toPromise().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           this.getUserVar.push({id: doc.id, data: doc.data()}); 
         });
       });
-    }
   };
 
   updateInterestedMovie = async (movieData) => {
@@ -67,12 +66,14 @@ export class WatchListService {
       this.getUserVar.forEach(user => {
         if (user.id === userId) {
           try {
+            if (user.data.interested === undefined) return;
             user.data.interested.forEach(movie => {
               if (movie.title === movieTitle) {
                 this.comparisonTitle.push(movieTitle);
               }
             });
           } finally {
+            if (user.data.rated === undefined) return
             user.data.rated.forEach(movie => {
               if (movie.title === movieTitle) {
                 this.preUpdateMovie = {movie};
@@ -134,16 +135,30 @@ export class WatchListService {
 
   checkReviewExisting = async (movieTitle, userId) => {
     await this.getUser();
-    this.getUserVar.forEach(user => {
-      if (user.id === userId) {
-        if (user.data.reviews === undefined) return;
-        user.data.reviews.forEach(review => {
-          if (review.movieTitle === movieTitle) {
-            this.preUpdateReview = {review};
-          }
-        })
-      }
-    })
+    try {
+      await this.getUserVar.forEach(user => {
+        if (user.id === userId) {
+          if (user.data.reviews === undefined) return;
+          user.data.reviews.forEach(review => {
+            if (review.movieTitle === movieTitle) {
+              this.reviewExists.push({
+                movieTitle: review.movieTitle,
+                review: review.review,
+                reviewRating: review.reviewRating,
+                dateCreated: review.dateCreated,
+                poster_path: review.poster_path
+              });
+              this.preUpdateReview = {review};
+              this.alreadyReviewed = true;
+            } else {
+              this.alreadyReviewed = false;
+            }
+          })
+        }
+      })
+    } finally {
+      return
+    }
   }
 
   updateRatedList = async (movieData) => {
@@ -166,32 +181,32 @@ export class WatchListService {
 
   saveReview = async (reviewData) => {
     if (this.preUpdateReview !== undefined) {
-      await this.db.collection('users').doc(this.docId).update({
+      this.db.collection('users').doc(this.docId).update({
         reviews: firebase.firestore.FieldValue.arrayRemove(this.preUpdateReview.review)
       });
     };
-    await this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
-    this.getUser();
+    this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
   }
 
   hasReview = async (movieTitle, userId) => {
-    if (this.preUpdateReview === undefined) return;
-    this.snapShotSub = await this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
+    this.hasReviewShotSub = this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
       try {
         this.snapShotData = res.payload.data();
       } finally {
-        if (this.reviewExists.length !== 0) {
-          this.reviewExists = [];
-        };
         if (this.snapShotData.uid === userId) {
+          if (this.snapShotData.reviews === undefined) return;
           this.snapShotData.reviews.forEach(review => {
             if (review.movieTitle === movieTitle) {
               this.alreadyReviewed = true;
+              if (this.reviewExists.length !== 0) {
+                this.reviewExists = [];
+              };
               this.reviewExists.push({
                 movieTitle: review.movieTitle,
                 review: review.review,
                 reviewRating: review.reviewRating,
-                dateCreated: review.dateCreated
+                dateCreated: review.dateCreated,
+                poster_path: review.poster_path
               });
             } else {
               this.alreadyReviewed = false;
