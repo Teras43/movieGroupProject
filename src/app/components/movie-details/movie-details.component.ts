@@ -171,7 +171,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       });
       await this.watchListService.getUserVar.forEach(user => {
         if (user.id === this.dataShare.currentUser.uid) {
-          if (user.data.interested === undefined) {
+          if (user.data.interested.length === 0 || user.data.interested.length === undefined) {
             this.watchListService.updateInterestedMovie(this.movieData);
             return
           }

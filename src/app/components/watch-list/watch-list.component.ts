@@ -1,10 +1,11 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit,  } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { WatchListService } from '../../services/watch-list.service';
 import { Observable } from 'rxjs';
 import { User } from '../../interfaces';
 import { ApiDataService } from '../../services/api-data.service';
 import { DataShareService } from '../../services/data-share.service';
+import firebase from 'firebase/app'
 
 
 
@@ -16,6 +17,8 @@ import { DataShareService } from '../../services/data-share.service';
 export class WatchListComponent implements OnInit {
   getUserVar = [];
   interestedUser = [];
+  deleteUser = [];
+
 
   constructor(
     private watchListService: WatchListService,
@@ -43,20 +46,27 @@ export class WatchListComponent implements OnInit {
 
   // // use this! make a new function that runs this.
   yes() {
-    console.log(this.watchListService.getUserVar)
     this.watchListService.getUserVar.forEach((user) => {
       if (user.id === this.dataShareService.currentUser.uid) {
        
         this.interestedUser.push(user.data);
-        console.log(this.interestedUser, 'interested user');
       } else {
         return;
       }
     });
   }
-  deleteMovie = async (title) =>{
-    this.watchListService.deleteInterestedMovie(title)
-    console.log('went through')
+  deleteMovie = async (user) => {
+    // this.deleteUser.push({movie: user})
+    // this.watchListService.deleteInterestedMovie(this.deleteUser[0]);
+    // await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
+    // this.deleteUser = [];
+    // this.watchListService.getUser().then(() => {
+    //   this.yes()
+    // })
+        await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
+        this.interestedUser.splice(user);
+        
+    
   }
 
 

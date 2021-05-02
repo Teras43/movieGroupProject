@@ -9,7 +9,7 @@
                             <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
                             <div>{{item.title}}</div>
                             <div>Average Rating: {{item.vote_average}}</div>
-                            <button (click)="deleteMovie(user,i)">delete</button>
+                            <button (click)="deleteMovie(user.interested[i])">delete</button>
                         </div>
                     </div>
                 </div>
