@@ -86,9 +86,12 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     if (this.sub2 !== undefined) {
       this.sub1.unsubscribe();
     };
-    if (this.watchListService.snapShotSub !== undefined) {
-      this.watchListService.snapShotSub.unsubscribe();
+    if (this.watchListService.hasReviewShotSub !== undefined) {
+      this.watchListService.hasReviewShotSub.unsubscribe();
     };
+    if (this.watchListService.checkReviewSub !== undefined) {
+      this.watchListService.checkReviewSub.unsubscribe();
+    }
   };
 
   setData = () => {
@@ -171,7 +174,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       });
       await this.watchListService.getUserVar.forEach(user => {
         if (user.id === this.dataShare.currentUser.uid) {
-          if (user.data.interested.length === 0 || user.data.interested.length === undefined) {
+          if (user.data.interested === undefined || user.data.interested.length === 0) {
             this.watchListService.updateInterestedMovie(this.movieData);
             return
           }
@@ -227,25 +230,28 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     let cDay = currentDate.getDate();
     let cMonth = currentDate.getMonth() + 1;
     let cYear = currentDate.getFullYear();
-    await this.watchListService.checkReviewExisting(movieTitle, this.dataShare.currentUser.uid)
-    await this.watchListService.getUserVar.forEach(user => {
-      if (user.id === this.dataShare.currentUser.uid) {
-        user.data.rated.forEach(movie => {
-          if (movie.title === movieTitle) {
-            this.reviewData.push({
-              reviewRating: movie.userRating,
-              movieTitle: movie.title,
-              review: this.reviewString,
-              dateCreated: cDay + "/" + cMonth + "/" + cYear
-            });
-          }
-        })
-      }
+    await this.watchListService.checkReviewExisting(movieTitle, this.dataShare.currentUser.uid).then(() => {
+      this.watchListService.getUserVar.forEach(user => {
+        if (user.id === this.dataShare.currentUser.uid) {
+          user.data.rated.forEach(movie => {
+            if (movie.title === movieTitle) {
+              this.reviewData.push({
+                reviewRating: movie.userRating,
+                movieTitle: movie.title,
+                review: this.reviewString,
+                dateCreated: cDay + "/" + cMonth + "/" + cYear,
+                poster_path: movie.poster_path
+              });
+            }
+          })
+        }
+      })
     })
     this.watchListService.saveReview(this.reviewData).then(() => {
       this.watchListService.hasReview(this.movieDetails.title, this.dataShare.currentUser.uid);
     })
     this.reviewString = '';
+    this.reviewData = [];
   };
 
   editReview = () => {
