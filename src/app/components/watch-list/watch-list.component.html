@@ -4,59 +4,85 @@
       <mat-tab-group>
         <mat-tab label="Interested">
           <div class="interestedContainer" *ngIf="interestedUser">
-            <div *ngFor="let user of interestedUser; let i = index">
-              <h3>{{ user.displayName }}</h3>
-              <div *ngFor="let item of user.interested">
-                <img
-                  src="{{ apiDataService.apiPosterPath + item.poster_path }}"
-                  class="movieListThumb"
-                  (click)="selectMovie(item.id)"
-                />
-                <div>{{ item.title }}</div>
-                <div>Average Rating: {{ item.vote_average }}</div>
-                <button (click)="deleteInterestedMovie(user.interested[i])">
-                  <mat-icon class="deleteIcon">delete</mat-icon>
-                </button>
+            <div *ngFor="let user of interestedUser">
+              <h3 class="userNameInterested">
+                {{ user.displayName }}'s Interested Movies
+              </h3>
+              <div
+                class="interestedDataDiv"
+                *ngFor="let item of user.interested; let i = index"
+              >
+                <div class="btnDiv">
+                  <button
+                    class="deleteInterestedBtn"
+                    (click)="deleteMovie(user.interested[i])"
+                  >
+                    <mat-icon class="deleteIcon">delete</mat-icon>
+                  </button>
+                </div>
+                <div class="allMovieData">
+                  <div class="imgContainer">
+                    <img
+                      class="movieListThumb"
+                      src="{{
+                        apiDataService.apiPosterPath + item.poster_path
+                      }}"
+                    />
+                  </div>
+                  <div class="dataDiv">
+                    <div class="movieDataDiv">
+                      <div class="titleDiv">{{ item.title }}</div>
+                      <div class="ratingDiv">
+                        Average Rating: {{ item.vote_average }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </mat-tab>
         <mat-tab label="Watched">
           <div class="watchedContainer" *ngIf="interestedUser">
-            <div *ngFor="let user of interestedUser; let i = index">
-              <h3>{{ user.displayName }}</h3>
-              <div *ngFor="let item of user.rated">
-                <img
-                  src="{{ apiDataService.apiPosterPath + item.poster_path }}"
-                  class="movieListThumb"
-                  (click)="selectMovie(item.id)"
-                />
-                <div>{{ item.title }}</div>
-                <div>Your Rating: {{ item.userRating }}/10</div>
-                <button (click)="deleteRatedMovie(user.rated[i])">
-                    <mat-icon class="deleteIcon">delete</mat-icon>
-                  </button>
+            <div *ngFor="let user of interestedUser">
+              <h3 class="userNameWatched">
+                {{ user.displayName }}'s Watched List
+              </h3>
+              <div class="watchedDataDiv" *ngFor="let item of user.rated">
+                <div class="imgContainer">
+                  <img
+                    class="movieListThumb"
+                    src="{{ apiDataService.apiPosterPath + item.poster_path }}"
+                  />
+                </div>
+                <div class="dataDiv2">
+                  <div class="watchedTitleDiv">{{ item.title }}</div>
+                  <div class="watchedRatingDiv">
+                    Your Rating: {{ item.userRating }}/10
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </mat-tab>
         <mat-tab label="Reviews">
           <div class="reviewContainer" *ngIf="interestedUser">
-            <div *ngFor="let user of interestedUser; let i = index">
-              <h3>{{ user.displayName }}</h3>
-              <div *ngFor="let item of user.reviews">
-                <img
-                  src="{{ apiDataService.apiPosterPath + item.poster_path }}"
-                  class="movieListThumb"
-                  (click)="selectMovie(item.id)"
-                />
-                <div>{{ item.movieTitle }}</div>
-                <div>Your Rating: {{ item.reviewRating }}/10</div>
-                <div>Your Review: "{{ item.review }}"</div>
-                <div>Date Created: {{item.dateCreated}}</div>
-                <button (click)="deleteReviewedMovie(user.reviews[i])">
-                    <mat-icon class="deleteIcon">delete</mat-icon>
-                  </button>
+            <div *ngFor="let user of interestedUser">
+              <h3 class="userNameReview">{{ user.displayName }}'s Reviews</h3>
+              <div class="reviewDataDiv" *ngFor="let item of user.reviews">
+                <div class="imgContainer">
+                  <img
+                    src="{{ apiDataService.apiPosterPath + item.poster_path }}"
+                    class="movieListThumb"
+                  />
+                </div>
+                <div class="dataDiv3">
+                  <div class="reviewTitleDiv">{{ item.movieTitle }}</div>
+                  <div class="reviewRatingDiv">
+                    Your Rating: {{ item.reviewRating }}/10
+                  </div>
+                  <div class="reviewDiv">{{ item.review }}</div>
+                </div>
               </div>
             </div>
           </div>

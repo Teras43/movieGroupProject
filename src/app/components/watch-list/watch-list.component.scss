@@ -3,23 +3,179 @@
 
   .mainCardContainer {
     height: 100%;
+    overflow: scroll;
+    background-color: #181a1b;
+    border-radius: 0;
 
     .interestedContainer {
+      .userNameInterested {
+        color: #3f8eb2;
+        font-style: italic;
+        font-weight: 900;
+        border-bottom: 1px solid white;
+        padding-bottom: 1em;
+        text-align: center;
+      }
+
+      .interestedDataDiv {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1.5em 2em 1.5em;
+        margin-bottom: 1.5em;
+        border-bottom: 1px solid white;
+
+        .btnDiv {
+          display: flex;
+          justify-content: flex-end;
+          margin-bottom: 1em;
+
+          .deleteInterestedBtn {
+            width: 4em;
+            outline: none;
+            background: none;
+            border: none;
+
+            .deleteIcon {
+              font-size: 2em;
+              color: #3f8eb2;
+            }
+          }
+        }
+
+        .allMovieData {
+          display: flex;
+
+          .imgContainer {
+            .movieListThumb {
+              display: flex;
+              height: 11em;
+              width: 7em;
+              margin-right: 1.2em;
+              border: 1px solid white;
+            }
+          }
+
+          .dataDiv {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .movieDataDiv {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+
+              .titleDiv {
+                font-size: 1em;
+                font-weight: 500;
+                margin-bottom: 0.5em;
+              }
+
+              .ratingDiv {
+                opacity: 0.8;
+                font-size: 1em;
+                margin-bottom: 1em;
+              }
+            }
+          }
+        }
+      }
     }
 
     .watchedContainer {
+      .userNameWatched {
+        color: #3f8eb2;
+        font-style: italic;
+        font-weight: 900;
+        border-bottom: 1px solid white;
+        padding-bottom: 1em;
+        text-align: center;
+      }
+
+      .watchedDataDiv {
+        display: flex;
+        padding: 1em 1.5em 2em 1.5em;
+        margin-bottom: 1.5em;
+        border-bottom: 1px solid white;
+
+        .movieListThumb {
+          display: flex;
+          height: 11em;
+          width: 7em;
+          margin-right: 1.2em;
+          border: 1px solid white;
+        }
+
+        .dataDiv2 {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .watchedTitleDiv {
+            font-size: 1em;
+            font-weight: 500;
+            margin-bottom: 0.5em;
+          }
+
+          .watchedRatingDiv {
+            opacity: 0.8;
+            font-size: 1em;
+            margin-bottom: 1em;
+          }
+        }
+      }
     }
 
     .reviewContainer {
+      .userNameReview {
+        color: #3f8eb2;
+        font-style: italic;
+        font-weight: 900;
+        border-bottom: 1px solid white;
+        padding-bottom: 1em;
+        text-align: center;
+      }
+
+      .reviewDataDiv {
+        display: flex;
+        padding: 1em 1.5em 2em 1.5em;
+        margin-bottom: 1.5em;
+        border-bottom: 1px solid white;
+
+        .movieListThumb {
+          display: flex;
+          height: 11em;
+          width: 7em;
+          margin-right: 1.2em;
+          border: 1px solid white;
+        }
+
+        .dataDiv3 {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .reviewTitleDiv {
+            font-size: 1em;
+            font-weight: 500;
+            margin-bottom: 0.5em;
+          }
+
+          .reviewRatingDiv {
+            opacity: 0.8;
+            font-size: 1em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid white;
+          }
+
+          .reviewDiv {
+            padding: 0.5em 0 0.5em 0;
+            overflow: scroll;
+            font-size: 0.9em;
+          }
+        }
+      }
     }
   }
-}
-
-.movieListThumb {
-  display: flex;
-  flex: 1;
-  height: 11em;
-  width: 7.2em;
-  margin-right: 1.2em;
-  border: 1px solid white;
 }
