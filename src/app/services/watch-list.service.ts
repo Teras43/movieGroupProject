@@ -46,6 +46,7 @@ export class WatchListService {
   };
 
   updateInterestedMovie = async (movieData) => {
+    console.log(movieData);
     await this.db
       .collection('users')
       .doc(this.docId)
