@@ -9,20 +9,20 @@
                             <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
                             <div>{{item.title}}</div>
                             <div>Average Rating: {{item.vote_average}}</div>
-                            <button (click)="deleteMovie(user.interested[i])">delete</button>
+                            <button (click)="deleteMovie(user.interested[i])">Remove</button>
                         </div>
                     </div>
                 </div>
             </mat-tab>
             <mat-tab label="Watched">
                 <div class="" *ngIf="interestedUser">
-                    <div *ngFor="let user of interestedUser">
+                    <div *ngFor="let user of interestedUser; let i = index">
                         <p>{{user.displayName}}</p>
                         <div *ngFor="let item of user.rated">
                             <img src="{{apiDataService.apiPosterPath + item.poster_path}}" class="movieListThumb">
                             <div>{{item.title}}</div>
                             <div>Your Rating: {{item.userRating}}/10</div>
-
+                            <button (click)="deleteMovie(user.rated[i])">Remove</button>
                         </div>
                     </div>
                 </div>
