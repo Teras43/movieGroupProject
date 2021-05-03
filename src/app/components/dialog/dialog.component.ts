@@ -67,13 +67,12 @@ export class DialogComponent implements OnInit {
         userRating: this.curRating,
         id: this.movieId
       });
-      this.watchListService.updateRatedList(this.movieData).then(() => {
-        this.watchListService.checkRatingExisting(this.title, this.dataShare.currentUser.uid);
-      })
+      this.watchListService.checkRatingExisting(this.title, this.dataShare.currentUser.uid).then(() => {
+        this.watchListService.updateRatedList(this.movieData)
+      });
     } finally {
-      this.movieData = [];
+      this.dialogRef.close();
     }
-    this.dialogRef.close();
   };
 
   removeClose = async () => {
