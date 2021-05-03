@@ -33,7 +33,7 @@ export class WatchListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.watchListService.getUser().then(() => {
-      this.yes()
+      this.getUserData()
     })
   }
    
@@ -41,8 +41,7 @@ export class WatchListComponent implements OnInit, OnDestroy {
     this.interestedUser = []
   }
 
-  // // use this! make a new function that runs this.
-  yes() {
+  getUserData = ()  => {
     this.watchListService.getUserVar.forEach((user) => {
       if (user.id === this.dataShareService.currentUser.uid) {
        
@@ -53,11 +52,12 @@ export class WatchListComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteMovie = async (user) => {
-    // this.deleteUser.push({movie: user})
-    // this.watchListService.deleteInterestedMovie(this.deleteUser[0]);
-    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
-    // this.deleteUser = [];
-    window.location.reload();
+  deleteMovie = (user) => {
+    this.deleteUser.push({movie: user})
+    console.log(this.deleteUser[0]);
+    this.watchListService.deleteInterestedMovie(this.deleteUser[0]).then(() => {
+      this.deleteUser = [];
+      window.location.reload();
+    });
   }
 }
