@@ -10,10 +10,11 @@
                 <img
                   src="{{ apiDataService.apiPosterPath + item.poster_path }}"
                   class="movieListThumb"
+                  (click)="selectMovie(item.id)"
                 />
                 <div>{{ item.title }}</div>
                 <div>Average Rating: {{ item.vote_average }}</div>
-                <button (click)="deleteMovie(user.interested[i])">
+                <button (click)="deleteInterestedMovie(user.interested[i])">
                   <mat-icon class="deleteIcon">delete</mat-icon>
                 </button>
               </div>
@@ -22,31 +23,40 @@
         </mat-tab>
         <mat-tab label="Watched">
           <div class="watchedContainer" *ngIf="interestedUser">
-            <div *ngFor="let user of interestedUser">
+            <div *ngFor="let user of interestedUser; let i = index">
               <h3>{{ user.displayName }}</h3>
               <div *ngFor="let item of user.rated">
                 <img
                   src="{{ apiDataService.apiPosterPath + item.poster_path }}"
                   class="movieListThumb"
+                  (click)="selectMovie(item.id)"
                 />
                 <div>{{ item.title }}</div>
                 <div>Your Rating: {{ item.userRating }}/10</div>
+                <button (click)="deleteRatedMovie(user.rated[i])">
+                    <mat-icon class="deleteIcon">delete</mat-icon>
+                  </button>
               </div>
             </div>
           </div>
         </mat-tab>
         <mat-tab label="Reviews">
           <div class="reviewContainer" *ngIf="interestedUser">
-            <div *ngFor="let user of interestedUser">
+            <div *ngFor="let user of interestedUser; let i = index">
               <h3>{{ user.displayName }}</h3>
               <div *ngFor="let item of user.reviews">
                 <img
                   src="{{ apiDataService.apiPosterPath + item.poster_path }}"
                   class="movieListThumb"
+                  (click)="selectMovie(item.id)"
                 />
-                <div>{{ item.title }}</div>
+                <div>{{ item.movieTitle }}</div>
                 <div>Your Rating: {{ item.reviewRating }}/10</div>
                 <div>Your Review: "{{ item.review }}"</div>
+                <div>Date Created: {{item.dateCreated}}</div>
+                <button (click)="deleteReviewedMovie(user.reviews[i])">
+                    <mat-icon class="deleteIcon">delete</mat-icon>
+                  </button>
               </div>
             </div>
           </div>
