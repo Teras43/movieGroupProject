@@ -5,6 +5,7 @@ import { ApiDataService } from '../../services/api-data.service';
 import { DataShareService } from '../../services/data-share.service';
 import firebase from 'firebase/app'
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 
@@ -24,7 +25,9 @@ export class WatchListComponent implements OnInit, OnDestroy {
     private db: AngularFirestore,
     public apiDataService: ApiDataService,
     public dataShareService: DataShareService,
-    public location: Location
+    public location: Location,
+    public dataShare: DataShareService,
+    private router: Router,
    
   ) {
     this.dataShareService.parseUserInfo();
@@ -59,5 +62,24 @@ export class WatchListComponent implements OnInit, OnDestroy {
       this.deleteUser = [];
       window.location.reload();
     });
+  }
+  deleteRatedMovie = async (user) => {
+    this.deleteUser.push({movie: user})
+    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({rated: firebase.firestore.FieldValue.arrayRemove(user)})
+    this.deleteUser = [];
+    window.location.reload();
+  }
+  deleteReviewedMovie = async (user) => {
+    this.deleteUser.push({movie: user})
+    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({reviews: firebase.firestore.FieldValue.arrayRemove(user)})
+    this.deleteUser = [];
+    window.location.reload();
+  }
+  
+  selectMovie = (movieId) => {
+    this.dataShare.movieId = movieId;
+    this.router.navigate([`/movie/${movieId}`], { queryParams: {
+      id: movieId
+    } });
   }
 }
