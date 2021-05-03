@@ -15,6 +15,7 @@ export class DialogComponent implements OnInit {
   title: string;
   rated: boolean;
   curRating: number;
+  movieId: number;
   movieData = [];
 
   ratingNumbers: RatingInterface[] = [
@@ -41,6 +42,7 @@ export class DialogComponent implements OnInit {
     this.poster_path = this.dataShare.dialogImg;
     this.title = this.dataShare.dialogTitle;
     this.curRating = data.curRating;
+    this.movieId = data.id
   };
   
   ngOnInit(): void {
@@ -62,7 +64,8 @@ export class DialogComponent implements OnInit {
       this.movieData.push({
         poster_path: this.poster_path,
         title: this.title,
-        userRating: this.curRating
+        userRating: this.curRating,
+        id: this.movieId
       });
       this.watchListService.updateRatedList(this.movieData).then(() => {
         this.watchListService.checkRatingExisting(this.title, this.dataShare.currentUser.uid);

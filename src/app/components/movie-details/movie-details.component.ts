@@ -147,7 +147,10 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   openDialog = async () => {
     let dialogRef = this.dialog.open(DialogComponent, {
       panelClass: 'newBackground',
-      data: { curRating: this.curRating}
+      data: { 
+        curRating: this.curRating,
+        id: this.movieDetails.id
+      }
     });
     
     this.sub1 = await this.watchListService.userRating.subscribe(res => {
@@ -171,6 +174,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         title: this.movieDetails.title,
         vote_average: this.movieDetails.vote_average,
         poster_path: this.movieDetails.poster_path,
+        id: this.movieDetails.id
       });
       await this.watchListService.getUserVar.forEach(user => {
         if (user.id === this.dataShare.currentUser.uid) {
@@ -240,7 +244,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
                 movieTitle: movie.title,
                 review: this.reviewString,
                 dateCreated: cDay + "/" + cMonth + "/" + cYear,
-                poster_path: movie.poster_path
+                poster_path: movie.poster_path,
+                id: movie.id
               });
             }
           })
