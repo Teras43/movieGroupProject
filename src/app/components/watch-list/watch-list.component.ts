@@ -1,11 +1,10 @@
-import { Component, ComponentFactoryResolver, OnInit,  } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { WatchListService } from '../../services/watch-list.service';
-import { Observable } from 'rxjs';
-import { User } from '../../interfaces';
 import { ApiDataService } from '../../services/api-data.service';
 import { DataShareService } from '../../services/data-share.service';
 import firebase from 'firebase/app'
+import { Location } from '@angular/common';
 
 
 
@@ -14,7 +13,7 @@ import firebase from 'firebase/app'
   templateUrl: './watch-list.component.html',
   styleUrls: ['./watch-list.component.scss'],
 })
-export class WatchListComponent implements OnInit {
+export class WatchListComponent implements OnInit, OnDestroy {
   getUserVar = [];
   interestedUser = [];
   deleteUser = [];
@@ -25,6 +24,7 @@ export class WatchListComponent implements OnInit {
     private db: AngularFirestore,
     public apiDataService: ApiDataService,
     public dataShareService: DataShareService,
+    public location: Location
    
   ) {
     this.dataShareService.parseUserInfo();
@@ -32,17 +32,14 @@ export class WatchListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.dataShareService.parseUserInfo();
-  this.watchListService.getUser().then(() => {
-    this.yes()
-  })
-
-  // setTimeout(() =>{
-
-
-  // },250)
+    this.watchListService.getUser().then(() => {
+      this.yes()
+    })
   }
-
+   
+  ngOnDestroy(): void {
+    this.interestedUser = []
+  }
 
   // // use this! make a new function that runs this.
   yes() {
@@ -55,20 +52,12 @@ export class WatchListComponent implements OnInit {
       }
     });
   }
+
   deleteMovie = async (user) => {
     // this.deleteUser.push({movie: user})
     // this.watchListService.deleteInterestedMovie(this.deleteUser[0]);
-    // await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
+    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
     // this.deleteUser = [];
-    // this.watchListService.getUser().then(() => {
-    //   this.yes()
-    // })
-        await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({interested: firebase.firestore.FieldValue.arrayRemove(user)})
-        this.interestedUser.splice(user);
-        
-    
+    window.location.reload();
   }
-
-
-  //then console.log(user)
 }
