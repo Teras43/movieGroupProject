@@ -65,7 +65,7 @@ export class WatchListComponent implements OnInit, OnDestroy {
   }
   deleteRatedMovie = async (user) => {
     this.deleteUser.push({movie: user})
-    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({rated: firebase.firestore.FieldValue.arrayRemove(user)})
+    this.watchListService.deleteRatedMovie
     this.deleteUser = [];
     window.location.reload();
   }

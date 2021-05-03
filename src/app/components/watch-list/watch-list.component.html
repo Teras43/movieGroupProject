@@ -27,11 +27,12 @@
                       src="{{
                         apiDataService.apiPosterPath + item.poster_path
                       }}"
+                      (click)="selectMovie(item.id)"
                     />
                   </div>
                   <div class="dataDiv">
                     <div class="movieDataDiv">
-                      <div class="titleDiv">{{ item.title }}</div>
+                      <div class="titleDiv"  (click)="selectMovie(item.id)">{{ item.title }}</div>
                       <div class="ratingDiv">
                         Average Rating: {{ item.vote_average }}
                       </div>
@@ -53,10 +54,11 @@
                   <img
                     class="movieListThumb"
                     src="{{ apiDataService.apiPosterPath + item.poster_path }}"
+                    (click)="selectMovie(item.id)"
                   />
                 </div>
                 <div class="dataDiv2">
-                  <div class="watchedTitleDiv">{{ item.title }}</div>
+                  <div class="watchedTitleDiv" (click)="selectMovie(item.id)">{{ item.title }}</div>
                   <div class="watchedRatingDiv">
                     Your Rating: {{ item.userRating }}/10
                   </div>
@@ -74,10 +76,11 @@
                   <img
                     src="{{ apiDataService.apiPosterPath + item.poster_path }}"
                     class="movieListThumb"
+                    (click)="selectMovie(item.id)"
                   />
                 </div>
                 <div class="dataDiv3">
-                  <div class="reviewTitleDiv">{{ item.movieTitle }}</div>
+                  <div class="reviewTitleDiv"  (click)="selectMovie(item.id)" >{{ item.movieTitle }}</div>
                   <div class="reviewRatingDiv">
                     Your Rating: {{ item.reviewRating }}/10
                   </div>
