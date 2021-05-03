@@ -49,7 +49,15 @@
               <h3 class="userNameWatched">
                 {{ user.displayName }}'s Watched List
               </h3>
-              <div class="watchedDataDiv" *ngFor="let item of user.rated">
+              <div class="watchedDataDiv" *ngFor="let item of user.rated; let i = index">
+                <div class="btnDiv">
+                    <button
+                      class="deleteInterestedBtn"
+                      (click)="deleteRatedMovie(user.rated[i])"
+                    >
+                      <mat-icon class="deleteIcon">delete</mat-icon>
+                    </button>
+                  </div>
                 <div class="imgContainer">
                   <img
                     class="movieListThumb"
@@ -71,7 +79,7 @@
           <div class="reviewContainer" *ngIf="interestedUser">
             <div *ngFor="let user of interestedUser">
               <h3 class="userNameReview">{{ user.displayName }}'s Reviews</h3>
-              <div class="reviewDataDiv" *ngFor="let item of user.reviews">
+              <div class="reviewDataDiv" *ngFor="let item of user.reviews; let i = index">
                 <div class="imgContainer">
                   <img
                     src="{{ apiDataService.apiPosterPath + item.poster_path }}"
