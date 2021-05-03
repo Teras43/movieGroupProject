@@ -5,7 +5,7 @@
         <mat-tab label="Interested">
           <div class="interestedContainer" *ngIf="interestedUser">
             <div *ngFor="let user of interestedUser; let i = index">
-              <h3>{{ user.displayName }}</h3>
+              <h3>{{ user.displayName }}</h3> 
               <div *ngFor="let item of user.interested">
                 <img
                   src="{{ apiDataService.apiPosterPath + item.poster_path }}"
