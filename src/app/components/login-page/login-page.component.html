@@ -1,8 +1,4 @@
-<!-- <div *ngIf="afAuth.currentUser">
-    <h1>Logged in</h1>
-</div>
-<div *ngIf="!afAuth.currentUser">
-    <h1>Logged out</h1>
-    <firebase-ui></firebase-ui>
-</div> -->
-<ngx-auth-firebaseui (onSuccess)="appNav()"></ngx-auth-firebaseui>
+<ngx-auth-firebaseui
+  (onSuccess)="appNav()"
+  providers="google"
+></ngx-auth-firebaseui>
