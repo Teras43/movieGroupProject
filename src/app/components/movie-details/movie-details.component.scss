@@ -141,11 +141,17 @@
         width: 100%;
         margin-bottom: 1em;
 
-        .starIcon {
-          display: flex;
-          flex: 0.5;
-          color: gold;
-          font-size: 3em;
+        .ratingImg {
+          @media (min-width: 800px) {
+            margin-left: 2em;
+          }
+
+          .starIcon {
+            display: flex;
+            flex: 0.5;
+            color: gold;
+            font-size: 3em;
+          }
         }
 
         .ratingInfo {
@@ -155,6 +161,10 @@
           align-items: center;
           margin-left: 1.2em;
           margin-right: 1.5em;
+
+          @media (min-width: 500px) {
+            align-items: flex-start;
+          }
 
           .voteCountDiv {
             opacity: 0.7;
@@ -275,6 +285,11 @@
       padding-left: 1em;
       padding-right: 1em;
       background-color: #181a1b;
+      width: 100%;
+
+      @media (min-width: 800px) {
+        max-width: 868px;
+      }
 
       .castCrewTitle {
         color: #3f8eb2;
@@ -353,6 +368,12 @@
       padding-bottom: 2em;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
+      width: 100%;
+
+      @media (min-width: 800px) {
+        max-width: 900px;
+        margin: 1.5em 0em;
+      }
 
       .relatedMovieContainer {
         display: flex;

@@ -84,7 +84,18 @@
           <img class="slideImg" src="{{ dataShare.jpgNotFound }}" />
         </div>
       </div>
-      <div class="allPhotosDiv">
+      <div
+        class="allPhotosDiv"
+        *ngIf="peopleDetails.images.profiles.length >= 4"
+        (click)="goToPhotos()"
+      >
+        <div class="allPhotosTxt">See More Photos!</div>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </div>
+      <div
+        class="allPhotosDiv"
+        *ngIf="peopleDetails.images.profiles.length <= 4"
+      >
         <div class="allPhotosTxt">No More Photos Found</div>
       </div>
     </mat-card>
