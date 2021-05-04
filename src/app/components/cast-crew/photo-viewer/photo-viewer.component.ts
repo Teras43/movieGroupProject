@@ -21,7 +21,6 @@ export class PhotoViewerComponent implements OnInit {
   ngOnInit(): void {
     this.currentName = this.dataShare.peoplePhotoName;
     this.images = this.dataShare.peopleImages;
-    console.log("Img: ", this.images);
   };
 
   isLoaded = () => {

@@ -60,10 +60,7 @@ export class CastCrewPageComponent implements OnInit, OnDestroy {
             return
           };
           this.peopleDetails = res;
-          console.log("People details: ", this.peopleDetails);
-          // setTimeout(() => {
             this.getUpdateDates(this.peopleDetails.birthday, this.peopleDetails.deathday);
-          // }, 300);
         },
         (error) => {
           this.router.navigate(['./error404'])

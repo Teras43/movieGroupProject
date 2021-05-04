@@ -47,7 +47,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       this.watchListService.getUser().then(() => {
         this.apiData.getSelectedMovieData(res.id).subscribe(
           (res2) => {
-            console.log("res2: ", res2);
             if (res2.success) {
               this.router.navigate(['./error404'])
               return
