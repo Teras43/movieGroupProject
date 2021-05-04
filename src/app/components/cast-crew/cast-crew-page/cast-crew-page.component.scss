@@ -3,166 +3,177 @@
   padding-left: 1em;
   padding-right: 1em;
 
-  .nameDiv {
-    margin-top: 0.7em;
-    font-size: 1.3em;
-    font-weight: 500;
-  }
-
-  .knownForDiv {
-    font-size: 1em;
-    font-weight: 300;
-    opacity: 0.8;
-  }
-
-  .personDetail {
-    height: 12.65em;
+  .pseudoContainer {
     width: 100%;
-    display: flex;
 
-    .imgDiv {
-      display: flex;
-
-      .personImg {
-        height: 12em;
-        width: 8.5em;
-        border: 1px solid black;
-        margin-top: 0.6em;
-        box-shadow: 2px -1px;
-      }
-    }
-    .infoDiv {
-      height: 100%;
-      width: 100%;
+    @media (min-width: 800px) {
+      max-width: 900px;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
-      margin-left: 0.8em;
-
-      .bioDiv {
-        height: 60%;
-        overflow: scroll;
-        margin-bottom: 1em;
-      }
-
-      .birthDeathDiv {
-        font-weight: 500;
-        font-size: 1em;
-      }
-
-      .creditDiv {
-        font-weight: 500;
-        font-size: 1em;
-      }
+      margin: auto;
     }
-  }
 
-  .otherNames {
-    height: 3em;
-    padding-top: 1.5em;
-    padding-bottom: 2em;
-    border-bottom: 0.1em solid rgba(0, 0, 0, 0.5);
-
-    .otherNameTitle {
-      font-size: 0.8em;
+    .nameDiv {
+      margin-top: 0.7em;
+      font-size: 1.3em;
       font-weight: 500;
-      margin-bottom: 0.5em;
     }
 
-    .otherNameListContainer {
-      height: 4em;
-      width: 65%;
-      font-size: 0.8em;
-      font-weight: 400;
-      overflow: scroll;
-    }
-  }
-
-  .photoDiv {
-    background-color: #181a1b;
-    margin-top: 2em;
-
-    .photoTitleContainer {
-      margin-bottom: 1em;
-      font-size: 1.2em;
-      color: #3f8eb2;
+    .knownForDiv {
+      font-size: 1em;
+      font-weight: 300;
+      opacity: 0.8;
     }
 
-    .photoSlideContainer {
+    .personDetail {
+      height: 12.65em;
+      width: 100%;
       display: flex;
-      overflow: scroll;
-      padding-bottom: 1em;
-      margin-bottom: 1em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.9);
 
       .imgDiv {
-        margin-right: 1em;
-        object-fit: cover;
+        display: flex;
 
-        .slideImg {
-          height: 10em;
-          width: 7em;
-          border: 1px solid white;
+        .personImg {
+          height: 12em;
+          width: 8.5em;
+          border: 1px solid black;
+          margin-top: 0.6em;
+          box-shadow: 2px -1px;
+        }
+      }
+      .infoDiv {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin-left: 0.8em;
+
+        .bioDiv {
+          height: 60%;
+          overflow: scroll;
+          margin-bottom: 1em;
+        }
+
+        .birthDeathDiv {
+          font-weight: 500;
+          font-size: 1em;
+        }
+
+        .creditDiv {
+          font-weight: 500;
+          font-size: 1em;
         }
       }
     }
 
-    .allPhotosDiv {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 0.2em;
+    .otherNames {
+      height: 3em;
+      padding-top: 1.5em;
+      padding-bottom: 2em;
+      border-bottom: 0.1em solid rgba(0, 0, 0, 0.5);
+
+      .otherNameTitle {
+        font-size: 0.8em;
+        font-weight: 500;
+        margin-bottom: 0.5em;
+      }
+
+      .otherNameListContainer {
+        height: 4em;
+        width: 65%;
+        font-size: 0.8em;
+        font-weight: 400;
+        overflow: scroll;
+      }
     }
-  }
 
-  .filmCard {
-    margin-top: 1.5em;
-    background-color: #181a1b;
-    margin-bottom: 0.3em;
+    .photoDiv {
+      background-color: #181a1b;
+      margin-top: 2em;
 
-    .filmTitleContainer {
-      margin-bottom: 1em;
-      font-size: 1.2em;
-      font-weight: 500;
-      color: #3f8eb2;
-    }
+      .photoTitleContainer {
+        margin-bottom: 1em;
+        font-size: 1.2em;
+        color: #3f8eb2;
+      }
 
-    .filmSliderContainer {
-      display: flex;
-      overflow: scroll;
-      height: 18em;
-
-      .filmImgDiv {
-        margin-right: 1em;
+      .photoSlideContainer {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        overflow: scroll;
+        padding-bottom: 1em;
+        margin-bottom: 1em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.9);
 
-        .filmImg {
-          height: 10em;
-          width: 7em;
-          background-color: white;
+        .imgDiv {
+          margin-right: 1em;
+          object-fit: cover;
+
+          .slideImg {
+            height: 10em;
+            width: 7em;
+            border: 1px solid white;
+          }
         }
+      }
 
-        .movieName {
+      .allPhotosDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 0.2em;
+      }
+    }
+
+    .filmCard {
+      margin-top: 1.5em;
+      background-color: #181a1b;
+      margin-bottom: 0.3em;
+
+      .filmTitleContainer {
+        margin-bottom: 1em;
+        font-size: 1.2em;
+        font-weight: 500;
+        color: #3f8eb2;
+      }
+
+      .filmSliderContainer {
+        display: flex;
+        overflow: scroll;
+        height: 18em;
+
+        .filmImgDiv {
+          margin-right: 1em;
           display: flex;
           flex-direction: column;
-          justify-content: center;
           align-items: center;
 
-          .movieTitle {
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-            font-size: 1em;
-            text-align: center;
+          .filmImg {
+            height: 10em;
+            width: 7em;
+            background-color: white;
           }
 
-          .characterName {
-            margin-bottom: 0.5em;
-            opacity: 0.6;
-            text-align: center;
-            font-size: 0.8em;
+          .movieName {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .movieTitle {
+              margin-top: 0.5em;
+              margin-bottom: 0.5em;
+              font-size: 1em;
+              text-align: center;
+            }
+
+            .characterName {
+              margin-bottom: 0.5em;
+              opacity: 0.6;
+              text-align: center;
+              font-size: 0.8em;
+            }
           }
         }
       }

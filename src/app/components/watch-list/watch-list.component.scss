@@ -24,6 +24,13 @@
         margin-bottom: 1.5em;
         border-bottom: 1px solid white;
 
+        @media (min-width: 800px) {
+          display: flex;
+          justify-content: center;
+          margin: auto;
+          max-width: 900px;
+        }
+
         .btnDiv {
           display: flex;
           justify-content: flex-end;
@@ -99,6 +106,13 @@
         padding: 0 1.5em 2em 1.5em;
         margin-bottom: 1.5em;
         border-bottom: 1px solid white;
+
+        @media (min-width: 800px) {
+          display: flex;
+          justify-content: center;
+          margin: auto;
+          max-width: 900px;
+        }
 
         .btnDiv {
           display: flex;
@@ -177,6 +191,13 @@
         padding: 1em 1.5em 2em 1.5em;
         margin-bottom: 1.5em;
         border-bottom: 1px solid white;
+
+        @media (min-width: 800px) {
+          display: flex;
+          justify-content: center;
+          margin: auto;
+          max-width: 900px;
+        }
 
         .movieListThumb {
           display: flex;
