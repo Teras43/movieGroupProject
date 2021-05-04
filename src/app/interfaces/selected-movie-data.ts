@@ -10,4 +10,5 @@ export interface SelectedMovieData {
   vote_average: number,
   vote_count?: number,
   success?: any,
+  id?: number,
 }

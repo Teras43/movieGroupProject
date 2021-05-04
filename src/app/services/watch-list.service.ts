@@ -58,7 +58,7 @@ export class WatchListService {
     await this.db.collection('users').doc(this.docId).update({interested: firebase.firestore.FieldValue.arrayRemove(movieData.movie)});
   };
 
-  checkTitle = async (movieTitle, userId) => {
+  checkTitle = async (movieId, userId) => {
     if (this.getUserVar.length !== 0) {
       await this.getUser();
     }
@@ -68,16 +68,16 @@ export class WatchListService {
           try {
             if (user.data.interested === undefined) return;
             user.data.interested.forEach(movie => {
-              if (movie.title === movieTitle) {
-                this.comparisonTitle.push(movieTitle);
+              if (movie.id === movieId) {
+                this.comparisonTitle.push(movie.title);
               }
             });
           } finally {
             if (user.data.rated === undefined) return
             user.data.rated.forEach(movie => {
-              if (movie.title === movieTitle) {
+              if (movie.id === movieId) {
                 this.preUpdateMovie = {movie};
-                this.ratedComparison.push(movieTitle);
+                this.ratedComparison.push(movie.title);
                 this.userRating = of(movie.userRating);
               } else {
                 return
@@ -108,35 +108,37 @@ export class WatchListService {
   };
 
   checkRatingExisting = async (movieTitle, userId) => {
-    await this.getUser();
-    try {
-      this.getUserVar.forEach(user => {
-       if (user.id === userId) {
-         user.data.rated.forEach(movie => {
-           if (movie.title === movieTitle) {
-              this.preUpdateMovie = {movie};
-              this.ratedComparison.push(movieTitle);
-              this.userRating = of(movie.userRating);
-            }
-          });
-        }
-      });
-    } finally {
-      if (this.ratedComparison.length !== 0) {
-        this.didRate = true;
-        this.ratedComparison = [];
-      } else {
-        this.didRate = false;
-        this.userRating = of(undefined);
-        this.ratedComparison = [];
-      };
-    }
+    await this.getUserVar
+    this.getUser().then(() => {
+      try {
+        this.getUserVar.forEach(user => {
+         if (user.id === userId) {
+           user.data.rated.forEach(movie => {
+             if (movie.title === movieTitle) {
+                this.preUpdateMovie = {movie};
+                this.ratedComparison.push(movieTitle);
+                this.userRating = of(movie.userRating);
+              }
+            });
+          }
+        });
+      } finally {
+        if (this.ratedComparison.length !== 0) {
+          this.didRate = true;
+          this.ratedComparison = [];
+        } else {
+          this.didRate = false;
+          this.userRating = of(undefined);
+          this.ratedComparison = [];
+        };
+      }
+    })
   }
 
   checkReviewExisting = async (movieTitle, userId) => {
-    await this.getUser();
+    await this.getUserVar;
     try {
-      await this.getUserVar.forEach(user => {
+      this.getUserVar.forEach(user => {
         if (user.id === userId) {
           if (user.data.reviews === undefined) return;
           user.data.reviews.forEach(review => {
@@ -188,7 +190,7 @@ export class WatchListService {
     this.db.collection('users').doc(this.docId).update({reviews: firebase.firestore.FieldValue.arrayUnion(reviewData[0])})
   }
 
-  hasReview = async (movieTitle, userId) => {
+  hasReview = async (movieId, userId) => {
     this.hasReviewShotSub = this.db.collection('users').doc(this.docId).snapshotChanges().subscribe(res => {
       try {
         this.snapShotData = res.payload.data();
@@ -196,7 +198,7 @@ export class WatchListService {
         if (this.snapShotData.uid === userId) {
           if (this.snapShotData.reviews === undefined) return;
           this.snapShotData.reviews.forEach(review => {
-            if (review.movieTitle === movieTitle) {
+            if (review.id === movieId) {
               this.alreadyReviewed = true;
               if (this.reviewExists.length !== 0) {
                 this.reviewExists = [];

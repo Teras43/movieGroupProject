@@ -47,12 +47,13 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       this.watchListService.getUser().then(() => {
         this.apiData.getSelectedMovieData(res.id).subscribe(
           (res2) => {
+            console.log("res2: ", res2);
             if (res2.success) {
               this.router.navigate(['./error404'])
               return
             };
-            this.watchListService.checkTitle(res2.title, this.dataShare.currentUser.uid).then(() => {
-              this.watchListService.hasReview(res2.title, this.dataShare.currentUser.uid);
+            this.watchListService.checkTitle(res2.id, this.dataShare.currentUser.uid).then(() => {
+              this.watchListService.hasReview(res2.id, this.dataShare.currentUser.uid);
             })
           },
           (error) => {
@@ -189,7 +190,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         };
       });
     } finally {
-      this.watchListService.checkTitle(this.movieDetails.title, this.dataShare.currentUser.uid);
+      this.watchListService.checkTitle(this.movieDetails.id, this.dataShare.currentUser.uid);
       this.movieData = [];
     }
   };
@@ -206,7 +207,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         }
       });
     } finally {
-      this.watchListService.checkTitle(this.movieDetails.title, this.dataShare.currentUser.uid);
+      this.watchListService.checkTitle(this.movieDetails.id, this.dataShare.currentUser.uid);
     }
   };
 
@@ -252,7 +253,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       })
     })
     this.watchListService.saveReview(this.reviewData).then(() => {
-      this.watchListService.hasReview(this.movieDetails.title, this.dataShare.currentUser.uid);
+      this.watchListService.hasReview(this.movieDetails.id, this.dataShare.currentUser.uid);
     })
     this.reviewString = '';
     this.reviewData = [];

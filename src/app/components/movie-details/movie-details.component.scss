@@ -28,9 +28,9 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.4);
       background-color: #dde1e4;
       padding: 1em;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 867px;
       }
 
@@ -285,9 +285,9 @@
       padding-left: 1em;
       padding-right: 1em;
       background-color: #181a1b;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 868px;
       }
 
@@ -368,9 +368,9 @@
       padding-bottom: 2em;
       border-top: 1px solid black;
       border-bottom: 1px solid black;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 900px;
         margin: 1.5em 0em;
       }
@@ -417,9 +417,9 @@
       flex-direction: column;
       margin: 0 1.5em;
       background-color: #181a1b;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 868px;
         margin: 0 0;
       }
@@ -468,9 +468,9 @@
 
     .userReviewDiv {
       margin: 0 1.5em;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 900px;
         margin: 0 0;
       }
@@ -512,9 +512,9 @@
 
     .commentsContainer {
       margin: 0px 1.5em;
-      width: 100%;
 
       @media (min-width: 800px) {
+        width: 100%;
         max-width: 900px;
         margin: 0 0;
       }
