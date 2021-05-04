@@ -7,9 +7,15 @@
     align-items: flex-end;
     background-image: url("../../../assets/images/pexels-clem-onojeghuo-375885.jpg");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #181a1b;
     height: 15em;
     width: 100%;
+
+    @media (min-width: 800px) {
+      height: 25em;
+    }
 
     .searchInput {
       height: 4em;
@@ -49,71 +55,168 @@
     overflow: scroll;
     background-color: #181a1b;
 
-    .listContent {
-      max-height: 33%;
-      display: flex;
-      object-fit: contain;
-      border-bottom: 1px solid white;
-      padding-top: 2em;
-      justify-content: space-between;
+    .searchDataArea {
+      width: 100%;
 
-      .movieListThumb {
-        display: flex;
-        flex: 1;
-        height: 11em;
-        width: 7.2em;
-        margin-right: 1.2em;
-        border: 1px solid white;
-      }
-
-      .movieInfoDiv {
+      @media (min-width: 800px) {
         display: flex;
         flex-direction: column;
-        flex: 2;
-        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+      }
 
-        .movieTitleDiv {
-          display: flex;
-          border-bottom: 1px solid white;
-          margin-bottom: 1em;
-          flex: 0.5;
-          color: #3f8eb2;
-        }
+      .listContent {
+        max-height: 33%;
+        display: flex;
+        object-fit: contain;
+        padding-top: 2em;
+        border-bottom: 1px solid white;
+        justify-content: space-between;
+        width: 100%;
 
-        .movieDescDiv {
-          height: 10em;
+        .movieListThumb {
           display: flex;
-          font-size: 0.8em;
           flex: 1;
-          overflow: hidden;
+          height: 11em;
+          width: 7.2em;
+          margin-right: 1.2em;
+          border: 1px solid white;
         }
 
-        .movieRateDiv {
+        .movieInfoDiv {
           display: flex;
-          flex: 0.5;
-          justify-content: space-between;
-          margin-top: 1em;
-          margin-bottom: 1em;
-          font-size: 1em;
-          overflow: hidden;
+          flex-direction: column;
+          flex: 2;
+          flex-wrap: wrap;
 
-          .ratingDiv {
+          .movieTitleDiv {
             display: flex;
-            flex-direction: column;
-            margin-right: 0.6em;
-
-            .ratingVoteColor {
-              color: #3f8eb2;
-            }
+            border-bottom: 1px solid white;
+            margin-bottom: 1em;
+            flex: 0.5;
+            color: #3f8eb2;
           }
 
-          .countDiv {
+          .movieDescDiv {
+            height: 10em;
             display: flex;
-            flex-direction: column;
-            margin-left: 0.7em;
+            font-size: 0.8em;
+            flex: 1;
+            overflow: scroll;
+          }
 
-            .ratingVoteColor {
-              color: #3f8eb2;
+          .movieRateDiv {
+            display: flex;
+            flex: 0.5;
+            justify-content: space-between;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            font-size: 1em;
+            overflow: visible;
+
+            .ratingDiv {
+              display: flex;
+              flex-direction: column;
+              margin-right: 0.6em;
+
+              .ratingVoteColor {
+                color: #3f8eb2;
+              }
+            }
+
+            .countDiv {
+              display: flex;
+              flex-direction: column;
+              margin-left: 0.7em;
+
+              .ratingVoteColor {
+                color: #3f8eb2;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .mainDataArea {
+      width: 100%;
+
+      @media (min-width: 800px) {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .listContent {
+        max-height: 33%;
+        display: flex;
+        object-fit: contain;
+        border-bottom: 1px solid white;
+        padding-top: 2em;
+        justify-content: space-between;
+
+        .movieListThumb {
+          display: flex;
+          flex: 1;
+          height: 11em;
+          width: 7.2em;
+          margin-right: 1.2em;
+          border: 1px solid white;
+        }
+
+        .movieInfoDiv {
+          display: flex;
+          flex-direction: column;
+          flex: 2;
+          flex-wrap: wrap;
+
+          .movieTitleDiv {
+            display: flex;
+            border-bottom: 1px solid white;
+            margin-bottom: 1em;
+            flex: 0.5;
+            color: #3f8eb2;
+          }
+
+          .movieDescDiv {
+            height: 10em;
+            display: flex;
+            font-size: 0.8em;
+            flex: 1;
+            overflow: hidden;
+          }
+
+          .movieRateDiv {
+            display: flex;
+            flex: 0.5;
+            justify-content: space-between;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            font-size: 1em;
+            overflow: hidden;
+
+            .ratingDiv {
+              display: flex;
+              flex-direction: column;
+              margin-right: 0.6em;
+
+              .ratingVoteColor {
+                color: #3f8eb2;
+              }
+            }
+
+            .countDiv {
+              display: flex;
+              flex-direction: column;
+              margin-left: 0.7em;
+
+              .ratingVoteColor {
+                color: #3f8eb2;
+              }
             }
           }
         }

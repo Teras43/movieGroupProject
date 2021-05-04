@@ -26,7 +26,7 @@
       <button class="searchTrigger" (click)="searchFn()">Search</button>
     </div>
     <mat-card class="movieListCard">
-      <div *ngIf="searchResponse">
+      <div *ngIf="searchResponse" class="searchDataArea">
         <div class="listContent" *ngFor="let data of searchResponse.results">
           <div class="imgDiv">
             <img
@@ -110,7 +110,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="!searchResponse && popData.results">
+      <div *ngIf="!searchResponse && popData.results" class="mainDataArea">
         <mat-tab-group color="primary" *ngIf="popData && topData && playData">
           <mat-tab label="Popular">
             <div class="listContent" *ngFor="let data of popData.results">
