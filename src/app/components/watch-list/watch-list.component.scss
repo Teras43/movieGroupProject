@@ -45,6 +45,10 @@
             .deleteIcon {
               font-size: 2em;
               color: #3f8eb2;
+
+              @media (min-width: 800px) {
+                margin-top: 1em;
+              }
             }
           }
         }
@@ -128,6 +132,10 @@
             .deleteIcon {
               font-size: 2em;
               color: #3f8eb2;
+
+              @media (min-width: 800px) {
+                margin-top: 1em;
+              }
             }
           }
         }
