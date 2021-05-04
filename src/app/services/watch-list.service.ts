@@ -108,8 +108,8 @@ export class WatchListService {
   };
 
   checkRatingExisting = async (movieTitle, userId) => {
-    await this.getUserVar
-    this.getUser().then(() => {
+    // await this.getUserVar
+    await this.getUser().then(() => {
       try {
         this.getUserVar.forEach(user => {
          if (user.id === userId) {
