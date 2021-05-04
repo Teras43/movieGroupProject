@@ -43,7 +43,6 @@ export class MovieListComponent implements OnInit {
     if (this.searchQuery.match(this.searchRegex)) {
       this.apiData.getMovieData(this.searchQuery).subscribe(res => {
         this.searchResponse = res
-        console.log(this.searchResponse);
       });
     } else {
       return;

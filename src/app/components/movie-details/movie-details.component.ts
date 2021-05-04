@@ -100,7 +100,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
         this.movieDetails = res;
         this.dataShare.dialogImg = res.poster_path;
         this.dataShare.dialogTitle = res.title;
-        console.log('Details: ', this.movieDetails);
         this.updateData();
       });
     } finally {

@@ -57,24 +57,26 @@ export class WatchListComponent implements OnInit, OnDestroy {
 
   deleteMovie = (user) => {
     this.deleteUser.push({movie: user})
-    console.log(this.deleteUser[0]);
+  
     this.watchListService.deleteInterestedMovie(this.deleteUser[0]).then(() => {
       this.deleteUser = [];
       window.location.reload();
     });
   }
-  deleteRatedMovie = async (user) => {
+  deleteRatedMovie =(user) => {
     this.deleteUser.push({movie: user})
-    this.watchListService.deleteRatedMovie
-    this.deleteUser = [];
-    window.location.reload();
+    this.watchListService.deleteRatedMovie(this.deleteUser[0]).then(()=>{
+      this.deleteUser = [];
+      window.location.reload();
+
+    })
   }
-  deleteReviewedMovie = async (user) => {
-    this.deleteUser.push({movie: user})
-    await this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({reviews: firebase.firestore.FieldValue.arrayRemove(user)})
-    this.deleteUser = [];
-    window.location.reload();
-  }
+  // deleteReviewedMovie = async (user) => {
+  //   this.deleteUser.push({movie: user})
+  //   this.db.collection('users').doc(this.dataShareService.currentUser.uid).update({reviews: firebase.firestore.FieldValue.arrayRemove(user)})
+  //   this.deleteUser = [];
+  //   window.location.reload();
+  // }
   
   selectMovie = (movieId) => {
     this.dataShare.movieId = movieId;
