@@ -1,10 +1,16 @@
 <div class="movieListContainer">
   <div class="pseudoContainer" *ngIf="isLoaded()">
     <div class="searchDiv">
-      <mat-form-field class="searchInput">
-        <div class="searchBarDiv">
+      <div class="searchBarDiv">
+        <mat-form-field class="searchInput">
           <mat-label class="searchBarLabel">Search Movies!</mat-label>
-          <input matInput type="text" [(ngModel)]="searchQuery" />
+          <input
+            class="searchBarInput"
+            autocomplete="off"
+            matInput
+            type="text"
+            [(ngModel)]="searchQuery"
+          />
           <button
             mat-button
             *ngIf="searchQuery"
@@ -15,8 +21,8 @@
           >
             <mat-icon>close</mat-icon>
           </button>
-        </div>
-      </mat-form-field>
+        </mat-form-field>
+      </div>
       <button class="searchTrigger" (click)="searchFn()">Search</button>
     </div>
     <mat-card class="movieListCard">
