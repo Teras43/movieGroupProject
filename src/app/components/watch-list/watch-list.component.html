@@ -32,7 +32,9 @@
                   </div>
                   <div class="dataDiv">
                     <div class="movieDataDiv">
-                      <div class="titleDiv"  (click)="selectMovie(item.id)">{{ item.title }}</div>
+                      <div class="titleDiv" (click)="selectMovie(item.id)">
+                        {{ item.title }}
+                      </div>
                       <div class="ratingDiv">
                         Average Rating: {{ item.vote_average }}
                       </div>
@@ -49,26 +51,63 @@
               <h3 class="userNameWatched">
                 {{ user.displayName }}'s Watched List
               </h3>
-              <div class="watchedDataDiv" *ngFor="let item of user.rated; let i = index">
+              <div
+                class="watchedDataDiv"
+                *ngFor="let item of user.rated; let i = index"
+              >
                 <div class="btnDiv">
-                    <button
-                      class="deleteInterestedBtn"
-                      (click)="deleteRatedMovie(user.rated[i])"
-                    >
-                      <mat-icon class="deleteIcon">delete</mat-icon>
-                    </button>
-                  </div>
-                <div class="imgContainer">
-                  <img
-                    class="movieListThumb"
-                    src="{{ apiDataService.apiPosterPath + item.poster_path }}"
-                    (click)="selectMovie(item.id)"
-                  />
+                  <button
+                    class="deleteInterestedBtn"
+                    (click)="deleteRatedMovie(user.rated[i])"
+                  >
+                    <mat-icon class="deleteIcon">delete</mat-icon>
+                  </button>
                 </div>
-                <div class="dataDiv2">
-                  <div class="watchedTitleDiv" (click)="selectMovie(item.id)">{{ item.title }}</div>
-                  <div class="watchedRatingDiv">
-                    Your Rating: {{ item.userRating }}/10
+                <div class="allWatchedMovieData">
+                  <div class="imgContainer">
+                    <img
+                      class="movieListThumb"
+                      src="{{
+                        apiDataService.apiPosterPath + item.poster_path
+                      }}"
+                      (click)="selectMovie(item.id)"
+                    />
+                  </div>
+                  <div class="dataDiv2">
+                    <div class="watchedTitleDiv" (click)="selectMovie(item.id)">
+                      {{ item.title }}
+                    </div>
+                    <div class="watchedRatingDiv">
+                      Your Rating: {{ item.userRating }}/10
+                    </div>
+                    <div class="changeRatingDiv">
+                      <mat-form-field
+                        class="changeRatingForm"
+                        appearance="fill"
+                      >
+                        <mat-label class="changeRatingLabel"
+                          >Change Rating</mat-label
+                        >
+                        <mat-select
+                          class="changeRatingSelect"
+                          [(value)]="item.userRating"
+                          (selectionChange)="
+                            updateRating(
+                              item.title,
+                              item.id,
+                              item.poster_path,
+                              item.userRating
+                            )
+                          "
+                        >
+                          <mat-option
+                            *ngFor="let rating of ratingNumbers"
+                            [value]="rating.value"
+                            >{{ rating.value }} {{ rating.tag }}</mat-option
+                          >
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -79,7 +118,10 @@
           <div class="reviewContainer" *ngIf="interestedUser">
             <div *ngFor="let user of interestedUser">
               <h3 class="userNameReview">{{ user.displayName }}'s Reviews</h3>
-              <div class="reviewDataDiv" *ngFor="let item of user.reviews; let i = index">
+              <div
+                class="reviewDataDiv"
+                *ngFor="let item of user.reviews; let i = index"
+              >
                 <div class="imgContainer">
                   <img
                     src="{{ apiDataService.apiPosterPath + item.poster_path }}"
@@ -88,11 +130,20 @@
                   />
                 </div>
                 <div class="dataDiv3">
-                  <div class="reviewTitleDiv"  (click)="selectMovie(item.id)" >{{ item.movieTitle }}</div>
+                  <div class="reviewTitleDiv" (click)="selectMovie(item.id)">
+                    {{ item.movieTitle }}
+                  </div>
                   <div class="reviewRatingDiv">
                     Your Rating: {{ item.reviewRating }}/10
                   </div>
                   <div class="reviewDiv">{{ item.review }}</div>
+                  <button
+                    mat-raised-button
+                    class="deleteReviewBtn"
+                    (click)="deleteReviewedMovie(item)"
+                  >
+                    Delete Review
+                  </button>
                 </div>
               </div>
             </div>

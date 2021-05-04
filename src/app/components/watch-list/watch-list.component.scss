@@ -95,33 +95,68 @@
 
       .watchedDataDiv {
         display: flex;
-        padding: 1em 1.5em 2em 1.5em;
+        flex-direction: column;
+        padding: 0 1.5em 2em 1.5em;
         margin-bottom: 1.5em;
         border-bottom: 1px solid white;
 
-        .movieListThumb {
+        .btnDiv {
           display: flex;
-          height: 11em;
-          width: 7em;
-          margin-right: 1.2em;
-          border: 1px solid white;
+          justify-content: flex-end;
+          margin-bottom: 1em;
+
+          .deleteInterestedBtn {
+            width: 4em;
+            outline: none;
+            background: none;
+            border: none;
+
+            .deleteIcon {
+              font-size: 2em;
+              color: #3f8eb2;
+            }
+          }
         }
 
-        .dataDiv2 {
+        .allWatchedMovieData {
           display: flex;
-          flex-direction: column;
-          width: 100%;
 
-          .watchedTitleDiv {
-            font-size: 1em;
-            font-weight: 500;
-            margin-bottom: 0.5em;
+          .imgContainer {
+            .movieListThumb {
+              display: flex;
+              height: 11em;
+              width: 7em;
+              margin-right: 1.2em;
+              border: 1px solid white;
+            }
           }
 
-          .watchedRatingDiv {
-            opacity: 0.8;
-            font-size: 1em;
-            margin-bottom: 1em;
+          .dataDiv2 {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .watchedTitleDiv {
+              font-size: 1em;
+              font-weight: 500;
+              margin-bottom: 0.5em;
+            }
+
+            .watchedRatingDiv {
+              opacity: 0.8;
+              font-size: 1em;
+              margin-bottom: 1em;
+            }
+
+            .changeRatingDiv {
+              .changeRatingForm {
+                width: 10em;
+
+                .changeRatingLabel {
+                  color: #3f8eb2;
+                }
+              }
+            }
           }
         }
       }
@@ -173,6 +208,13 @@
             padding: 0.5em 0 0.5em 0;
             overflow: scroll;
             font-size: 0.9em;
+          }
+
+          .deleteReviewBtn {
+            margin-top: 1em;
+            background-color: #3f8eb2;
+            color: white;
+            width: 9em;
           }
         }
       }
