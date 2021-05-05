@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
+import { AuthProvider } from 'ngx-auth-firebaseui';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
+  providers = AuthProvider;
 
   constructor(
     public afAuth: AngularFireAuth, 
