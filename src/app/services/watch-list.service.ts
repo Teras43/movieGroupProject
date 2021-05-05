@@ -37,12 +37,13 @@ export class WatchListService {
   }
 
   getUser = async (): Promise<any> => {
-      this.getUserVar = [];
-      return await this.db.collection('users').get().toPromise().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.getUserVar.push({id: doc.id, data: doc.data()}); 
-        });
+    this.getUserVar = [];
+    await this.db.collection('users').get().toPromise().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.getUserVar.push({id: doc.id, data: doc.data()}); 
       });
+    });
+    return
   };
 
   updateInterestedMovie = async (movieData) => {
@@ -108,35 +109,34 @@ export class WatchListService {
   };
 
   checkRatingExisting = async (movieTitle, userId) => {
-    // await this.getUserVar
     await this.getUser().then(() => {
-      try {
-        this.getUserVar.forEach(user => {
-         if (user.id === userId) {
-           user.data.rated.forEach(movie => {
-             if (movie.title === movieTitle) {
-                this.preUpdateMovie = {movie};
-                this.ratedComparison.push(movieTitle);
-                this.userRating = of(movie.userRating);
-              }
-            });
-          }
-        });
-      } finally {
-        if (this.ratedComparison.length !== 0) {
-          this.didRate = true;
-          this.ratedComparison = [];
-        } else {
-          this.didRate = false;
-          this.userRating = of(undefined);
-          this.ratedComparison = [];
-        };
-      }
+      this.getUserVar.forEach(user => {
+        if (user.id === userId) {
+          if (user.data.rated === undefined) return;
+          user.data.rated.forEach(movie => {
+           if (movie.title === movieTitle) {
+              this.preUpdateMovie = {movie};
+              this.ratedComparison.push(movieTitle);
+              this.userRating = of(movie.userRating);
+            }
+          });
+        }
+      });
+    }).then(() => {
+      if (this.ratedComparison.length !== 0) {
+        this.didRate = true;
+        this.ratedComparison = [];
+      } else {
+        this.didRate = false;
+        this.userRating = of(undefined);
+        this.ratedComparison = [];
+      };
     })
   }
 
   checkReviewExisting = async (movieTitle, userId) => {
     await this.getUserVar;
+    await this.getUser();
     try {
       this.getUserVar.forEach(user => {
         if (user.id === userId) {

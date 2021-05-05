@@ -59,18 +59,19 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  rate = () => {
+  rate = async () => {
+    this.movieData.push({
+      poster_path: this.poster_path,
+      title: this.title,
+      userRating: this.curRating,
+      id: this.movieId
+    });
     try {
-      this.movieData.push({
-        poster_path: this.poster_path,
-        title: this.title,
-        userRating: this.curRating,
-        id: this.movieId
-      });
-      this.watchListService.checkRatingExisting(this.title, this.dataShare.currentUser.uid).then(() => {
+      await this.watchListService.checkRatingExisting(this.title, this.dataShare.currentUser.uid).then(() => {
         this.watchListService.updateRatedList(this.movieData)
       });
     } finally {
+      this.watchListService.didRate = true;
       this.dialogRef.close();
     }
   };
