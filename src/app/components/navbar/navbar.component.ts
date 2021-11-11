@@ -23,9 +23,9 @@ export class NavbarComponent implements OnInit {
 
   navHome = () => {
     this.router.navigate(['./popular'])
-    // .then(() => {
-    //   window.location.reload();
-    // });
+    .then(() => {
+      window.location.reload();
+    });
   };
 
   navList = () => {

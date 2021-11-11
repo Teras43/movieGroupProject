@@ -11,7 +11,6 @@ import { NotFoundComponent } from '../components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: '', redirectTo: 'popular', pathMatch: 'full' },
   { path: 'popular', component: MovieListComponent, canActivate: [ LoggedInGuard ] }, 
   { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [ LoggedInGuard ] },
   { path: 'people/:id', component: CastCrewPageComponent, canActivate: [ LoggedInGuard ] },
@@ -19,6 +18,7 @@ const routes: Routes = [
   { path: 'watchlist', component: WatchListComponent, canActivate: [ LoggedInGuard ] },
   { path: 'loggedout', component: LoginPageComponent },
   { path: 'error404', component: NotFoundComponent },
+  { path: '', redirectTo: 'popular', pathMatch: 'full' },
   { path: '**', redirectTo: '/error404' }
 ];
 
