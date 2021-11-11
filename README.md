@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Current Build Cmd
+
+Run `ng build --prod=true --outputPath=docs --baseHref=/movieGroupProject/` to build the project.
+
+## Current Copy for 404 Cmd
+
+Run `cp docs/index.html docs/404.html` to copy the index into a 404.html for the 404 routes. Git push after this.

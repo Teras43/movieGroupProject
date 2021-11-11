@@ -1,6 +1,7 @@
 <div class="loginPageContainer">
   <div class="loginBox">
     <ngx-auth-firebaseui
+      [guestEnabled]="false"
       (onSuccess)="appNav()"
       [providers]="[providers.Google]"
     ></ngx-auth-firebaseui>
